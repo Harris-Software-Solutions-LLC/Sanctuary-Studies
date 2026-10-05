@@ -60,18 +60,18 @@ $eBuilds = Join-Path $eRoot 'MuzicleBuilds'
 
 foreach ($root in @($dRoot, $eRoot)) {
   if (-not (Test-Path -LiteralPath $root -PathType Container)) { Fail "$root is not mounted." }
-  $drive = Get-PSDrive -Name $root.Substring(0, 1) -ErrorAction SilentlyContinue
-  if ($null -eq $drive) { Fail "$root is not available as a filesystem drive." }
-  if ($drive.Free -lt $MinimumFreeBytes) {
-    Fail "$root has only $([Math]::Round($drive.Free / 1GB, 2)) GB free; at least $([Math]::Round($MinimumFreeBytes / 1GB, 2)) GB is required."
+  $drive = [IO.DriveInfo]::new($root)
+  if (-not $drive.IsReady) { Fail "$root is not ready." }
+  if ($drive.AvailableFreeSpace -lt $MinimumFreeBytes) {
+    Fail "$root has only $([Math]::Round($drive.AvailableFreeSpace / 1GB, 2)) GB free; at least $([Math]::Round($MinimumFreeBytes / 1GB, 2)) GB is required."
   }
 }
 
 Assert-WritableDirectory $dBuilds
 Assert-WritableDirectory $eBuilds
 
-$dVolume = Get-Volume -DriveLetter D -ErrorAction SilentlyContinue
-if ($dVolume -and $dVolume.FileSystem -eq 'FAT32') {
+$dVolume = [IO.DriveInfo]::new($dRoot)
+if ($dVolume.DriveFormat -eq 'FAT32') {
   Write-Warning 'D: uses FAT32. Any generated file larger than 4 GB will fail; the completed output will be checked for this limit.'
 }
 
@@ -90,7 +90,7 @@ $estimatedBytes = [UInt64]([Math]::Max(512MB, $sourceStats.Bytes * 3))
 Write-Host "Repository: $repoRoot"
 Write-Host "Label: $Label -> $slug"
 Write-Host "Expected temporary/final disk impact: approximately $([Math]::Round($estimatedBytes / 1GB, 2)) GB per external destination, plus the Electron cache."
-Write-Host "D: free: $([Math]::Round((Get-PSDrive D).Free / 1GB, 2)) GB; E: free: $([Math]::Round((Get-PSDrive E).Free / 1GB, 2)) GB"
+Write-Host "D: free: $([Math]::Round(([IO.DriveInfo]::new($dRoot)).AvailableFreeSpace / 1GB, 2)) GB; E: free: $([Math]::Round(([IO.DriveInfo]::new($eRoot)).AvailableFreeSpace / 1GB, 2)) GB"
 Write-Host "Planned D: output: $dFinal"
 Write-Host "Planned E: output: $eFinal"
 
