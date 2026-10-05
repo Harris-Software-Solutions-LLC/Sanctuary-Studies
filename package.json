@@ -6,6 +6,15 @@
   "scripts": {
     "test": "node scripts/validate.cjs",
     "lint": "node scripts/validate.cjs --lint",
-    "typecheck": "node scripts/validate.cjs --typecheck"
+    "typecheck": "node scripts/validate.cjs --typecheck",
+    "start:electron": "electron electron/main.cjs",
+    "package:external": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/package-external.ps1"
+  },
+  "devDependencies": {
+    "electron": "^39.1.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "extends": "./electron-builder.yml"
   }
 }

@@ -1,0 +1,16 @@
+appId: com.harrissoftwaresolutions.sanctuarystudies
+productName: Sanctuary Studies
+asar: true
+files:
+  - electron/**
+  - '*.html'
+  - '*.css'
+  - '*.js'
+  - manifest.json
+  - service-worker.js
+directories:
+  # This is a deliberately external sentinel. The release wrapper always overrides it.
+  output: D:\MuzicleBuilds\__sanctuary-studies-packaging-wrapper-required
+win:
+  target:
+    - nsis
