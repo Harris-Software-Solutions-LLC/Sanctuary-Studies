@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Sanctuary Intra Comparative Studies</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1C2A39">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sanctuary Studies">
+<meta name="description" content="A comprehensive, interactive platform exploring biblical sanctuary doctrine through scholarly resources, scripture study, and comparative learning tools.">
+</head>
+<body>
+
+<!-- APP HEADER -->
+<header id="app-header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo" onclick="navigate('home')">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div>
+          <div class="logo-text">Sanctuary Study</div>
+          <div class="logo-sub">Comparative Studies Platform</div>
+        </div>
+      </div>
+      <nav class="nav-desktop">
+        <span class="nav-item" onclick="navigate('home')">Home</span>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-toggle">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="nav-dropdown-menu">
+            <div class="nav-dropdown-item" onclick="navigate('explorer')">3D Sanctuary Explorer</div>
+            <div class="nav-dropdown-item" onclick="navigate('compare')">Compare Sanctuaries</div>
+            <div class="nav-dropdown-item" onclick="navigate('symbolism')">Symbolism Explorer</div>
+            <div class="nav-dropdown-item" onclick="navigate('colors')">Sacred Colors</div>
+            <div class="nav-dropdown-item" onclick="navigate('heavenly')">Heavenly Portal</div>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-toggle">Study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="nav-dropdown-menu">
+            <div class="nav-dropdown-item" onclick="navigate('bible')">KJV Bible</div>
+            <div class="nav-dropdown-item" onclick="navigate('scripture')">Scripture Navigator</div>
+            <div class="nav-dropdown-item" onclick="navigate('timeline')">Ministry Timeline</div>
+            <div class="nav-dropdown-item" onclick="navigate('judgment')">Investigative Judgment</div>
+            <div class="nav-dropdown-item" onclick="navigate('library')">Digital Library</div>
+          </div>
+        </div>
+        <span class="nav-item" onclick="navigate('media')">Media</span>
+        <span class="nav-item" onclick="navigate('educators')">Educators</span>
+        <span class="nav-item" onclick="navigate('forums')">Forums</span>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-icon" onclick="toggleSearch()" title="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="btn-icon mobile-menu-btn" onclick="toggleMobileMenu()" title="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="mobile-nav">
+    <div class="container">
+      <div class="mobile-nav-item" onclick="navigate('home');closeMobileMenu()"><span class="mn-icon">🏠</span><span>Home</span></div>
+      <div class="mobile-nav-section">Explore</div>
+      <div class="mobile-nav-item" onclick="navigate('explorer');closeMobileMenu()"><span class="mn-icon">🏛</span><span>3D Sanctuary Explorer</span></div>
+      <div class="mobile-nav-item" onclick="navigate('compare');closeMobileMenu()"><span class="mn-icon">⚖</span><span>Compare Sanctuaries</span></div>
+      <div class="mobile-nav-item" onclick="navigate('symbolism');closeMobileMenu()"><span class="mn-icon">✨</span><span>Symbolism Explorer</span></div>
+      <div class="mobile-nav-item" onclick="navigate('colors');closeMobileMenu()"><span class="mn-icon">🎨</span><span>Sacred Colors</span></div>
+      <div class="mobile-nav-item" onclick="navigate('heavenly');closeMobileMenu()"><span class="mn-icon">⭐</span><span>Heavenly Portal</span></div>
+      <div class="mobile-nav-section">Study</div>
+      <div class="mobile-nav-item" onclick="navigate('bible');closeMobileMenu()"><span class="mn-icon">📖</span><span>KJV Bible</span></div>
+      <div class="mobile-nav-item" onclick="navigate('scripture');closeMobileMenu()"><span class="mn-icon">🔍</span><span>Scripture Navigator</span></div>
+      <div class="mobile-nav-item" onclick="navigate('timeline');closeMobileMenu()"><span class="mn-icon">⏱</span><span>Ministry Timeline</span></div>
+      <div class="mobile-nav-item" onclick="navigate('judgment');closeMobileMenu()"><span class="mn-icon">🛡</span><span>Investigative Judgment</span></div>
+      <div class="mobile-nav-item" onclick="navigate('library');closeMobileMenu()"><span class="mn-icon">📚</span><span>Digital Library</span></div>
+      <div class="mobile-nav-section">Community</div>
+      <div class="mobile-nav-item" onclick="navigate('media');closeMobileMenu()"><span class="mn-icon">🎧</span><span>Media</span></div>
+      <div class="mobile-nav-item" onclick="navigate('educators');closeMobileMenu()"><span class="mn-icon">🎓</span><span>Educators</span></div>
+      <div class="mobile-nav-item" onclick="navigate('forums');closeMobileMenu()"><span class="mn-icon">💬</span><span>Forums</span></div>
+      <div class="mobile-nav-item" onclick="navigate('profiles');closeMobileMenu()"><span class="mn-icon">👤</span><span>My Profile</span></div>
+      <div class="mobile-nav-item" onclick="navigate('myths');closeMobileMenu()"><span class="mn-icon">❓</span><span>Myths vs Facts</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- SEARCH OVERLAY -->
+<div id="search-overlay" onclick="closeSearch(event)">
+  <div id="search-box">
+    <div style="position:relative">
+      <svg style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#999" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="search-input" type="text" placeholder="Search scriptures, topics, books..." oninput="doSearch(this.value)" onkeydown="if(event.key==='Escape')closeSearch()">
+    </div>
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main-content">
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="container">
+      <h1>Sanctuary Intra<br><span class="hero-accent">Comparative Studies</span></h1>
+      <p class="hero-sub">A comprehensive, interactive platform exploring biblical sanctuary doctrine through scholarly resources, scripture study, and comparative learning tools</p>
+      <div class="hero-mission">
+        <h3>Our Mission</h3>
+        <p>To deepen theological understanding through immersive digital experiences while fostering respectful community dialogue and academic discourse within Adventist scholarship</p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num">14</div><div class="hero-stat-label">Timeline Steps</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">Classic Books</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">66</div><div class="hero-stat-label">Bible Books (KJV)</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">8</div><div class="hero-stat-label">Sacred Colors</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <h2 style="margin-bottom:1.5rem;color:var(--navy)">Study Modules</h2>
+      <div class="grid-3" id="feature-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- BIBLE -->
+<div id="page-bible" class="page">
+  <div class="page-header ph-bible">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>KJV Bible</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">📖</div>
+        <div><h1>KJV Bible Study</h1><p>King James Version — Complete Text with Study Tools</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="sidebar-layout">
+        <div class="sidebar">
+          <div class="sidebar-card">
+            <h4>Select Book</h4>
+            <select class="form-select" id="bible-book-select" onchange="updateBibleBook(this.value)"></select>
+          </div>
+          <div class="sidebar-card">
+            <h4>Chapter</h4>
+            <div id="chapter-grid" class="chapter-btn-grid"></div>
+          </div>
+          <div class="sidebar-card">
+            <h4>Search Scripture</h4>
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" class="form-input" id="bible-search" placeholder="Search words or phrases..." oninput="searchBible(this.value)">
+            </div>
+            <div id="bible-search-results"></div>
+          </div>
+          <div class="sidebar-card">
+            <h4>Study Tools</h4>
+            <div class="tool-list">
+              <button class="tool-btn" onclick="toggleMemMode()" id="mem-btn">🧠 Memorization Mode</button>
+              <button class="tool-btn" onclick="goToVerse('Exodus',25)">⛩ Exodus 25 — Tabernacle</button>
+              <button class="tool-btn" onclick="goToVerse('Leviticus',16)">📜 Leviticus 16 — Atonement</button>
+              <button class="tool-btn" onclick="goToVerse('Daniel',8)">📅 Daniel 8 — 2300 Days</button>
+              <button class="tool-btn" onclick="goToVerse('Hebrews',9)">🌟 Hebrews 9 — Heavenly</button>
+              <button class="tool-btn" onclick="goToVerse('Revelation',4)">👁 Revelation 4 — Throne</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:1rem">
+            <div class="bible-chapter-header">
+              <h3 id="bible-chapter-title">Genesis 1 (KJV)</h3>
+              <div style="display:flex;gap:.5rem">
+                <button class="nav-chapter-btn" onclick="prevChapter()">‹ Prev</button>
+                <button class="nav-chapter-btn" onclick="nextChapter()">Next ›</button>
+              </div>
+            </div>
+            <div id="bible-text" class="card-body bible-text-area"></div>
+          </div>
+          <div class="card card-body">
+            <h3 style="margin-bottom:.75rem">Cross-References & Study Notes</h3>
+            <div class="grid-2">
+              <div><h4 style="margin-bottom:.5rem">Related Passages</h4><div id="cross-refs"></div></div>
+              <div><h4 style="margin-bottom:.5rem">Study Notes</h4><div id="study-notes"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIBRARY -->
+<div id="page-library" class="page">
+  <div class="page-header ph-library">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Digital Library</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">📚</div>
+        <div><h1>Curated Digital Library</h1><p>Scholarly resources, classic Adventist texts, and academic materials</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="card card-body" style="margin-bottom:1.5rem">
+        <div class="grid-2" style="gap:1rem">
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="form-input" placeholder="Search by title, author, or keywords..." oninput="filterLibrary(this.value)">
+          </div>
+          <select class="form-select" onchange="filterLibraryCategory(this.value)">
+            <option value="all">All Categories</option>
+            <option value="sanctuary">Sanctuary Doctrine</option>
+            <option value="daniel">Book of Daniel</option>
+            <option value="hebrews">Book of Hebrews</option>
+            <option value="judgment">Investigative Judgment</option>
+            <option value="prophecy">Prophetic Studies</option>
+            <option value="typology">Typology</option>
+          </select>
+        </div>
+      </div>
+      <h3 style="margin-bottom:1rem">Featured Classic Works</h3>
+      <div id="library-featured" style="display:flex;flex-direction:column;gap:1rem;margin-bottom:2rem"></div>
+      <h3 style="margin-bottom:1rem">Additional Scholarly Resources</h3>
+      <div class="grid-3" id="library-resources"></div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOK VIEWERS -->
+<div id="page-book-crosier" class="page"><div id="book-viewer-crosier"></div></div>
+<div id="page-book-haskell" class="page"><div id="book-viewer-haskell"></div></div>
+<div id="page-book-andreasen" class="page"><div id="book-viewer-andreasen"></div></div>
+<div id="page-book-gilbert" class="page"><div id="book-viewer-gilbert"></div></div>
+<div id="page-book-defense" class="page"><div id="book-viewer-defense"></div></div>
+
+<!-- TIMELINE -->
+<div id="page-timeline" class="page">
+  <div class="page-header ph-timeline">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Ministry Timeline</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">⏱</div>
+        <div><h1>Aaron & Jesus Ministry Timeline</h1><p>14 Parallel Steps — Earthly Type and Heavenly Antitype</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="card card-body" style="margin-bottom:1.5rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+          <div style="display:flex;align-items:center;gap:.75rem">
+            <button class="btn btn-navy btn-sm" onclick="timelinePrev()">‹ Prev</button>
+            <span style="font-size:.9rem;color:var(--text-muted)">Step <strong id="tl-step-num">1</strong> of <span id="tl-total">14</span></span>
+            <button class="btn btn-navy btn-sm" onclick="timelineNext()">Next ›</button>
+          </div>
+          <div style="display:flex;gap:.5rem">
+            <button class="btn btn-primary btn-sm" onclick="toggleTimelinePlay()" id="tl-play-btn">▶ Play</button>
+            <button class="btn btn-secondary btn-sm" onclick="timelineReset()">↺ Reset</button>
+          </div>
+        </div>
+        <div class="progress-bar" style="margin-top:1rem"><div class="progress-fill" id="tl-progress" style="width:4.2%"></div></div>
+        <div class="grid-2" style="margin-top:1rem">
+          <div class="tl-col-header aaron">Aaron — Earthly Type</div>
+          <div class="tl-col-header jesus">Jesus — Heavenly Antitype</div>
+        </div>
+      </div>
+      <div id="timeline-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- JUDGMENT -->
+<div id="page-judgment" class="page">
+  <div class="page-header ph-judgment">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Investigative Judgment</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">🛡</div>
+        <div><h1>Investigative Judgment Module</h1><p>Interactive learning about this cornerstone Adventist doctrine</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="sidebar-layout">
+        <div class="sidebar">
+          <div class="sidebar-card">
+            <h4>Learning Modules</h4>
+            <div id="judgment-nav"></div>
+            <div style="margin-top:1rem">
+              <div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--text-muted);margin-bottom:.3rem"><span>Progress</span><span id="judgment-pct">0%</span></div>
+              <div class="progress-bar"><div class="progress-fill" id="judgment-progress-bar" style="width:0%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div id="judgment-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTURE NAVIGATOR -->
+<div id="page-scripture" class="page">
+  <div class="page-header ph-scripture">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Scripture Navigator</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">🔍</div>
+        <div><h1>Scripture Navigator</h1><p>Linking Biblical Texts to Sanctuary Elements</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="sidebar-layout">
+        <div class="sidebar">
+          <div class="sidebar-card">
+            <h4>Sanctuary Passages</h4>
+            <div id="scripture-passage-list"></div>
+          </div>
+          <div class="sidebar-card">
+            <h4>Filter by Element</h4>
+            <select class="form-select" onchange="filterScriptures(this.value)">
+              <option value="all">All Elements</option>
+              <option value="ark">Ark of the Covenant</option>
+              <option value="lampstand">Golden Lampstand</option>
+              <option value="showbread">Table of Showbread</option>
+              <option value="incense">Altar of Incense</option>
+              <option value="laver">Bronze Laver</option>
+              <option value="altar">Burnt Offering Altar</option>
+              <option value="heavenly">Heavenly Sanctuary</option>
+            </select>
+          </div>
+        </div>
+        <div id="scripture-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SYMBOLISM -->
+<div id="page-symbolism" class="page">
+  <div class="page-header ph-symbolism">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Symbolism Explorer</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">✨</div>
+        <div><h1>Symbolism Explorer</h1><p>Theological meaning behind every sanctuary furnishing</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="tabs">
+        <div class="tab-btn active" onclick="switchSymbolismTab('overview',this)">Overview</div>
+        <div class="tab-btn" onclick="switchSymbolismTab('typology',this)">Type & Antitype</div>
+        <div class="tab-btn" onclick="switchSymbolismTab('linguistic',this)">Hebrew/Greek Words</div>
+        <div class="tab-btn" onclick="switchSymbolismTab('furnishings',this)">Furnishings Detail</div>
+      </div>
+      <div id="symbolism-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SACRED COLORS -->
+<div id="page-colors" class="page">
+  <div class="page-header ph-colors">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Sacred Colors</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">🎨</div>
+        <div><h1>Sacred Colors of the Sanctuary</h1><p>Eight divine colors and their profound spiritual significance</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="grid-4" id="colors-grid" style="margin-bottom:1.5rem"></div>
+      <div id="color-detail-panel"></div>
+    </div>
+  </div>
+</div>
+
+<!-- HEAVENLY PORTAL -->
+<div id="page-heavenly" class="page">
+  <div class="page-header ph-heavenly">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Heavenly Portal</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">⭐</div>
+        <div><h1>Heavenly Sanctuary Portal</h1><p>Immersive journey from earthly to celestial realms</p></div>
+      </div>
+    </div>
+  </div>
+  <div id="heavenly-bg">
+    <div class="section">
+      <div class="container">
+        <div class="card card-body" style="margin-bottom:1.5rem">
+          <h3 style="margin-bottom:.75rem">Journey Stages</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem" id="heavenly-stage-btns"></div>
+        </div>
+        <div id="heavenly-portal-content"></div>
+        <div class="grid-2" style="margin-top:1.5rem">
+          <div class="card card-body">
+            <h4 style="margin-bottom:.5rem">Biblical Foundation</h4>
+            <p style="font-size:.875rem;color:var(--text-secondary);line-height:1.75">The heavenly sanctuary represents the true tabernacle which the Lord pitched, not man (Hebrews 8:2). This portal experience helps visualize the progressive journey from earthly types to heavenly realities.</p>
+          </div>
+          <div class="card card-body">
+            <h4 style="margin-bottom:.5rem">Spiritual Application</h4>
+            <p style="font-size:.875rem;color:var(--text-secondary);line-height:1.75">Each stage represents our spiritual journey: justification (outer court), sanctification (holy place), and glorification (most holy place), culminating in the throne room of grace.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARE -->
+<div id="page-compare" class="page">
+  <div class="page-header ph-compare">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Compare Sanctuaries</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">⚖</div>
+        <div><h1>Sanctuary Comparison</h1><p>Side-by-side analysis of biblical sanctuaries through history</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="tabs">
+        <div class="tab-btn active" onclick="switchCompareTab('overview',this)">Overview</div>
+        <div class="tab-btn" onclick="switchCompareTab('structure',this)">Structure</div>
+        <div class="tab-btn" onclick="switchCompareTab('furnishings',this)">Furnishings</div>
+        <div class="tab-btn" onclick="switchCompareTab('dimensions',this)">Dimensions</div>
+        <div class="tab-btn" onclick="switchCompareTab('materials',this)">Materials</div>
+      </div>
+      <div id="compare-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPLORER -->
+<div id="page-explorer" class="page">
+  <div class="page-header ph-explorer">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>3D Explorer</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">🏛</div>
+        <div><h1>Sanctuary Explorer</h1><p>Interactive exploration of biblical sanctuary models</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section"><div class="container"><div id="explorer-content"></div></div></div>
+</div>
+
+<!-- MEDIA -->
+<div id="page-media" class="page">
+  <div class="page-header ph-media">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Media</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">🎧</div>
+        <div><h1>Companion Media</h1><p>Podcasts and video series with expert scholars</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="tabs">
+        <div class="tab-btn active" onclick="switchMediaTab('podcasts',this)">Podcasts</div>
+        <div class="tab-btn" onclick="switchMediaTab('videos',this)">Video Series</div>
+        <div class="tab-btn" onclick="switchMediaTab('guides',this)">Discussion Guides</div>
+      </div>
+      <div id="media-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- EDUCATORS -->
+<div id="page-educators" class="page">
+  <div class="page-header ph-educators">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Educators</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">🎓</div>
+        <div><h1>Educator Resources</h1><p>Teaching tools and lesson plans for ministry leaders</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem">
+        <select class="form-select" style="max-width:220px" onchange="filterEducators('cat',this.value)">
+          <option value="all">All Categories</option>
+          <option value="lesson-plans">Lesson Plans</option>
+          <option value="activities">Classroom Activities</option>
+          <option value="presentations">Presentations</option>
+          <option value="printables">Printables</option>
+          <option value="videos">Video Resources</option>
+        </select>
+        <select class="form-select" style="max-width:220px" onchange="filterEducators('age',this.value)">
+          <option value="all">All Ages</option>
+          <option value="children">Children (6–12)</option>
+          <option value="youth">Youth (13–17)</option>
+          <option value="adult">Adult (18+)</option>
+          <option value="mixed">Mixed Ages</option>
+        </select>
+      </div>
+      <div class="grid-3" id="educators-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FORUMS -->
+<div id="page-forums" class="page">
+  <div class="page-header ph-forums">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Forums</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">💬</div>
+        <div><h1>Discussion Forums</h1><p>Moderated community dialogue and study groups</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="sidebar-layout">
+        <div class="sidebar">
+          <div class="sidebar-card"><h4>Categories</h4><div id="forum-categories"></div></div>
+          <div class="sidebar-card">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" class="form-input" placeholder="Search discussions..." oninput="searchForums(this.value)">
+            </div>
+          </div>
+          <div class="sidebar-card guidelines-card">
+            <h4>Community Guidelines</h4>
+            <ul class="guidelines-list">
+              <li>Be respectful and charitable</li>
+              <li>Support claims with Scripture</li>
+              <li>No personal attacks</li>
+              <li>Stay on topic</li>
+              <li>Cite scholarly sources</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+            <h3>Discussions</h3>
+            <button class="btn btn-primary btn-sm" onclick="showToast('Sign in to post a new discussion')">+ New Discussion</button>
+          </div>
+          <div id="forum-discussions"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILES -->
+<div id="page-profiles" class="page">
+  <div class="page-header ph-profiles">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>My Profile</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">👤</div>
+        <div><h1>Learning Profile</h1><p>Track progress and customize your learning journey</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section"><div class="container"><div id="profile-content"></div></div></div>
+</div>
+
+<!-- MYTHS -->
+<div id="page-myths" class="page">
+  <div class="page-header ph-myths">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span> › </span><span>Myths vs Facts</span></div>
+      <div class="page-header-inner">
+        <div class="page-header-icon">❓</div>
+        <div><h1>Myth vs. Fact</h1><p>Clarifying common doctrinal misconceptions with Scripture</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem" id="myth-cats"></div>
+      <div class="grid-2" id="myths-content"></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<footer id="app-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:.6rem">
+          <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+          <span style="font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:white">Sanctuary Study Platform</span>
+        </div>
+        <p>An academic resource for biblical scholarship exploring Christ's ministry in the heavenly sanctuary through Scripture, historical analysis, and interactive learning tools.</p>
+      </div>
+      <div>
+        <div class="footer-heading">Study Topics</div>
+        <div class="footer-links">
+          <span class="footer-link" onclick="navigate('explorer')">Earthly Sanctuary</span>
+          <span class="footer-link" onclick="navigate('heavenly')">Heavenly Sanctuary</span>
+          <span class="footer-link" onclick="navigate('scripture')">Priesthood of Christ</span>
+          <span class="footer-link" onclick="navigate('judgment')">Day of Atonement</span>
+          <span class="footer-link" onclick="navigate('symbolism')">Symbolism</span>
+          <span class="footer-link" onclick="navigate('colors')">Sacred Colors</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Resources</div>
+        <div class="footer-links">
+          <span class="footer-link" onclick="navigate('library')">Digital Library</span>
+          <span class="footer-link" onclick="navigate('timeline')">Ministry Timeline</span>
+          <span class="footer-link" onclick="navigate('bible')">KJV Bible</span>
+          <span class="footer-link" onclick="navigate('educators')">Educators</span>
+          <span class="footer-link" onclick="navigate('forums')">Community</span>
+          <span class="footer-link" onclick="navigate('myths')">Myths vs Facts</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Digital Sanctuary Network. All rights reserved.</p>
+      <div style="display:flex;gap:1.5rem">
+        <span class="footer-link">Contact</span>
+        <span class="footer-link">Privacy</span>
+        <span class="footer-link">Terms</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav id="bottom-nav">
+  <button class="bottom-nav-item active" id="bn-home" onclick="navigate('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+    <span>Home</span>
+  </button>
+  <button class="bottom-nav-item" id="bn-bible" onclick="navigate('bible')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+    <span>Bible</span>
+  </button>
+  <button class="bottom-nav-item" id="bn-library" onclick="navigate('library')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+    <span>Library</span>
+  </button>
+  <button class="bottom-nav-item" id="bn-timeline" onclick="navigate('timeline')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>Timeline</span>
+  </button>
+  <button class="bottom-nav-item" id="bn-more" onclick="toggleMobileMenu()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+    <span>More</span>
+  </button>
+</nav>
+
+<script src="app-data.js"></script>
+<script src="app-books.js"></script>
+<script src="app-pages1.js"></script>
+<script src="app-pages2.js"></script>
+<script src="app-pages3.js"></script>
+<script src="app-core.js"></script>
+<script src="badge-override.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(function(reg) { console.log('SW registered:', reg.scope); })
+        .catch(function(err) { console.log('SW registration failed:', err); });
+    });
+  }
+</script>
+</body>
+</html>

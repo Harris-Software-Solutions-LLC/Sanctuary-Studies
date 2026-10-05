@@ -1,0 +1,11 @@
+{
+  "name": "sanctuary-studies",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline-first Sanctuary Studies application",
+  "scripts": {
+    "test": "node scripts/validate.cjs",
+    "lint": "node scripts/validate.cjs --lint",
+    "typecheck": "node scripts/validate.cjs --typecheck"
+  }
+}

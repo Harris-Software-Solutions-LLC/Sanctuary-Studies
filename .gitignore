@@ -1,0 +1,27 @@
+# Dependencies and local tooling
+node_modules/
+.npm/
+.cache/
+
+# Platform output
+dist/
+release/
+out/
+output/
+win-unpacked/
+win-unpacked-*/
+mobile/android/
+mobile/ios/
+
+# Local reports and secrets
+coverage/
+.env
+.env.*
+!.env.example
+*.log
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
