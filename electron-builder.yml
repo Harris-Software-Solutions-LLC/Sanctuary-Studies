@@ -10,7 +10,7 @@ files:
   - service-worker.js
 directories:
   # This is a deliberately external sentinel. The release wrapper always overrides it.
-  output: D:\MuzicleBuilds\__sanctuary-studies-packaging-wrapper-required
+  output: E:\MuzicleBuilds\__sanctuary-studies-packaging-wrapper-required
 win:
   target:
     - nsis
