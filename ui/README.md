@@ -11,3 +11,7 @@ This folder is a parallel UI prototype for the `UI` branch. It does not replace 
 - Keyboard-friendly search and selection.
 
 The prototype uses demo records until the shared store is connected to the final renderer.
+
+## Preserved root workspace
+
+The `Existing Study Workspace` navigation action opens the original root `index.html` application in a second local Electron window. This is an additive compatibility bridge: the root workspace files remain in the repository and are not replaced, removed, or loaded from a remote browser or web server.

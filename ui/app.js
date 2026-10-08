@@ -34,6 +34,13 @@ function openStudyDialog() { $('#study-form').reset(); $('#study-dialog').showMo
 $('#global-search').addEventListener('input', (event) => { state.query = event.target.value; $('#table-search').value = state.query; render(); });
 $('#table-search').addEventListener('input', (event) => { state.query = event.target.value; $('#global-search').value = state.query; render(); });
 $('#new-study').addEventListener('click', openStudyDialog);
+$('#open-legacy-workspace').addEventListener('click', async () => {
+  try {
+    await window.sanctuaryDesktop.openLegacyWorkspace();
+  } catch (error) {
+    console.error('Unable to open the existing Study Workspace.', error);
+  }
+});
 $('#study-form').addEventListener('submit', (event) => { event.preventDefault(); $('#study-dialog').close(); });
 document.addEventListener('keydown', (event) => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); $('#global-search').focus(); } });
 

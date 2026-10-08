@@ -47,3 +47,13 @@
 - Keep the D: mirror and E: working copy limited to Sanctuary Studies files and Git history.
 - The canonical GitHub repository is `https://github.com/Harris-Software-Solutions-LLC/Sanctuary-Studies.git`.
 - The canonical Google Drive destination is the existing `Sanctuary Studies` folder associated with `bachresearchgroup@gmail.com`.
+
+## Append-only conversation records
+
+- Record each user-visible Sanctuary Studies task conversation under `records/chat-history/YYYY/YYYY-MM-DD/<timestamp>-<slug>.md`.
+- Each record must include the user-visible request, the user-visible response summary, decisions, changed files, tests, commit or branch information, and external archive status.
+- Conversation records are append-only. Never overwrite or delete earlier records automatically.
+- Keep the record in the E: working copy, mirror it to `D:\Sanctuary Studies\records\chat-history`, commit and push it to this repository's GitHub branch, and upload a copy to the existing Sanctuary Studies Google Drive folder associated with `bachresearchgroup@gmail.com`.
+- Log user-visible messages, project data, and artifact metadata only. Do not store hidden chain-of-thought, credentials, access tokens, passwords, or unrelated personal data.
+- If a record cannot be copied to one of the required destinations, report the missing destination and do not claim that archival is complete.
+- Keep all records Sanctuary Studies-only. Never include Muzicle, MMC, Canon and Imitation, or any other repository's material.

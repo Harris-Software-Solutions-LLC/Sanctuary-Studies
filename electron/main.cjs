@@ -5,11 +5,23 @@ const { createStore } = require('../shared/store.cjs');
 
 const appRoot = path.resolve(__dirname, '..');
 const entrypoint = path.join(appRoot, 'ui', 'index.html');
+const legacyEntrypoint = path.join(appRoot, 'index.html');
 let store;
 
-function isAppFile(url) {
+function isAppFile(url, allowedEntrypoint = entrypoint) {
   if (!url.startsWith('file://')) return false;
-  return fileURLToPath(new URL(url)) === entrypoint;
+  try {
+    return fileURLToPath(new URL(url)) === allowedEntrypoint;
+  } catch {
+    return false;
+  }
+}
+
+function configureWindow(window, allowedEntrypoint) {
+  window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+  window.webContents.on('will-navigate', (event, url) => {
+    if (!isAppFile(url, allowedEntrypoint)) event.preventDefault();
+  });
 }
 
 function createWindow() {
@@ -28,13 +40,31 @@ function createWindow() {
     }
   });
 
-  window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
-  window.webContents.on('will-navigate', (event, url) => {
-    if (!isAppFile(url)) event.preventDefault();
-  });
+  configureWindow(window, entrypoint);
   window.loadFile(entrypoint);
 
   if (process.env.SANCTUARY_DEVTOOLS === '1') window.webContents.openDevTools();
+}
+
+function createLegacyWindow() {
+  const window = new BrowserWindow({
+    width: 1440,
+    height: 960,
+    minWidth: 900,
+    minHeight: 640,
+    backgroundColor: '#f5f0e8',
+    title: 'Sanctuary Studies — Existing Study Workspace',
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: false,
+      sandbox: true,
+      preload: path.join(__dirname, 'preload.cjs')
+    }
+  });
+
+  configureWindow(window, legacyEntrypoint);
+  window.loadFile(legacyEntrypoint);
+  return window;
 }
 
 app.whenReady().then(() => {
@@ -43,6 +73,10 @@ app.whenReady().then(() => {
   ipcMain.handle('study:create', (_event, input) => store.createStudy(input));
   ipcMain.handle('study:add-record', (_event, input) => store.addStudyRecord(input));
   ipcMain.handle('data:export-bundle', () => store.exportBundle());
+  ipcMain.handle('ui:open-legacy', () => {
+    createLegacyWindow();
+    return true;
+  });
 
   session.defaultSession.setPermissionRequestHandler((_webContents, _permission, callback) => callback(false));
   createWindow();
