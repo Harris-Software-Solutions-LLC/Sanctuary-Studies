@@ -40,3 +40,9 @@ Begin incorporating all functionality of the UI from the root branch/main while 
 - D: mirror to be updated from the pushed `UI` branch.
 - GitHub: record to be committed and pushed on `UI`.
 - Google Drive: record to be uploaded to the existing Sanctuary Studies folder associated with `bachresearchgroup@gmail.com`.
+
+## Archive update
+
+- Commit `6ce11f4e64f05087e6285dbe1b30242dc9981db1` was pushed to GitHub branch `UI`.
+- The D: mirror was fast-forwarded to the same commit and remains clean.
+- The Drive connector can discover the designated folder but returned `404 Not Found` for folder listing, folder creation, and file upload. No Drive upload is claimed until that connector access is repaired.
