@@ -7,6 +7,8 @@
   "scripts": {
     "test": "node scripts/validate.cjs",
     "test:shared": "node scripts/test-shared-model.cjs",
+    "test:store": "node scripts/test-store-persistence.cjs",
+    "test:electron": "electron scripts/test-electron-root-workspace.cjs",
     "lint": "node scripts/validate.cjs --lint",
     "typecheck": "node scripts/validate.cjs --typecheck",
     "start:electron": "electron electron/main.cjs",

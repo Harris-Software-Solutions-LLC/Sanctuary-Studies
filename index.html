@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <title>Sanctuary Intra Comparative Studies</title>
 <link rel="stylesheet" href="styles.css">
 <link rel="manifest" href="manifest.json">
@@ -680,7 +681,7 @@
 <script src="app-core.js"></script>
 <script src="badge-override.js"></script>
 <script>
-  if ('serviceWorker' in navigator) {
+  if (location.protocol !== 'file:' && 'serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('./service-worker.js')
         .then(function(reg) { console.log('SW registered:', reg.scope); })
