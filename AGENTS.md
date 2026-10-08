@@ -29,12 +29,21 @@
 - Electron packaging is an explicit release action only. Before packaging, report expected disk impact, verify the external destinations, and keep all temporary and final output off `C:`.
 - Never create `win-unpacked`, `win-unpacked-*`, `dist`, `release`, `out`, `output`, or other Electron packaging output on `C:`.
 
-## External-only packaging
+## Sanctuary Studies external-only packaging
 
-- Explicit Windows packaging must write to both `D:\MuzicleBuilds` and `E:\MuzicleBuilds`.
-- `E:\MuzicleBuilds` is the authoritative build destination; `D:\MuzicleBuilds` is the mirror copy.
+- Explicit Windows packaging must write to both `D:\Sanctuary Studies Builds` and `E:\Sanctuary Studies Builds`.
+- `E:\Sanctuary Studies Builds` is the authoritative build destination; `D:\Sanctuary Studies Builds` is the mirror copy.
 - Before packaging, verify both drives exist, are writable, and have adequate free space. Fail clearly rather than falling back when either drive is unavailable.
 - Warn that `D:` is FAT32 and fail clearly if any generated file exceeds FAT32's 4 GB limit.
 - Use a distinct directory on each destination named `win-unpacked-<feature-slug>-<yyyyMMdd-HHmmss>`.
 - Build once on an external drive and copy the completed result to the other drive unless the packaging system requires separate builds. Verify the copy by file count and total bytes.
 - Clean only a temporary staging directory owned by the failed packaging run. Never remove source files, Git data, or previous builds.
+
+## Project isolation
+
+- Sanctuary Studies is never related to, copied from, synchronized with, or packaged through Muzicle.
+- Never use Muzicle source, Git history, branches, remotes, credentials, caches, assets, scripts, or output for Sanctuary Studies.
+- Never use `D:\MuzicleBuilds`, `E:\MuzicleBuilds`, or any Muzicle repository as a Sanctuary Studies path or input.
+- Keep the D: mirror and E: working copy limited to Sanctuary Studies files and Git history.
+- The canonical GitHub repository is `https://github.com/Harris-Software-Solutions-LLC/Sanctuary-Studies.git`.
+- The canonical Google Drive destination is the existing `Sanctuary Studies` folder associated with `bachresearchgroup@gmail.com`.

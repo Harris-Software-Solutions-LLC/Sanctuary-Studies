@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sanctuary Studies — UI branch</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true">SS</div>
+          <div>
+            <div class="brand-name">Sanctuary Studies</div>
+            <div class="brand-subtitle">Private scholarly workspace</div>
+          </div>
+        </div>
+        <label class="global-search" aria-label="Search the research library">
+          <span aria-hidden="true">⌕</span>
+          <input id="global-search" type="search" placeholder="Search studies, notes, sources…" />
+          <kbd>Ctrl K</kbd>
+        </label>
+        <div class="topbar-actions">
+          <span class="save-state"><span class="save-dot"></span> Local</span>
+          <button class="button button-primary" id="new-study">+ New Study</button>
+        </div>
+      </header>
+
+      <div class="app-body">
+        <aside class="sidebar" aria-label="Application navigation">
+          <div class="sidebar-label">Workspace</div>
+          <nav class="nav-list">
+            <button class="nav-item is-active"><span>▦</span> All Studies</button>
+            <button class="nav-item"><span>◫</span> Collections</button>
+            <button class="nav-item"><span>◇</span> Data Model</button>
+            <button class="nav-item"><span>⇄</span> Import / Export</button>
+          </nav>
+          <div class="sidebar-spacer"></div>
+          <button class="nav-item"><span>⚙</span> Settings</button>
+          <div class="local-note"><span class="save-dot"></span> Stored on this device</div>
+        </aside>
+
+        <main class="workspace">
+          <div class="page-heading">
+            <div>
+              <div class="eyebrow">Research library</div>
+              <h1>All Studies</h1>
+              <p>Open a study to work with its sources, notes, people, places, events, and tags.</p>
+            </div>
+            <div class="heading-actions">
+              <button class="button button-secondary">Filter</button>
+              <button class="button button-secondary">Sort: Updated</button>
+            </div>
+          </div>
+
+          <section class="library-panel" aria-labelledby="library-title">
+            <div class="panel-toolbar">
+              <div>
+                <h2 id="library-title">Study Library</h2>
+                <span id="study-count" class="muted"></span>
+              </div>
+              <label class="table-search" aria-label="Filter studies">
+                <span aria-hidden="true">⌕</span>
+                <input id="table-search" type="search" placeholder="Filter studies…" />
+              </label>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr><th>Study</th><th>Status</th><th>Sources</th><th>Notes</th><th>Records</th><th>Updated</th></tr>
+                </thead>
+                <tbody id="study-table"></tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+
+        <aside class="inspector" aria-label="Selected study details">
+          <div class="eyebrow">Details</div>
+          <div id="inspector-content" class="inspector-content"></div>
+        </aside>
+      </div>
+    </div>
+
+    <dialog id="study-dialog" class="modal">
+      <form id="study-form" method="dialog">
+        <div class="modal-heading"><div><div class="eyebrow">New workspace</div><h2>Create a study</h2></div><button class="close-button" value="cancel" aria-label="Close">×</button></div>
+        <label>Study title<input name="title" required placeholder="e.g. The Gospel of John" /></label>
+        <label>Description<textarea name="description" rows="4" placeholder="What is this study investigating?"></textarea></label>
+        <div class="modal-actions"><button class="button button-secondary" value="cancel">Cancel</button><button class="button button-primary" value="default">Create Study</button></div>
+      </form>
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

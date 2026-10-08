@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "description": "Offline-first Sanctuary Studies application",
+  "main": "electron/main.cjs",
   "scripts": {
     "test": "node scripts/validate.cjs",
+    "test:shared": "node scripts/test-shared-model.cjs",
     "lint": "node scripts/validate.cjs --lint",
     "typecheck": "node scripts/validate.cjs --typecheck",
     "start:electron": "electron electron/main.cjs",

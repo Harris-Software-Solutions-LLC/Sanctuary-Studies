@@ -19,6 +19,7 @@ coverage/
 .env.*
 !.env.example
 *.log
+*-ui-preview.png
 
 # OS/editor files
 .DS_Store

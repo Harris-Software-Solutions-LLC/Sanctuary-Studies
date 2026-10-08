@@ -3,6 +3,8 @@ productName: Sanctuary Studies
 asar: true
 files:
   - electron/**
+  - shared/**
+  - ui/**
   - '*.html'
   - '*.css'
   - '*.js'
@@ -10,7 +12,7 @@ files:
   - service-worker.js
 directories:
   # This is a deliberately external sentinel. The release wrapper always overrides it.
-  output: E:\MuzicleBuilds\__sanctuary-studies-packaging-wrapper-required
+  output: E:\Sanctuary Studies Builds\__sanctuary-studies-packaging-wrapper-required
 win:
   target:
     - nsis

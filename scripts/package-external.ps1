@@ -14,8 +14,8 @@ Set-StrictMode -Version Latest
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path.TrimEnd('\')
 $expectedRepoRoot = 'E:\Sanctuary Studies'
-$buildRootE = 'E:\MuzicleBuilds'
-$buildRootD = 'D:\MuzicleBuilds'
+$buildRootE = 'E:\Sanctuary Studies Builds'
+$buildRootD = 'D:\Sanctuary Studies Builds'
 $fat32MaximumFileBytes = 4GB
 
 function Fail([string]$Message) {

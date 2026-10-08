@@ -1,0 +1,84 @@
+{
+  "format": "sanctuary-studies-database",
+  "schema_version": 1,
+  "tables": {
+    "studies": {
+      "primary_key": ["id"],
+      "columns": {
+        "id": "uuid",
+        "title": "text",
+        "description": "text",
+        "status": "text",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      }
+    },
+    "sources": {
+      "primary_key": ["id"],
+      "columns": {
+        "id": "uuid",
+        "study_id": "uuid",
+        "title": "text",
+        "author": "text",
+        "source_type": "text",
+        "citation": "text",
+        "local_path": "text",
+        "notes": "text"
+      },
+      "foreign_keys": [{ "columns": ["study_id"], "references": "studies.id" }]
+    },
+    "notes": {
+      "primary_key": ["id"],
+      "columns": {
+        "id": "uuid",
+        "study_id": "uuid",
+        "title": "text",
+        "body": "text",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+      },
+      "foreign_keys": [{ "columns": ["study_id"], "references": "studies.id" }]
+    },
+    "entities": {
+      "primary_key": ["id"],
+      "columns": {
+        "id": "uuid",
+        "study_id": "uuid",
+        "entity_type": "text",
+        "name": "text",
+        "description": "text",
+        "metadata_json": "json"
+      },
+      "allowed_entity_types": ["person", "place", "event"],
+      "foreign_keys": [{ "columns": ["study_id"], "references": "studies.id" }]
+    },
+    "relationships": {
+      "primary_key": ["id"],
+      "columns": {
+        "id": "uuid",
+        "study_id": "uuid",
+        "source_entity_id": "uuid",
+        "relationship_type": "text",
+        "target_entity_id": "uuid"
+      },
+      "foreign_keys": [
+        { "columns": ["study_id"], "references": "studies.id" },
+        { "columns": ["source_entity_id"], "references": "entities.id" },
+        { "columns": ["target_entity_id"], "references": "entities.id" }
+      ]
+    },
+    "tags": {
+      "primary_key": ["id"],
+      "columns": { "id": "uuid", "study_id": "uuid", "name": "text" },
+      "foreign_keys": [{ "columns": ["study_id"], "references": "studies.id" }]
+    },
+    "study_tags": {
+      "primary_key": ["study_id", "tag_id"],
+      "columns": { "study_id": "uuid", "tag_id": "uuid" },
+      "foreign_keys": [
+        { "columns": ["study_id"], "references": "studies.id" },
+        { "columns": ["tag_id"], "references": "tags.id" }
+      ]
+    }
+  }
+}

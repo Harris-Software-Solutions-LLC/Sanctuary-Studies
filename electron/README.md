@@ -15,4 +15,4 @@ Packaging is a separate, explicit release action:
 npm run package:external -- "feature-name"
 ```
 
-The packaging wrapper requires both `D:\MuzicleBuilds` and `E:\MuzicleBuilds`, places temporary output on D:, copies the completed build to E:, and verifies the copy. It intentionally fails when either drive is unavailable.
+The packaging wrapper requires both `D:\Sanctuary Studies Builds` and `E:\Sanctuary Studies Builds`, places temporary output on E:, copies the completed build to D:, and verifies the copy. It intentionally fails when either drive is unavailable.
