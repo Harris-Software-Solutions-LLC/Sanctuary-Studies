@@ -55,3 +55,9 @@ During the audit, the user also reported an Electron error showing `Unable to fi
 - D: to be fast-forwarded from the pushed `UI` branch.
 - GitHub: to be committed and pushed to `UI`.
 - Google Drive: unresolved; the connector returns 404 for the discovered Sanctuary Studies folder during metadata, listing, and write operations.
+
+## Archive update
+
+- Commit `2e79ad82bbb3897e2f5b1d286b5c838419688971` was pushed to GitHub branch `UI`.
+- The D: mirror was fast-forwarded to the same commit and remains clean.
+- A subsequent Drive retry was rejected because the folder could not be reliably grounded after repeated 404 responses. No replacement folder was created, no existing record was deleted, and no Drive upload is claimed.
