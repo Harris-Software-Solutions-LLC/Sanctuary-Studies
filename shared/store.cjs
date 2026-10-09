@@ -100,7 +100,7 @@ function createStore(filePath) {
       .map(({ content, link }) => ({ ...clone(content), link: clone(link) }));
   }
 
-  function attachContentPackage({ studyId, packageData, items = [], sourceName = '', sourcePath = '', sourceRevision = '', licenseStatus = 'review-required' }) {
+  function attachContentPackage({ studyId, packageData, items = [], relationships = [], sourceName = '', sourcePath = '', sourceRevision = '', licenseStatus = 'review-required' }) {
     return transact((database) => {
       const study = activeStudy(database, studyId);
       const timestamp = new Date().toISOString();
@@ -119,8 +119,17 @@ function createStore(filePath) {
           links += 1;
         }
       }
+      const contentIds = new Set(database.content_items.filter((item) => !item.deleted_at).map((item) => item.id));
+      let relationshipCount = 0;
+      for (const relation of relationships) {
+        if (!relation?.source_content_id || !relation.relationship_type || !relation.target_content_id) throw new Error('Content relationships require source, type, and target fields.');
+        if (!contentIds.has(relation.source_content_id) || !contentIds.has(relation.target_content_id)) throw new Error(`Content relationship ${relation.id || 'unknown'} references a missing item.`);
+        const existing = database.content_relationships.find((candidate) => candidate.source_content_id === relation.source_content_id && candidate.relationship_type === relation.relationship_type && candidate.target_content_id === relation.target_content_id && !candidate.deleted_at);
+        if (existing) Object.assign(existing, clone(relation), { updated_at: timestamp, deleted_at: null });
+        else { database.content_relationships.push({ ...clone(relation), created_at: relation.created_at || timestamp, updated_at: timestamp, deleted_at: null }); relationshipCount += 1; }
+      }
       study.updated_at = timestamp;
-      return { contentType: packageData?.content_type || 'unknown', items: items.length, links, stepCount: packageData?.step_count || 0, questionCount: packageData?.question_count || 0 };
+      return { contentType: packageData?.content_type || 'unknown', items: items.length, links, relationships: relationshipCount, stepCount: packageData?.step_count || 0, questionCount: packageData?.question_count || 0 };
     });
   }
 

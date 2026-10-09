@@ -4,6 +4,7 @@ const { fileURLToPath } = require('node:url');
 const { app, BrowserWindow, dialog, ipcMain, session } = require('electron');
 const { createStore } = require('../shared/store.cjs');
 const { loadTimelinePackage, timelinePackageToItems } = require('../shared/content/timeline/index.cjs');
+const { loadScripturePackage, scripturePackageToItems, scripturePackageToRelationships } = require('../shared/content/scripture/index.cjs');
 
 const appRoot = path.resolve(__dirname, '..');
 const entrypoint = path.join(appRoot, 'ui', 'index.html');
@@ -87,6 +88,20 @@ app.whenReady().then(() => {
       sourcePath: 'project/src/components/TimelinePage.tsx; project/src/data/timelineQuestions.ts',
       sourceRevision: 'timeline-v1-normalized-24-step',
       licenseStatus: 'review-required'
+    });
+  });
+  ipcMain.handle('content:scripture', () => loadScripturePackage());
+  ipcMain.handle('content:attach-scripture', (_event, input) => {
+    const packageData = loadScripturePackage();
+    return store.attachContentPackage({
+      studyId: input?.studyId,
+      packageData,
+      items: scripturePackageToItems(packageData),
+      relationships: scripturePackageToRelationships(packageData),
+      sourceName: 'Sanctuary Studies legacy Scripture data',
+      sourcePath: 'app-data.js; app-pages1.js',
+      sourceRevision: packageData.source_revision,
+      licenseStatus: packageData.license_status
     });
   });
   ipcMain.handle('study:create', (_event, input) => store.createStudy(input));

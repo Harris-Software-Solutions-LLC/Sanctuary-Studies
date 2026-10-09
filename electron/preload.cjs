@@ -12,6 +12,8 @@ contextBridge.exposeInMainWorld('sanctuaryDesktop', Object.freeze({
     listStudyContent: (input) => ipcRenderer.invoke('data:list-study-content', input),
     getTimelineContent: () => ipcRenderer.invoke('content:timeline'),
     attachTimeline: (input) => ipcRenderer.invoke('content:attach-timeline', input),
+    getScriptureContent: () => ipcRenderer.invoke('content:scripture'),
+    attachScripture: (input) => ipcRenderer.invoke('content:attach-scripture', input),
     createStudy: (input) => ipcRenderer.invoke('study:create', input),
     updateStudy: (input) => ipcRenderer.invoke('study:update', input),
     deleteStudy: (input) => ipcRenderer.invoke('study:delete', input),

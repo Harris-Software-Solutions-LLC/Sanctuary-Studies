@@ -1,0 +1,20 @@
+{
+  "package_id": "scripture",
+  "package_version": 1,
+  "source_files": [
+    "app-data.js",
+    "app-pages1.js"
+  ],
+  "source_revision": "937468ae441adccd2268f2763dbd44ccad455a0c",
+  "import_method": "scripts/import-legacy-scripture.cjs",
+  "license_status": "review-required",
+  "offline_policy": "No network requests or hosted content are required.",
+  "excluded_infrastructure": [
+    "legacy page markup",
+    "navigation shell",
+    "authentication",
+    "community/forum behavior",
+    "external media and hosted fonts"
+  ],
+  "notes": "The KJV data and sanctuary-focused Scripture records are normalized into a local package. The preserved root Scripture and Bible routes remain available as compatibility surfaces."
+}

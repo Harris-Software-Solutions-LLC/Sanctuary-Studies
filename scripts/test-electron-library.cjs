@@ -4,6 +4,7 @@ const path = require('node:path');
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { createStore } = require('../shared/store.cjs');
 const { loadTimelinePackage, timelinePackageToItems } = require('../shared/content/timeline/index.cjs');
+const { loadScripturePackage } = require('../shared/content/scripture/index.cjs');
 
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-library-${process.pid}`);
@@ -16,6 +17,7 @@ function registerHandlers(store) {
   ipcMain.handle('study:add-record', (_event, input) => store.addStudyRecord(input));
   ipcMain.handle('data:export-bundle', () => store.exportBundle());
   ipcMain.handle('content:timeline', () => loadTimelinePackage());
+  ipcMain.handle('content:scripture', () => loadScripturePackage());
   ipcMain.handle('content:attach-timeline', (_event, input) => {
     const packageData = loadTimelinePackage();
     return store.attachContentPackage({ studyId: input?.studyId, packageData, items: timelinePackageToItems(packageData), sourceName: 'test timeline', sourcePath: 'test/timeline', sourceRevision: 'test' });
@@ -52,6 +54,7 @@ async function run() {
     return { studyId: study.id, timeline, attachment, modeText };
   })()`);
   await new Promise((resolve) => { window.webContents.once('did-finish-load', resolve); window.reload(); });
+  await window.webContents.executeJavaScript(`new Promise((resolve) => { const started = Date.now(); const check = () => { if ((document.querySelector('#study-table')?.textContent || '').includes('Electron library test') || Date.now() - started > 5000) resolve(true); else setTimeout(check, 50); }; check(); })`);
   const result = await window.webContents.executeJavaScript(`({ tableText: document.querySelector('#study-table')?.textContent || '', detailText: document.querySelector('#study-detail-view')?.textContent || '', modeValue: document.querySelector('#workspace-mode')?.value || '' })`);
   report.tableText = result.tableText;
   report.detailText = result.detailText;
