@@ -1,0 +1,9 @@
+{
+  "package": "learning",
+  "version": 1,
+  "source_files": ["app-data.js", "app-pages3.js"],
+  "source_revision": "61b379e7d6d4c9cc6ca693a334fd89c35759d8e5",
+  "runtime": "offline-local",
+  "license_status": "review-required",
+  "removed_dependencies": ["hosted downloads", "external media", "network requests"]
+}

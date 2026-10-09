@@ -8,6 +8,9 @@ const { loadScripturePackage } = require('../shared/content/scripture/index.cjs'
 const { loadLibraryPackage } = require('../shared/content/library/index.cjs');
 const { loadSymbolismPackage } = require('../shared/content/symbolism/index.cjs');
 const { loadColorsPackage } = require('../shared/content/colors/index.cjs');
+const { loadSanctuaryPackage } = require('../shared/content/sanctuary/index.cjs');
+const { loadLearningPackage } = require('../shared/content/learning/index.cjs');
+const { loadExplorerPackage } = require('../shared/content/explorer/index.cjs');
 
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-library-${process.pid}`);
@@ -24,6 +27,9 @@ function registerHandlers(store) {
   ipcMain.handle('content:library', () => loadLibraryPackage());
   ipcMain.handle('content:symbolism', () => loadSymbolismPackage());
   ipcMain.handle('content:colors', () => loadColorsPackage());
+  ipcMain.handle('content:sanctuary', () => loadSanctuaryPackage());
+  ipcMain.handle('content:learning', () => loadLearningPackage());
+  ipcMain.handle('content:explorer', () => loadExplorerPackage());
   ipcMain.handle('content:attach-timeline', (_event, input) => {
     const packageData = loadTimelinePackage();
     return store.attachContentPackage({ studyId: input?.studyId, packageData, items: timelinePackageToItems(packageData), sourceName: 'test timeline', sourcePath: 'test/timeline', sourceRevision: 'test' });

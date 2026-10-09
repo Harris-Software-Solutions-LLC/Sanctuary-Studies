@@ -8,6 +8,9 @@ const { loadScripturePackage } = require('../shared/content/scripture/index.cjs'
 const { loadLibraryPackage } = require('../shared/content/library/index.cjs');
 const { loadSymbolismPackage } = require('../shared/content/symbolism/index.cjs');
 const { loadColorsPackage } = require('../shared/content/colors/index.cjs');
+const { loadSanctuaryPackage } = require('../shared/content/sanctuary/index.cjs');
+const { loadLearningPackage } = require('../shared/content/learning/index.cjs');
+const { loadExplorerPackage } = require('../shared/content/explorer/index.cjs');
 
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-study-lifecycle-${process.pid}`);
@@ -27,6 +30,9 @@ async function run() {
   ipcMain.handle('content:library', () => loadLibraryPackage());
   ipcMain.handle('content:symbolism', () => loadSymbolismPackage());
   ipcMain.handle('content:colors', () => loadColorsPackage());
+  ipcMain.handle('content:sanctuary', () => loadSanctuaryPackage());
+  ipcMain.handle('content:learning', () => loadLearningPackage());
+  ipcMain.handle('content:explorer', () => loadExplorerPackage());
   app.setPath('userData', temporaryRoot);
   app.setPath('cache', path.join(temporaryRoot, 'cache'));
   await app.whenReady();

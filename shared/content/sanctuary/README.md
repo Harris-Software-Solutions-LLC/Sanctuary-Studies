@@ -1,3 +1,9 @@
-# Sanctuary package boundary
+# Sanctuary Models and Comparative Structures
 
-The Sanctuary package will contain local furnishing, stage, comparison, and model metadata. Three-dimensional assets are treated as local attachments with provenance; web, hosted, and SaaS infrastructure are excluded.
+Versioned offline package imported from the preserved legacy Sanctuary Studies routes.
+
+This package contains four sanctuary models, four comparison tables, and four Heavenly Portal stages. Models preserve zones, periods, descriptions, and key Scripture references. Comparisons preserve structural, dimensional, theological, and historical rows. The legacy route remains available as a compatibility surface.
+
+Source files: `app-pages2.js`, `app-pages3.js`
+
+License status: review required before redistribution.

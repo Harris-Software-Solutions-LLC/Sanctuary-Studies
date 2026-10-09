@@ -1,0 +1,266 @@
+{
+  "format": "sanctuary-studies-content",
+  "content_type": "learning",
+  "content_version": 1,
+  "title": "Learning and Educator Resources",
+  "source_revision": "61b379e7d6d4c9cc6ca693a334fd89c35759d8e5",
+  "imported_at": "2026-10-09T13:01:05.248Z",
+  "source_files": [
+    "app-data.js",
+    "app-pages3.js"
+  ],
+  "license_status": "review-required",
+  "runtime": "offline-local",
+  "counts": {
+    "educator_resources": 9,
+    "categories": 4,
+    "age_groups": 4
+  },
+  "educator_resources": [
+    {
+      "content_id": "learning.educator.1",
+      "legacy_index": 0,
+      "id": 1,
+      "title": "Sanctuary Colors Interactive Lesson",
+      "cat": "lesson-plans",
+      "age": "children",
+      "duration": "45 minutes",
+      "desc": "Hands-on lesson exploring the eight sacred colors and their biblical meanings. Students create color cards and match each color to its scriptural significance.",
+      "objectives": [
+        "Identify the 8 sanctuary colors",
+        "Understand their symbolic meanings",
+        "Connect colors to Bible stories and Christ's ministry"
+      ],
+      "materials": [
+        "Colored paper",
+        "Markers",
+        "KJV Bible",
+        "Activity worksheets"
+      ],
+      "downloads": [
+        "Lesson Plan PDF",
+        "Activity Sheets",
+        "Color Cards Template",
+        "Teacher's Guide"
+      ],
+      "quarter": "Q2 2026 — Sanctuary Studies"
+    },
+    {
+      "content_id": "learning.educator.2",
+      "legacy_index": 1,
+      "id": 2,
+      "title": "Build a Tabernacle Model",
+      "cat": "activities",
+      "age": "youth",
+      "duration": "90 minutes",
+      "desc": "Group activity to construct a proportional scale model of the wilderness tabernacle using simple materials. Emphasizes exact biblical dimensions and arrangement.",
+      "objectives": [
+        "Learn tabernacle proportions and dimensions",
+        "Understand the spatial relationship of components",
+        "Practice collaborative learning"
+      ],
+      "materials": [
+        "Foam board",
+        "Gold/silver paint",
+        "Fabric scraps",
+        "Measuring tools",
+        "Popsicle sticks"
+      ],
+      "downloads": [
+        "Construction Instructions",
+        "Dimension Templates",
+        "Materials List",
+        "Presentation Notes"
+      ],
+      "quarter": "Q1 2026 — Old Testament Sanctuaries"
+    },
+    {
+      "content_id": "learning.educator.3",
+      "legacy_index": 2,
+      "id": 3,
+      "title": "Investigative Judgment Presentation",
+      "cat": "presentations",
+      "age": "adult",
+      "duration": "60 minutes",
+      "desc": "Comprehensive presentation on the doctrine of the investigative judgment, covering Daniel 7 and 8, the 2300-day prophecy, and the 1844 development. Includes Q&A guide.",
+      "objectives": [
+        "Explain the biblical basis in Daniel 7-9",
+        "Clarify common misconceptions",
+        "Show the Day of Atonement typology",
+        "Present the 1844 historical context"
+      ],
+      "materials": [
+        "Projector",
+        "Computer",
+        "Printed handouts"
+      ],
+      "downloads": [
+        "PowerPoint File (.pptx)",
+        "Speaker Notes PDF",
+        "Audience Handout",
+        "Timeline Chart"
+      ],
+      "quarter": "Q3 2026 — Prophetic Studies"
+    },
+    {
+      "content_id": "learning.educator.4",
+      "legacy_index": 3,
+      "id": 4,
+      "title": "Aaron's Ministry Role Play",
+      "cat": "activities",
+      "age": "mixed",
+      "duration": "30 minutes",
+      "desc": "Interactive dramatic presentation of the Day of Atonement service (Leviticus 16), connecting each step to Christ's heavenly ministry. Memorable and engaging for all ages.",
+      "objectives": [
+        "Visualize the Day of Atonement service",
+        "Understand each step's symbolic meaning",
+        "Connect the earthly type to Christ's heavenly antitype"
+      ],
+      "materials": [
+        "Simple costumes",
+        "Props (censer, bread, etc.)",
+        "Script cards",
+        "Background music"
+      ],
+      "downloads": [
+        "Full Script PDF",
+        "Costume Guide",
+        "Props Checklist",
+        "Director's Notes"
+      ],
+      "quarter": "Q4 2026 — Types and Antitypes"
+    },
+    {
+      "content_id": "learning.educator.5",
+      "legacy_index": 4,
+      "id": 5,
+      "title": "Sanctuary Furnishings Worksheet Set",
+      "cat": "printables",
+      "age": "children",
+      "duration": "20–30 minutes",
+      "desc": "A complete set of fill-in-the-blank worksheets covering all seven sanctuary furnishings, their materials, location, and symbolic meaning. KJV scripture references included.",
+      "objectives": [
+        "Name all sanctuary furnishings",
+        "Identify their location (court, holy, most holy)",
+        "State the primary symbolic meaning of each"
+      ],
+      "materials": [
+        "Printed worksheets",
+        "Pencils",
+        "KJV Bible for reference"
+      ],
+      "downloads": [
+        "Worksheet Set PDF (7 sheets)",
+        "Answer Key",
+        "Illustrated Diagram"
+      ],
+      "quarter": "All Quarters"
+    },
+    {
+      "content_id": "learning.educator.6",
+      "legacy_index": 5,
+      "id": 6,
+      "title": "Daniel 8:14 Timeline Study",
+      "cat": "lesson-plans",
+      "age": "adult",
+      "duration": "60 minutes",
+      "desc": "Step-by-step study of Daniel 8 and 9, walking through the 2300-day prophecy, the 70-week cut-off, the 457 BC starting point, and the 1844 terminus. Includes Greek and Hebrew word studies.",
+      "objectives": [
+        "Understand the year-day principle",
+        "Calculate the 70-week and 2300-day prophecies",
+        "Explain the 1844 significance",
+        "Respond to common objections"
+      ],
+      "materials": [
+        "Study guide printout",
+        "Calculator",
+        "Bible dictionary",
+        "Timeline chart"
+      ],
+      "downloads": [
+        "Study Guide PDF",
+        "Timeline Wall Chart",
+        "Answer Key",
+        "Bibliography"
+      ],
+      "quarter": "Q3 2026 — Daniel and Revelation"
+    },
+    {
+      "content_id": "learning.educator.7",
+      "legacy_index": 6,
+      "id": 7,
+      "title": "Sacred Colors Scripture Matching Game",
+      "cat": "activities",
+      "age": "children",
+      "duration": "25 minutes",
+      "desc": "Card-matching game where students match each sanctuary color to its biblical meaning, Hebrew name, and key scripture verse. Can be played individually or in teams.",
+      "objectives": [
+        "Memorize the 8 sacred colors and meanings",
+        "Associate colors with Hebrew terminology",
+        "Reinforce scripture memorization"
+      ],
+      "materials": [
+        "Printed card sets",
+        "Scissors",
+        "Optional: laminator"
+      ],
+      "downloads": [
+        "Game Cards PDF (printable)",
+        "Game Rules",
+        "Teacher Instructions"
+      ],
+      "quarter": "Q2 2026 — Sanctuary Studies"
+    },
+    {
+      "content_id": "learning.educator.8",
+      "legacy_index": 7,
+      "id": 8,
+      "title": "Heavenly Sanctuary Discussion Guide",
+      "cat": "printables",
+      "age": "mixed",
+      "duration": "45 minutes",
+      "desc": "Structured discussion guide for small groups exploring the reality of the heavenly sanctuary in Hebrews, the nature of Christ's high priestly ministry, and its practical implications for Christian living.",
+      "objectives": [
+        "Establish the biblical reality of the heavenly sanctuary",
+        "Understand Christ's ongoing high priestly work",
+        "Apply sanctuary truth to daily Christian experience"
+      ],
+      "materials": [
+        "Discussion guide (one per person)",
+        "KJV Bible"
+      ],
+      "downloads": [
+        "Discussion Guide PDF",
+        "Leader's Notes",
+        "Follow-up Questions"
+      ],
+      "quarter": "All Quarters"
+    },
+    {
+      "content_id": "learning.educator.9",
+      "legacy_index": 8,
+      "id": 9,
+      "title": "Comparison Chart: Earthly vs Heavenly Sanctuary",
+      "cat": "printables",
+      "age": "youth",
+      "duration": "30 minutes",
+      "desc": "Detailed comparison chart contrasting the earthly sanctuary with the heavenly, the Levitical priesthood with Christ's Melchizedek priesthood, and the old covenant with the new. Based on the book of Hebrews.",
+      "objectives": [
+        "Compare type and antitype systematically",
+        "Understand Christ's superior priesthood",
+        "See the inadequacy of the earthly system and its fulfillment in Christ"
+      ],
+      "materials": [
+        "Printed comparison chart",
+        "KJV Bible",
+        "Colored highlighters"
+      ],
+      "downloads": [
+        "Comparison Chart PDF",
+        "Study Notes",
+        "Scripture List"
+      ],
+      "quarter": "Q4 2026 — Types and Antitypes"
+    }
+  ]
+}

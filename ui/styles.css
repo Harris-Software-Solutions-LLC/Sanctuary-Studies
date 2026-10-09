@@ -325,3 +325,66 @@ tbody tr:hover, tbody tr.is-selected { background: #f1f4ee; }
   .symbolism-layout, .symbolism-reading-grid { grid-template-columns: 1fr; }
   .symbolism-results { max-height: 260px; }
 }
+.sanctuary-workspace,
+.learning-workspace,
+.explorer-workspace { display: grid; gap: 1rem; }
+.sanctuary-toolbar,
+.learning-toolbar,
+.explorer-toolbar { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; padding: .75rem 0; border-bottom: 1px solid var(--line, #d9d1c3); }
+.sanctuary-layout,
+.learning-layout,
+.explorer-layout { display: grid; grid-template-columns: minmax(220px, .72fr) minmax(0, 1.7fr); gap: 1rem; align-items: start; }
+.sanctuary-results,
+.learning-results,
+.explorer-results { display: grid; gap: .45rem; }
+.sanctuary-detail-panel,
+.learning-detail-panel,
+.explorer-detail-panel { min-width: 0; border-left: 1px solid var(--line, #d9d1c3); padding-left: 1rem; }
+.sanctuary-reading,
+.learning-reading { display: grid; gap: .9rem; }
+.sanctuary-reading h3,
+.learning-reading h3,
+.explorer-detail-panel h3 { margin: 0; font-family: Georgia, 'Times New Roman', serif; color: var(--ink, #26231f); }
+.sanctuary-zone-list { display: grid; gap: .55rem; }
+.sanctuary-zone-list article { padding: .7rem .8rem; border: 1px solid var(--line, #d9d1c3); background: rgba(255,255,255,.45); }
+.sanctuary-zone-list p { margin: .3rem 0 0; color: var(--muted, #6f6a62); font-size: .9rem; }
+.sanctuary-comparison-table { overflow: auto; border: 1px solid var(--line, #d9d1c3); }
+.sanctuary-comparison-table table { min-width: 640px; }
+.sanctuary-portal-content { border-left: 3px solid var(--brass, #9f7a35); padding-left: .9rem; line-height: 1.65; }
+.learning-tags,
+.learning-downloads,
+.specialized-tool-grid { display: flex; flex-wrap: wrap; gap: .45rem; }
+.learning-downloads span { border: 1px solid var(--line, #d9d1c3); padding: .35rem .55rem; font-size: .83rem; background: rgba(255,255,255,.45); }
+.learning-reading ul { margin: 0; padding-left: 1.25rem; }
+.explorer-zone-tabs { display: flex; gap: .45rem; flex-wrap: wrap; margin: 1rem 0; }
+.explorer-zone-button { border: 1px solid var(--line, #d9d1c3); background: transparent; color: var(--ink, #26231f); padding: .45rem .6rem; text-align: left; cursor: pointer; }
+.explorer-zone-button.is-selected { border-color: var(--brass, #9f7a35); background: rgba(159,122,53,.12); }
+.explorer-zone-detail { border-top: 1px solid var(--line, #d9d1c3); border-bottom: 1px solid var(--line, #d9d1c3); padding: .9rem 0; }
+.explorer-zone-detail h4 { margin: .25rem 0; font-family: Georgia, 'Times New Roman', serif; }
+.explorer-zone-detail p { margin: 0; color: var(--muted, #6f6a62); }
+.explorer-diagram { margin: 1rem 0 0; overflow: auto; padding: 1rem; background: #252823; color: #f2eadb; font: .72rem/1.55 Consolas, 'Courier New', monospace; white-space: pre; }
+.specialized-tools-panel { margin-top: .5rem; }
+.specialized-tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.specialized-tool { display: grid; gap: .4rem; padding: .8rem; border: 1px solid var(--line, #d9d1c3); background: rgba(255,255,255,.4); }
+.specialized-tool strong { font-family: Georgia, 'Times New Roman', serif; }
+.specialized-tool p { margin: 0; color: var(--muted, #6f6a62); font-size: .87rem; }
+.sanctuary-summary-list,
+.learning-summary-list,
+.explorer-summary-list { display: flex; flex-wrap: wrap; gap: .45rem; }
+.sanctuary-link,
+.learning-link,
+.explorer-link { border: 1px solid var(--line, #d9d1c3); background: transparent; color: var(--ink, #26231f); padding: .4rem .6rem; cursor: pointer; text-align: left; }
+.sanctuary-link:hover,
+.learning-link:hover,
+.explorer-link:hover { border-color: var(--brass, #9f7a35); background: rgba(159,122,53,.1); }
+.evidence-node.sanctuary { border-color: #9f7a35; }
+.evidence-node.learning { border-color: #527a61; }
+.evidence-node.explorer { border-color: #536d91; }
+@media (max-width: 900px) {
+  .sanctuary-layout,
+  .learning-layout,
+  .explorer-layout { grid-template-columns: 1fr; }
+  .sanctuary-detail-panel,
+  .learning-detail-panel,
+  .explorer-detail-panel { border-left: 0; border-top: 1px solid var(--line, #d9d1c3); padding: 1rem 0 0; }
+}

@@ -9,6 +9,9 @@ const { loadScripturePackage, scripturePackageToItems, scripturePackageToRelatio
 const { loadLibraryPackage, libraryPackageToItems, libraryPackageToRelationships } = require('../shared/content/library/index.cjs');
 const { loadSymbolismPackage, symbolismPackageToItems, symbolismPackageToRelationships } = require('../shared/content/symbolism/index.cjs');
 const { loadColorsPackage, colorsPackageToItems, colorsPackageToRelationships } = require('../shared/content/colors/index.cjs');
+const { loadSanctuaryPackage, sanctuaryPackageToItems, sanctuaryPackageToRelationships } = require('../shared/content/sanctuary/index.cjs');
+const { loadLearningPackage, learningPackageToItems, learningPackageToRelationships } = require('../shared/content/learning/index.cjs');
+const { loadExplorerPackage, explorerPackageToItems, explorerPackageToRelationships } = require('../shared/content/explorer/index.cjs');
 
 const appRoot = path.resolve(__dirname, '..');
 const entrypoint = path.join(appRoot, 'ui', 'index.html');
@@ -181,6 +184,48 @@ app.whenReady().then(() => {
       relationships: colorsPackageToRelationships(packageData),
       sourceName: 'Sanctuary Studies legacy Sacred Colors data',
       sourcePath: 'app-data.js; app-pages2.js',
+      sourceRevision: packageData.source_revision,
+      licenseStatus: packageData.license_status
+    });
+  });
+  ipcMain.handle('content:sanctuary', () => loadSanctuaryPackage());
+  ipcMain.handle('content:attach-sanctuary', (_event, input) => {
+    const packageData = loadSanctuaryPackage();
+    return store.attachContentPackage({
+      studyId: input?.studyId,
+      packageData,
+      items: sanctuaryPackageToItems(packageData),
+      relationships: sanctuaryPackageToRelationships(packageData),
+      sourceName: 'Sanctuary Studies legacy Sanctuary Models and comparative structures',
+      sourcePath: 'app-pages2.js; app-pages3.js',
+      sourceRevision: packageData.source_revision,
+      licenseStatus: packageData.license_status
+    });
+  });
+  ipcMain.handle('content:learning', () => loadLearningPackage());
+  ipcMain.handle('content:attach-learning', (_event, input) => {
+    const packageData = loadLearningPackage();
+    return store.attachContentPackage({
+      studyId: input?.studyId,
+      packageData,
+      items: learningPackageToItems(packageData),
+      relationships: learningPackageToRelationships(packageData),
+      sourceName: 'Sanctuary Studies legacy Learning and Educator Resources',
+      sourcePath: 'app-data.js; app-pages3.js',
+      sourceRevision: packageData.source_revision,
+      licenseStatus: packageData.license_status
+    });
+  });
+  ipcMain.handle('content:explorer', () => loadExplorerPackage());
+  ipcMain.handle('content:attach-explorer', (_event, input) => {
+    const packageData = loadExplorerPackage();
+    return store.attachContentPackage({
+      studyId: input?.studyId,
+      packageData,
+      items: explorerPackageToItems(packageData),
+      relationships: explorerPackageToRelationships(packageData),
+      sourceName: 'Sanctuary Studies legacy 3D Explorer and specialized tools',
+      sourcePath: 'app-pages3.js; app-data.js',
       sourceRevision: packageData.source_revision,
       licenseStatus: packageData.license_status
     });

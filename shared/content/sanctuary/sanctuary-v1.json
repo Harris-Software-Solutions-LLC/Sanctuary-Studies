@@ -1,0 +1,819 @@
+{
+  "format": "sanctuary-studies-content",
+  "content_type": "sanctuary",
+  "content_version": 1,
+  "title": "Sanctuary Models and Comparative Structures",
+  "source_revision": "61b379e7d6d4c9cc6ca693a334fd89c35759d8e5",
+  "imported_at": "2026-10-09T13:01:05.248Z",
+  "source_files": [
+    "app-pages2.js",
+    "app-pages3.js"
+  ],
+  "license_status": "review-required",
+  "runtime": "offline-local",
+  "counts": {
+    "models": 4,
+    "comparisons": 4,
+    "portal_stages": 4,
+    "scripture_references": 56
+  },
+  "models": [
+    {
+      "content_id": "sanctuary.model.tabernacle",
+      "legacy_index": 0,
+      "id": "tabernacle",
+      "label": "Wilderness Tabernacle",
+      "icon": "⛺",
+      "period": "c.1445–966 BC",
+      "color": "#b45309",
+      "desc": "The portable sanctuary built by Israel under Moses' direction in the wilderness of Sinai, following the exact divine blueprint shown on Mount Sinai.",
+      "zones": [
+        {
+          "name": "Outer Court Gate",
+          "desc": "The only entrance — through the east gate. 20 cubits wide, of blue, purple, scarlet, and fine linen. Represents Christ: \"I am the door.\" (John 10:9)"
+        },
+        {
+          "name": "Brazen Altar",
+          "desc": "The large bronze altar (5×5 cubits, 3 high). The fire on it never went out. The first object encountered — typifying the cross of Christ."
+        },
+        {
+          "name": "Brazen Laver",
+          "desc": "Bronze basin of water between altar and tabernacle. Priests washed before serving. Represents baptism and cleansing by the Word."
+        },
+        {
+          "name": "Holy Place",
+          "desc": "The first chamber (20×10 cubits) with Menorah (south), Table of Shewbread (north), and Altar of Incense (center-west). Daily priestly ministry."
+        },
+        {
+          "name": "The Veil",
+          "desc": "Embroidered linen curtain of blue, purple, scarlet — woven with cherubim. Separated Holy Place from Most Holy. Torn at the Crucifixion (Matt. 27:51)."
+        },
+        {
+          "name": "Most Holy Place",
+          "desc": "The Holiest of All (10×10 cubits). The Ark of the Covenant with the Mercy Seat and two cherubim. The Shekinah glory dwelt above the Mercy Seat."
+        }
+      ],
+      "keyScriptures": [
+        "Exodus 25-40",
+        "Hebrews 8:5",
+        "Hebrews 9:2-8"
+      ]
+    },
+    {
+      "content_id": "sanctuary.model.solomon",
+      "legacy_index": 1,
+      "id": "solomon",
+      "label": "Solomon's Temple",
+      "icon": "🏛️",
+      "period": "966–586 BC",
+      "color": "#ca8a04",
+      "desc": "The permanent stone-and-cedar sanctuary built by Solomon in Jerusalem on Mount Moriah, following the plans David received from God. Twice the size of the tabernacle.",
+      "zones": [
+        {
+          "name": "The Temple Mount",
+          "desc": "The expanded platform on which the Temple complex was built. Including Outer Courts, the Portico, and the main Temple building."
+        },
+        {
+          "name": "Jachin & Boaz",
+          "desc": "Two bronze pillars at the Temple entrance, named Jachin (\"He shall establish\") and Boaz (\"In him is strength\") — proclaiming God's covenant faithfulness."
+        },
+        {
+          "name": "The Bronze Sea",
+          "desc": "Enormous bronze basin (10 cubits diameter) resting on twelve bronze oxen — representing the twelve tribes. Used by priests for cleansing."
+        },
+        {
+          "name": "The Holy Place",
+          "desc": "40×20 cubits — twice the tabernacle's. Ten Menorahs (five left, five right), Ten Tables of Shewbread, and the Altar of Incense overlaid with cedar and gold."
+        },
+        {
+          "name": "The Most Holy Place",
+          "desc": "20×20×20 cubits — a perfect cube. Two cherubim of olive wood overlaid with gold, 10 cubits high, spanning the entire width. The Ark of the Covenant brought from the tabernacle."
+        },
+        {
+          "name": "God's Glory Fills the Temple",
+          "desc": "\"Then a cloud covered the tent of the congregation, and the glory of the LORD filled the tabernacle.\" — 1 Kings 8:10-11. The Shekinah descended at the dedication."
+        }
+      ],
+      "keyScriptures": [
+        "1 Kings 6-8",
+        "2 Chronicles 3-7",
+        "Psalm 48:1-2"
+      ]
+    },
+    {
+      "content_id": "sanctuary.model.herod",
+      "legacy_index": 2,
+      "id": "herod",
+      "label": "Herod's Temple",
+      "icon": "🕌",
+      "period": "20 BC–70 AD",
+      "color": "#1d4e89",
+      "desc": "A massive renovation and expansion of Zerubbabel's Second Temple begun by Herod the Great in 20 BC. Jesus taught and ministered in this Temple.",
+      "zones": [
+        {
+          "name": "The Royal Portico",
+          "desc": "A magnificent basilica on the south side of the Temple Mount. Probably where Jesus taught as a child (Luke 2:46) and drove out the money changers (Matt. 21:12)."
+        },
+        {
+          "name": "Court of the Gentiles",
+          "desc": "The outermost court where anyone could come. Separated from the inner courts by the \"Soreg\" — a stone barrier with warning inscriptions forbidding Gentile entry on pain of death."
+        },
+        {
+          "name": "Court of Women",
+          "desc": "The inner court where Jewish women could worship. Contained thirteen trumpet-shaped offering chests and the treasury where Jesus observed the widow's mite (Mark 12:41-44)."
+        },
+        {
+          "name": "Court of Israel & Priests",
+          "desc": "The inner courts surrounding the Temple building itself, accessible to Jewish men (Israel) and the priests respectively."
+        },
+        {
+          "name": "The Temple Building",
+          "desc": "The naos — the actual Temple structure housing the Holy Place and Most Holy Place. The Holy Place contained the Menorah, Table of Shewbread, and Altar of Incense."
+        },
+        {
+          "name": "The Veil & Its Tearing",
+          "desc": "The massive veil (60×20 cubits; reportedly the thickness of a palm) was torn from top to bottom at Christ's death (Matt. 27:51), signaling the end of the typical system."
+        }
+      ],
+      "keyScriptures": [
+        "Matthew 21:12-13",
+        "Luke 21:5-6",
+        "Matthew 27:51"
+      ]
+    },
+    {
+      "content_id": "sanctuary.model.heavenly-explorer",
+      "legacy_index": 3,
+      "id": "heavenly-explorer",
+      "label": "Heavenly Sanctuary",
+      "icon": "✨",
+      "period": "Eternal",
+      "color": "#0f766e",
+      "desc": "The original sanctuary — the true tabernacle which the Lord pitched and not man (Heb. 8:2). The earthly was built as a copy of this heavenly original.",
+      "zones": [
+        {
+          "name": "The Heavenly Courts",
+          "desc": "Revelation 4-5 describes the heavenly courts surrounding the throne of God — four living creatures, twenty-four elders, thousands of angels, and the sea of glass before the throne."
+        },
+        {
+          "name": "The Seven Lamps of Fire",
+          "desc": "\"And there were seven lamps of fire burning before the throne, which are the seven Spirits of God.\" — Revelation 4:5. The sevenfold Spirit in the heavenly Holy Place."
+        },
+        {
+          "name": "The Heavenly Altar",
+          "desc": "\"And another angel came and stood at the altar, having a golden censer; and there was given unto him much incense, that he should offer it with the prayers of all saints.\" — Revelation 8:3."
+        },
+        {
+          "name": "The Ark Revealed",
+          "desc": "\"And the temple of God was opened in heaven, and there was seen in his temple the ark of his testament.\" — Revelation 11:19. The ark is really there."
+        },
+        {
+          "name": "Christ the High Priest",
+          "desc": "\"We have such an high priest, who is set on the right hand of the throne of the Majesty in the heavens; A minister of the sanctuary.\" — Hebrews 8:1-2."
+        },
+        {
+          "name": "The Throne of Grace",
+          "desc": "The ultimate destination — the throne of God and of the Lamb. \"Let us therefore come boldly unto the throne of grace.\" — Hebrews 4:16. Open to all through Christ."
+        }
+      ],
+      "keyScriptures": [
+        "Hebrews 8:1-2",
+        "Revelation 4-5",
+        "Revelation 11:19"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "content_id": "sanctuary.comparison.structural",
+      "legacy_index": 0,
+      "id": "structural",
+      "title": "Structural Comparison",
+      "headers": [
+        "Feature",
+        "Wilderness Tabernacle",
+        "Solomon's Temple",
+        "Herod's Temple",
+        "Heavenly Sanctuary"
+      ],
+      "rows": [
+        [
+          "Construction",
+          "Moses (Exodus 25-40)",
+          "Solomon (1 Kings 6-8)",
+          "Herod (20 BC–AD 70)",
+          "God Himself (Heb. 8:2)"
+        ],
+        [
+          "Materials",
+          "Acacia wood, gold, linen, animal skins",
+          "Cedar, gold, stone, bronze",
+          "Stone, marble, gold",
+          "Pure gold, divine substance"
+        ],
+        [
+          "Outer Court",
+          "Linen curtains on bronze pillars",
+          "Stone walls, bronze pillars",
+          "Magnificent marble courts",
+          "Heavenly courts of praise"
+        ],
+        [
+          "Holy Place",
+          "10×20 cubits",
+          "20×40 cubits",
+          "20×40 cubits",
+          "Transcendent dimensions"
+        ],
+        [
+          "Most Holy Place",
+          "10×10 cubits (cube)",
+          "20×20×20 cubits (cube)",
+          "20×20 cubits",
+          "Throne room of God"
+        ],
+        [
+          "Lamp",
+          "7-branch Menorah (gold)",
+          "10 Menorahs",
+          "1 Menorah (restored)",
+          "Christ is the Light (Rev. 21:23)"
+        ],
+        [
+          "Ark of Covenant",
+          "Present (acacia/gold)",
+          "Present (Solomon)",
+          "Absent (lost after 586 BC)",
+          "Present (Rev. 11:19)"
+        ],
+        [
+          "Duration",
+          "~480 years (c.1445–966 BC)",
+          "~410 years (966–586 BC)",
+          "~90 years (20 BC–AD 70)",
+          "Eternal"
+        ]
+      ]
+    },
+    {
+      "content_id": "sanctuary.comparison.dimensions",
+      "legacy_index": 1,
+      "id": "dimensions",
+      "title": "Dimensions & Proportions",
+      "headers": [
+        "Measurement",
+        "Wilderness Tabernacle",
+        "Solomon's Temple",
+        "Herod's Temple"
+      ],
+      "rows": [
+        [
+          "Overall Length",
+          "100 cubits (~150 ft)",
+          "~100 cubits (court)",
+          "500 cubits (Temple Mount)"
+        ],
+        [
+          "Overall Width",
+          "50 cubits (~75 ft)",
+          "~50 cubits (court)",
+          "500 cubits (Temple Mount)"
+        ],
+        [
+          "Holy Place",
+          "20×10 cubits",
+          "40×20 cubits",
+          "~40×20 cubits"
+        ],
+        [
+          "Most Holy Place",
+          "10×10 cubits",
+          "20×20 cubits",
+          "20×20 cubits"
+        ],
+        [
+          "Height of Structure",
+          "~10 cubits (tabernacle)",
+          "30 cubits",
+          "60 cubits"
+        ],
+        [
+          "Altar of Burnt Offering",
+          "5 cubits square, 3 high",
+          "20 cubits square, 10 high",
+          "~50 cubits"
+        ],
+        [
+          "Ratio Holy:Most Holy",
+          "2:1",
+          "2:1",
+          "2:1 (same proportion)"
+        ]
+      ]
+    },
+    {
+      "content_id": "sanctuary.comparison.theological",
+      "legacy_index": 2,
+      "id": "theological",
+      "title": "Theological Comparison",
+      "headers": [
+        "Doctrine",
+        "Earthly Sanctuary",
+        "Heavenly Sanctuary (Hebrews)"
+      ],
+      "rows": [
+        [
+          "Priest",
+          "Levitical (mortal, sinful)",
+          "Christ (eternal, sinless)"
+        ],
+        [
+          "Sacrifice",
+          "Animal blood (temporary)",
+          "Christ's blood (permanent, once for all)"
+        ],
+        [
+          "Mediation",
+          "Aaron and sons",
+          "Jesus, sole Mediator (1 Tim. 2:5)"
+        ],
+        [
+          "Basis",
+          "Type/shadow (Heb. 10:1)",
+          "The \"very image\" — the reality"
+        ],
+        [
+          "Covenant",
+          "Old Covenant (Sinai)",
+          "New Covenant (Jer. 31:31-34)"
+        ],
+        [
+          "Atonement",
+          "Annual, repeated (Day of Atonement)",
+          "Ongoing; investigative since 1844"
+        ],
+        [
+          "Access",
+          "Priests only (Holy Place); High Priest only (Most Holy)",
+          "All believers have boldness to enter (Heb. 10:19)"
+        ],
+        [
+          "Law",
+          "Written on stone tablets (inside Ark)",
+          "Written on the heart (Heb. 8:10)"
+        ]
+      ]
+    },
+    {
+      "content_id": "sanctuary.comparison.timeline",
+      "legacy_index": 3,
+      "id": "timeline",
+      "title": "Historical Timeline",
+      "headers": [
+        "Period",
+        "Event",
+        "Scripture"
+      ],
+      "rows": [
+        [
+          "c.1445 BC",
+          "Tabernacle constructed in wilderness",
+          "Exodus 25-40"
+        ],
+        [
+          "c.1405–966 BC",
+          "Tabernacle used in Canaan (Shiloh, etc.)",
+          "Joshua 18:1; 1 Samuel 4"
+        ],
+        [
+          "966 BC",
+          "Solomon begins Temple construction",
+          "1 Kings 6:1"
+        ],
+        [
+          "959 BC",
+          "Solomon's Temple dedicated; glory fills it",
+          "1 Kings 8:10-11"
+        ],
+        [
+          "586 BC",
+          "Temple destroyed by Nebuchadnezzar",
+          "2 Kings 25:8-9"
+        ],
+        [
+          "516 BC",
+          "Second Temple (Zerubbabel) completed",
+          "Ezra 6:14-15"
+        ],
+        [
+          "20 BC",
+          "Herod begins Temple renovation",
+          "Josephus, Ant. 15.11"
+        ],
+        [
+          "31 AD",
+          "Temple veil torn at Christ's crucifixion",
+          "Matthew 27:51"
+        ],
+        [
+          "70 AD",
+          "Herod's Temple destroyed by Titus",
+          "Matthew 24:2"
+        ],
+        [
+          "1844 AD",
+          "Christ enters Most Holy (heavenly)",
+          "Daniel 8:14; Heb. 9:23"
+        ]
+      ]
+    }
+  ],
+  "portal_stages": [
+    {
+      "content_id": "sanctuary.portal.the-outer-court",
+      "legacy_index": 0,
+      "id": 0,
+      "label": "The Outer Court",
+      "icon": "⛺",
+      "desc": "Enter through the gate of the sanctuary court — the place of sacrifice and consecration.",
+      "color": "#92400e",
+      "bg": "linear-gradient(135deg,#92400e,#b45309)",
+      "scripture": "\"And let them make me a sanctuary; that I may dwell among them.\" — Exodus 25:8 (KJV)",
+      "content": "<p>The <strong>Outer Court</strong> is the beginning of the spiritual journey into the presence of God. It is an enclosed rectangular space of approximately 150×75 cubits, surrounded by linen curtains on bronze pillars. Only Israelites — God's covenant people — could enter here.</p>\n<p>In the Outer Court stands the <strong>Brazen Altar</strong>, the first object encountered. Its fire burned continually, consuming the sacrifices that represented the cost of sin. No one could approach God without first acknowledging their need for atonement.</p>\n<p>Beyond the altar stood the <strong>Brazen Laver</strong>, where priests washed before entering the tabernacle. Cleansing preceded service; consecration preceded access.</p>\n<h3>Typological Meaning</h3>\n<p>In the spiritual journey of the believer, the Outer Court represents: <em>Justification</em> — the initial experience of salvation through faith in Christ's atoning sacrifice. Here we come to the cross, acknowledge our sin, and receive the free gift of God's righteousness.</p>\n<blockquote>\"For by grace are ye saved through faith; and that not of yourselves: it is the gift of God.\" — Ephesians 2:8 (KJV)</blockquote>"
+    },
+    {
+      "content_id": "sanctuary.portal.the-holy-place",
+      "legacy_index": 1,
+      "id": 1,
+      "label": "The Holy Place",
+      "icon": "🕯️",
+      "desc": "Enter the first chamber — the place of light, sustenance, and prayer.",
+      "color": "#1d4e89",
+      "bg": "linear-gradient(135deg,#1d4e89,#2563eb)",
+      "scripture": "\"Seeing then that we have a great high priest, that is passed into the heavens, Jesus the Son of God, let us hold fast our profession.\" — Hebrews 4:14 (KJV)",
+      "content": "<p>The <strong>Holy Place</strong> was the first of the two apartments within the tabernacle itself. It measured 20×10 cubits and was accessible only to the consecrated priests — not the general Israelite population. Three pieces of furniture furnished this sacred space:</p>\n<p>The <strong>Golden Lampstand (Menorah)</strong> on the south side burned pure olive oil and provided the only light in the windowless room. Its seven branches carried seven lamps, their flames maintained by the priests morning and evening.</p>\n<p>The <strong>Table of Shewbread</strong> on the north side held twelve loaves replaced every Sabbath. The old loaves were eaten by the priests in the Holy Place — the bread of the Presence, representing God's sustenance of His people.</p>\n<p>The <strong>Altar of Incense</strong> stood directly before the veil, filling the sanctuary with fragrant smoke. The incense rose continuously, mingling with the Shekinah glory visible above the Most Holy Place.</p>\n<h3>Typological Meaning</h3>\n<p>The Holy Place represents <em>Sanctification</em> — the ongoing process of Christian growth through the Word (the Bread), prayer (the Incense), and the Holy Spirit (the Lampstand). This is where the believer lives — in daily communion with Christ through these means of grace.</p>\n<blockquote>\"Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need.\" — Hebrews 4:16 (KJV)</blockquote>"
+    },
+    {
+      "content_id": "sanctuary.portal.through-the-veil",
+      "legacy_index": 2,
+      "id": 2,
+      "label": "Through the Veil",
+      "icon": "🌅",
+      "desc": "The veil separating the apartments — torn from top to bottom at the crucifixion.",
+      "color": "#5b21b6",
+      "bg": "linear-gradient(135deg,#5b21b6,#7c3aed)",
+      "scripture": "\"And, behold, the veil of the temple was rent in twain from the top to the bottom.\" — Matthew 27:51 (KJV)",
+      "content": "<p>The <strong>Veil</strong> was a spectacular barrier of blue, purple, scarlet, and fine-twined linen, worked with cherubim. It hung on four golden pillars, separating the Holy Place from the Most Holy Place. No ordinary priest — and no layman — ever passed through it. Only the High Priest, once per year, on the Day of Atonement, entered.</p>\n<p>The veil represented the body of Christ (Hebrews 10:20) — His flesh standing between sinful humanity and the holy presence of God. To pass through required the death of a sacrifice; to pass through in the antitype required the death of the Son of God Himself.</p>\n<h3>The Tearing of the Veil</h3>\n<p>At the moment of Christ's death at Calvary, the great veil of the Temple was torn from top to bottom — <em>from top to bottom</em>, indicating it was torn by divine, not human, hands. This was the most dramatic object lesson in history: the way into the Most Holy — into the immediate presence of God — was now open.</p>\n<blockquote>\"Having therefore, brethren, boldness to enter into the holiest by the blood of Jesus, by a new and living way, which he hath consecrated for us, through the veil, that is to say, his flesh.\" — Hebrews 10:19-20 (KJV)</blockquote>\n<h3>The Spiritual Veil</h3>\n<p>In experience, the veil represents the transition from justification/sanctification to the deepest communion with God — from the outer chambers of Christian experience to the innermost place of His presence. Only those who pass through the death of self — reckoning themselves crucified with Christ — enter this dimension of spiritual experience.</p>"
+    },
+    {
+      "content_id": "sanctuary.portal.the-most-holy-place",
+      "legacy_index": 3,
+      "id": 3,
+      "label": "The Most Holy Place",
+      "icon": "✨",
+      "desc": "The throne room of God — the Shekinah glory, the Mercy Seat, the Ark of His covenant.",
+      "color": "#0f766e",
+      "bg": "linear-gradient(135deg,#0f766e,#059669)",
+      "scripture": "\"And the temple of God was opened in heaven, and there was seen in his temple the ark of his testament.\" — Revelation 11:19 (KJV)",
+      "content": "<p>The <strong>Most Holy Place</strong> — the Holiest of All — was the innermost chamber of the sanctuary, a perfect cube of 10×10×10 cubits. It contained only one piece of furniture: the <strong>Ark of the Covenant</strong> and its covering, the <strong>Mercy Seat</strong>. Yet in its simplicity it was the most sacred space on earth — the designated meeting point between God and mankind.</p>\n<p>Above the Mercy Seat, between the outstretched wings of the two golden cherubim, the <strong>Shekinah glory</strong> — the visible manifestation of God's presence — dwelt. Here was the throne of God on earth.</p>\n<h3>Contents of the Ark</h3>\n<ul>\n<li><strong>The Two Tables of Stone</strong>: The Ten Commandments, written by God's own finger — the transcript of His character, the foundation of His government</li>\n<li><strong>Aaron's Rod That Budded</strong>: Confirmation of the divinely appointed priesthood</li>\n<li><strong>The Golden Pot of Manna</strong>: Memorial of God's miraculous provision in the wilderness</li>\n</ul>\n<h3>The Mercy Seat: Grace Over Law</h3>\n<p>The Ark contained God's law — the standard of righteousness. The Mercy Seat <em>covered</em> the law — the blood of atonement sprinkled on it covering the broken law with God's mercy. This is the gospel in a single piece of furniture: law and grace, justice and mercy, meeting in perfect harmony at the blood of Christ.</p>\n<blockquote>\"Mercy and truth are met together; righteousness and peace have kissed each other.\" — Psalm 85:10 (KJV)</blockquote>\n<h3>The Heavenly Reality</h3>\n<p>Revelation 11:19 reveals that the ark of the testament is in the heavenly temple, visible after the temple was opened in heaven — confirming the reality of the heavenly sanctuary and its contents. This is where Christ now ministers as our High Priest, applying His blood to the heavenly mercy seat on behalf of every repentant sinner who comes to God through Him.</p>\n<blockquote>\"Who being the brightness of his glory, and the express image of his person, and upholding all things by the word of his power, when he had by himself purged our sins, sat down on the right hand of the Majesty on high.\" — Hebrews 1:3 (KJV)</blockquote>"
+    }
+  ],
+  "scripture_references": [
+    {
+      "id": "scripture.reference.exodus-25-40",
+      "reference": "Exodus 25-40",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.hebrews-8-5",
+      "reference": "Hebrews 8:5",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.hebrews-9-2-8",
+      "reference": "Hebrews 9:2-8",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.1-kings-6-8",
+      "reference": "1 Kings 6-8",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.2-chronicles-3-7",
+      "reference": "2 Chronicles 3-7",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.psalm-48-1-2",
+      "reference": "Psalm 48:1-2",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.matthew-21-12-13",
+      "reference": "Matthew 21:12-13",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.luke-21-5-6",
+      "reference": "Luke 21:5-6",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.matthew-27-51",
+      "reference": "Matthew 27:51",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.hebrews-8-1-2",
+      "reference": "Hebrews 8:1-2",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.revelation-4-5",
+      "reference": "Revelation 4-5",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.revelation-11-19",
+      "reference": "Revelation 11:19",
+      "kind": "Scripture reference",
+      "source": "legacy Heavenly Portal data"
+    },
+    {
+      "id": "scripture.reference.exodus-25-8",
+      "reference": "Exodus 25:8",
+      "kind": "Scripture reference",
+      "source": "legacy Heavenly Portal data"
+    },
+    {
+      "id": "scripture.reference.hebrews-4-14",
+      "reference": "Hebrews 4:14",
+      "kind": "Scripture reference",
+      "source": "legacy Heavenly Portal data"
+    },
+    {
+      "id": "scripture.reference.moses-exodus-25-40",
+      "reference": "Moses (Exodus 25-40)",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.solomon-1-kings-6-8",
+      "reference": "Solomon (1 Kings 6-8)",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.herod-20-bc-ad-70",
+      "reference": "Herod (20 BC–AD 70)",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.absent-lost-after-586-bc",
+      "reference": "Absent (lost after 586 BC)",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.90-years-20-bc-ad-70",
+      "reference": "~90 years (20 BC–AD 70)",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.ongoing-investigative-since-1844",
+      "reference": "Ongoing; investigative since 1844",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.joshua-18-1-1-samuel-4",
+      "reference": "Joshua 18:1; 1 Samuel 4",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.1-kings-6-1",
+      "reference": "1 Kings 6:1",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.1-kings-8-10-11",
+      "reference": "1 Kings 8:10-11",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.2-kings-25-8-9",
+      "reference": "2 Kings 25:8-9",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.ezra-6-14-15",
+      "reference": "Ezra 6:14-15",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.matthew-24-2",
+      "reference": "Matthew 24:2",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.daniel-8-14-heb-9-23",
+      "reference": "Daniel 8:14; Heb. 9:23",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary comparative structure data"
+    },
+    {
+      "id": "scripture.reference.identify-the-8-sanctuary-colors",
+      "reference": "Identify the 8 sanctuary colors",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.understand-their-symbolic-meanings",
+      "reference": "Understand their symbolic meanings",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.connect-colors-to-bible-stories-and-christ-s-ministry",
+      "reference": "Connect colors to Bible stories and Christ's ministry",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.learn-tabernacle-proportions-and-dimensions",
+      "reference": "Learn tabernacle proportions and dimensions",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.understand-the-spatial-relationship-of-components",
+      "reference": "Understand the spatial relationship of components",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.practice-collaborative-learning",
+      "reference": "Practice collaborative learning",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.explain-the-biblical-basis-in-daniel-7-9",
+      "reference": "Explain the biblical basis in Daniel 7-9",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.clarify-common-misconceptions",
+      "reference": "Clarify common misconceptions",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.show-the-day-of-atonement-typology",
+      "reference": "Show the Day of Atonement typology",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.present-the-1844-historical-context",
+      "reference": "Present the 1844 historical context",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.visualize-the-day-of-atonement-service",
+      "reference": "Visualize the Day of Atonement service",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.understand-each-step-s-symbolic-meaning",
+      "reference": "Understand each step's symbolic meaning",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.connect-the-earthly-type-to-christ-s-heavenly-antitype",
+      "reference": "Connect the earthly type to Christ's heavenly antitype",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.name-all-sanctuary-furnishings",
+      "reference": "Name all sanctuary furnishings",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.identify-their-location-court-holy-most-holy",
+      "reference": "Identify their location (court, holy, most holy)",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.state-the-primary-symbolic-meaning-of-each",
+      "reference": "State the primary symbolic meaning of each",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.understand-the-year-day-principle",
+      "reference": "Understand the year-day principle",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.calculate-the-70-week-and-2300-day-prophecies",
+      "reference": "Calculate the 70-week and 2300-day prophecies",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.explain-the-1844-significance",
+      "reference": "Explain the 1844 significance",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.respond-to-common-objections",
+      "reference": "Respond to common objections",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.memorize-the-8-sacred-colors-and-meanings",
+      "reference": "Memorize the 8 sacred colors and meanings",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.associate-colors-with-hebrew-terminology",
+      "reference": "Associate colors with Hebrew terminology",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.reinforce-scripture-memorization",
+      "reference": "Reinforce scripture memorization",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.establish-the-biblical-reality-of-the-heavenly-sanctuary",
+      "reference": "Establish the biblical reality of the heavenly sanctuary",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.understand-christ-s-ongoing-high-priestly-work",
+      "reference": "Understand Christ's ongoing high priestly work",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.apply-sanctuary-truth-to-daily-christian-experience",
+      "reference": "Apply sanctuary truth to daily Christian experience",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.compare-type-and-antitype-systematically",
+      "reference": "Compare type and antitype systematically",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.understand-christ-s-superior-priesthood",
+      "reference": "Understand Christ's superior priesthood",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    },
+    {
+      "id": "scripture.reference.see-the-inadequacy-of-the-earthly-system-and-its-fulfillment-in-christ",
+      "reference": "See the inadequacy of the earthly system and its fulfillment in Christ",
+      "kind": "Scripture reference",
+      "source": "legacy Educator Resources data"
+    }
+  ]
+}

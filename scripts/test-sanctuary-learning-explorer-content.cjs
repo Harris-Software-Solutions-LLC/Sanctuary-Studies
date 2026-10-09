@@ -1,0 +1,24 @@
+const assert = require('node:assert/strict');
+const { loadSanctuaryPackage, sanctuaryPackageToItems, sanctuaryPackageToRelationships } = require('../shared/content/sanctuary/index.cjs');
+const { loadLearningPackage, learningPackageToItems } = require('../shared/content/learning/index.cjs');
+const { loadExplorerPackage, explorerPackageToItems, explorerPackageToRelationships } = require('../shared/content/explorer/index.cjs');
+
+const sanctuary = loadSanctuaryPackage();
+const learning = loadLearningPackage();
+const explorer = loadExplorerPackage();
+assert.equal(sanctuary.counts.models, 4);
+assert.equal(sanctuary.counts.comparisons, 4);
+assert.equal(sanctuary.counts.portal_stages, 4);
+assert.equal(learning.counts.educator_resources, 9);
+assert.equal(explorer.counts.models, 4);
+assert.equal(explorer.counts.specialized_tools, 6);
+assert.ok(sanctuary.models.some((model) => model.label === 'Wilderness Tabernacle'));
+assert.ok(sanctuary.comparisons.some((comparison) => comparison.id === 'theological'));
+assert.ok(learning.educator_resources.some((resource) => resource.title === 'Build a Tabernacle Model'));
+assert.ok(explorer.models.some((model) => model.diagram.includes('OUTER COURT')));
+assert.equal(sanctuaryPackageToItems(sanctuary).filter((item) => item.content_type === 'sanctuary_model').length, 4);
+assert.equal(learningPackageToItems(learning).length, 9);
+assert.equal(explorerPackageToItems(explorer).filter((item) => item.content_type === 'explorer_model').length, 4);
+assert.ok(sanctuaryPackageToRelationships(sanctuary).some((relationship) => relationship.relationship_type === 'contains_zone'));
+assert.ok(explorerPackageToRelationships(explorer).some((relationship) => relationship.relationship_type === 'contains_zone'));
+console.log('Sanctuary, Learning, and Explorer content tests passed: 4 models, 4 comparisons, 9 educator resources, 6 specialized tools');

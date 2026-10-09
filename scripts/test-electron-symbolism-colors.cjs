@@ -8,6 +8,9 @@ const { loadScripturePackage } = require('../shared/content/scripture/index.cjs'
 const { loadLibraryPackage } = require('../shared/content/library/index.cjs');
 const { loadSymbolismPackage, symbolismPackageToItems, symbolismPackageToRelationships } = require('../shared/content/symbolism/index.cjs');
 const { loadColorsPackage, colorsPackageToItems, colorsPackageToRelationships } = require('../shared/content/colors/index.cjs');
+const { loadSanctuaryPackage } = require('../shared/content/sanctuary/index.cjs');
+const { loadLearningPackage } = require('../shared/content/learning/index.cjs');
+const { loadExplorerPackage } = require('../shared/content/explorer/index.cjs');
 
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-symbolism-colors-${process.pid}`);
@@ -23,6 +26,9 @@ function registerHandlers(store) {
   ipcMain.handle('content:library', () => loadLibraryPackage());
   ipcMain.handle('content:symbolism', () => loadSymbolismPackage());
   ipcMain.handle('content:colors', () => loadColorsPackage());
+  ipcMain.handle('content:sanctuary', () => loadSanctuaryPackage());
+  ipcMain.handle('content:learning', () => loadLearningPackage());
+  ipcMain.handle('content:explorer', () => loadExplorerPackage());
   ipcMain.handle('content:attach-symbolism', (_event, input) => { const packageData = loadSymbolismPackage(); return store.attachContentPackage({ studyId: input?.studyId, packageData, items: symbolismPackageToItems(packageData), relationships: symbolismPackageToRelationships(packageData), sourceName: 'test Symbolism', sourcePath: 'test/symbolism', sourceRevision: 'test', licenseStatus: 'review-required' }); });
   ipcMain.handle('content:attach-colors', (_event, input) => { const packageData = loadColorsPackage(); return store.attachContentPackage({ studyId: input?.studyId, packageData, items: colorsPackageToItems(packageData), relationships: colorsPackageToRelationships(packageData), sourceName: 'test Sacred Colors', sourcePath: 'test/colors', sourceRevision: 'test', licenseStatus: 'review-required' }); });
 }

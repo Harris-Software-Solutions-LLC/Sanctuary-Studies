@@ -1,3 +1,7 @@
-# Learning package boundary
+# Learning and Educator Resources
 
-The Learning package will contain judgment modules, educator resources, myths-versus-facts records, and learning prompts. It will use the same local content-item and provenance contract as the integrated timeline package.
+Versioned offline package containing the nine preserved educator resources from the legacy application. Each record retains its category, age group, duration, description, objectives, materials, download labels, and quarter metadata.
+
+Source files: `app-data.js`, `app-pages3.js`
+
+License status: review required before redistribution.

@@ -1,0 +1,9 @@
+{
+  "package": "explorer",
+  "version": 1,
+  "source_files": ["app-pages3.js", "app-data.js"],
+  "source_revision": "61b379e7d6d4c9cc6ca693a334fd89c35759d8e5",
+  "runtime": "offline-local",
+  "license_status": "review-required",
+  "removed_dependencies": ["hosted 3D assets", "external media", "network requests"]
+}

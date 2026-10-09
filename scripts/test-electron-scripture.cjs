@@ -8,6 +8,9 @@ const { loadScripturePackage, scripturePackageToItems, scripturePackageToRelatio
 const { loadLibraryPackage } = require('../shared/content/library/index.cjs');
 const { loadSymbolismPackage } = require('../shared/content/symbolism/index.cjs');
 const { loadColorsPackage } = require('../shared/content/colors/index.cjs');
+const { loadSanctuaryPackage } = require('../shared/content/sanctuary/index.cjs');
+const { loadLearningPackage } = require('../shared/content/learning/index.cjs');
+const { loadExplorerPackage } = require('../shared/content/explorer/index.cjs');
 
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-scripture-${process.pid}`);
@@ -24,6 +27,9 @@ function registerHandlers(store) {
   ipcMain.handle('content:library', () => loadLibraryPackage());
   ipcMain.handle('content:symbolism', () => loadSymbolismPackage());
   ipcMain.handle('content:colors', () => loadColorsPackage());
+  ipcMain.handle('content:sanctuary', () => loadSanctuaryPackage());
+  ipcMain.handle('content:learning', () => loadLearningPackage());
+  ipcMain.handle('content:explorer', () => loadExplorerPackage());
   ipcMain.handle('content:attach-scripture', (_event, input) => {
     const packageData = loadScripturePackage();
     return store.attachContentPackage({ studyId: input?.studyId, packageData, items: scripturePackageToItems(packageData), relationships: scripturePackageToRelationships(packageData), sourceName: 'test Scripture', sourcePath: 'test/scripture', sourceRevision: 'test', licenseStatus: 'review-required' });

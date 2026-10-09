@@ -1,0 +1,344 @@
+{
+  "format": "sanctuary-studies-content",
+  "content_type": "explorer",
+  "content_version": 1,
+  "title": "3D Sanctuary Explorer and Specialized Legacy Tools",
+  "source_revision": "61b379e7d6d4c9cc6ca693a334fd89c35759d8e5",
+  "imported_at": "2026-10-09T13:01:05.248Z",
+  "source_files": [
+    "app-pages3.js",
+    "app-data.js"
+  ],
+  "license_status": "review-required",
+  "runtime": "offline-local",
+  "counts": {
+    "models": 4,
+    "zones": 24,
+    "specialized_tools": 6,
+    "scripture_references": 9
+  },
+  "models": [
+    {
+      "content_id": "explorer.model.tabernacle",
+      "legacy_index": 0,
+      "id": "tabernacle",
+      "label": "Wilderness Tabernacle",
+      "icon": "⛺",
+      "period": "c.1445–966 BC",
+      "color": "#b45309",
+      "desc": "The portable sanctuary built by Israel under Moses' direction in the wilderness of Sinai, following the exact divine blueprint shown on Mount Sinai.",
+      "zones": [
+        {
+          "name": "Outer Court Gate",
+          "desc": "The only entrance — through the east gate. 20 cubits wide, of blue, purple, scarlet, and fine linen. Represents Christ: \"I am the door.\" (John 10:9)"
+        },
+        {
+          "name": "Brazen Altar",
+          "desc": "The large bronze altar (5×5 cubits, 3 high). The fire on it never went out. The first object encountered — typifying the cross of Christ."
+        },
+        {
+          "name": "Brazen Laver",
+          "desc": "Bronze basin of water between altar and tabernacle. Priests washed before serving. Represents baptism and cleansing by the Word."
+        },
+        {
+          "name": "Holy Place",
+          "desc": "The first chamber (20×10 cubits) with Menorah (south), Table of Shewbread (north), and Altar of Incense (center-west). Daily priestly ministry."
+        },
+        {
+          "name": "The Veil",
+          "desc": "Embroidered linen curtain of blue, purple, scarlet — woven with cherubim. Separated Holy Place from Most Holy. Torn at the Crucifixion (Matt. 27:51)."
+        },
+        {
+          "name": "Most Holy Place",
+          "desc": "The Holiest of All (10×10 cubits). The Ark of the Covenant with the Mercy Seat and two cherubim. The Shekinah glory dwelt above the Mercy Seat."
+        }
+      ],
+      "keyScriptures": [
+        "Exodus 25-40",
+        "Hebrews 8:5",
+        "Hebrews 9:2-8"
+      ],
+      "diagram": "<pre style=\"color:#f5f0e8;background:transparent;margin:0;white-space:pre\">\n ┌─────────────────────────────────────────────────────────────┐\n │                    OUTER COURT (150×75 cubits)              │\n │                                                             │\n │   [GATE - East]                                             │\n │       ↓                                                     │\n │   [⬛ BRAZEN ALTAR]      [🪣 BRAZEN LAVER]                   │\n │     (Sacrifice)           (Cleansing)                       │\n │                                                             │\n │   ┌────────────────────────────────────────┐                │\n │   │           HOLY PLACE (20×10)           │                │\n │   │  [🕯 MENORAH]  [📜 SHEWBREAD]  [🌿 INCENSE] │           │\n │   │   (Light)      (Bread)        (Prayer) │                │\n │   │                          ═══VEIL═══    │                │\n │   │   ┌──────────────────────┐             │                │\n │   │   │   MOST HOLY (10×10)  │             │                │\n │   │   │   [✨ ARK + MERCY SEAT] │           │               │\n │   │   │   [Shekinah Glory]   │             │                │\n │   │   └──────────────────────┘             │                │\n │   └────────────────────────────────────────┘                │\n └─────────────────────────────────────────────────────────────┘</pre>"
+    },
+    {
+      "content_id": "explorer.model.solomon",
+      "legacy_index": 1,
+      "id": "solomon",
+      "label": "Solomon's Temple",
+      "icon": "🏛️",
+      "period": "966–586 BC",
+      "color": "#ca8a04",
+      "desc": "The permanent stone-and-cedar sanctuary built by Solomon in Jerusalem on Mount Moriah, following the plans David received from God. Twice the size of the tabernacle.",
+      "zones": [
+        {
+          "name": "The Temple Mount",
+          "desc": "The expanded platform on which the Temple complex was built. Including Outer Courts, the Portico, and the main Temple building."
+        },
+        {
+          "name": "Jachin & Boaz",
+          "desc": "Two bronze pillars at the Temple entrance, named Jachin (\"He shall establish\") and Boaz (\"In him is strength\") — proclaiming God's covenant faithfulness."
+        },
+        {
+          "name": "The Bronze Sea",
+          "desc": "Enormous bronze basin (10 cubits diameter) resting on twelve bronze oxen — representing the twelve tribes. Used by priests for cleansing."
+        },
+        {
+          "name": "The Holy Place",
+          "desc": "40×20 cubits — twice the tabernacle's. Ten Menorahs (five left, five right), Ten Tables of Shewbread, and the Altar of Incense overlaid with cedar and gold."
+        },
+        {
+          "name": "The Most Holy Place",
+          "desc": "20×20×20 cubits — a perfect cube. Two cherubim of olive wood overlaid with gold, 10 cubits high, spanning the entire width. The Ark of the Covenant brought from the tabernacle."
+        },
+        {
+          "name": "God's Glory Fills the Temple",
+          "desc": "\"Then a cloud covered the tent of the congregation, and the glory of the LORD filled the tabernacle.\" — 1 Kings 8:10-11. The Shekinah descended at the dedication."
+        }
+      ],
+      "keyScriptures": [
+        "1 Kings 6-8",
+        "2 Chronicles 3-7",
+        "Psalm 48:1-2"
+      ],
+      "diagram": "<pre style=\"color:#f5f0e8;background:transparent;margin:0;white-space:pre\">\n ┌────────────────────────────────────────────────────────────────┐\n │                  SOLOMON'S TEMPLE COMPLEX                      │\n │                                                                │\n │  [JACHIN] [BOAZ]  ← Bronze Pillars at Entrance                │\n │        ↓                                                       │\n │  ┌─────────────────────────────────────┐                       │\n │  │         ULAM (Porch / Portico)       │ 20×10 cubits         │\n │  ├─────────────────────────────────────┤                       │\n │  │     HEKAL — THE HOLY PLACE           │ 40×20 cubits         │\n │  │  10 Menorahs | 10 Shewbread Tables  │                       │\n │  │         Gold Altar of Incense        │                       │\n │  │               ══════ VEIL ══════     │                       │\n │  │  ┌──────────────────────────────┐   │                       │\n │  │  │  DEBIR — MOST HOLY 20×20×20  │   │                       │\n │  │  │  Two Cherubim (10 cubits ea) │   │                       │\n │  │  │  ARK OF THE COVENANT         │   │                       │\n │  │  └──────────────────────────────┘   │                       │\n │  └─────────────────────────────────────┘                       │\n │  [BRONZE SEA on 12 Oxen]  [10 Bronze Lavers]                   │\n └────────────────────────────────────────────────────────────────┘</pre>"
+    },
+    {
+      "content_id": "explorer.model.herod",
+      "legacy_index": 2,
+      "id": "herod",
+      "label": "Herod's Temple",
+      "icon": "🕌",
+      "period": "20 BC–70 AD",
+      "color": "#1d4e89",
+      "desc": "A massive renovation and expansion of Zerubbabel's Second Temple begun by Herod the Great in 20 BC. Jesus taught and ministered in this Temple.",
+      "zones": [
+        {
+          "name": "The Royal Portico",
+          "desc": "A magnificent basilica on the south side of the Temple Mount. Probably where Jesus taught as a child (Luke 2:46) and drove out the money changers (Matt. 21:12)."
+        },
+        {
+          "name": "Court of the Gentiles",
+          "desc": "The outermost court where anyone could come. Separated from the inner courts by the \"Soreg\" — a stone barrier with warning inscriptions forbidding Gentile entry on pain of death."
+        },
+        {
+          "name": "Court of Women",
+          "desc": "The inner court where Jewish women could worship. Contained thirteen trumpet-shaped offering chests and the treasury where Jesus observed the widow's mite (Mark 12:41-44)."
+        },
+        {
+          "name": "Court of Israel & Priests",
+          "desc": "The inner courts surrounding the Temple building itself, accessible to Jewish men (Israel) and the priests respectively."
+        },
+        {
+          "name": "The Temple Building",
+          "desc": "The naos — the actual Temple structure housing the Holy Place and Most Holy Place. The Holy Place contained the Menorah, Table of Shewbread, and Altar of Incense."
+        },
+        {
+          "name": "The Veil & Its Tearing",
+          "desc": "The massive veil (60×20 cubits; reportedly the thickness of a palm) was torn from top to bottom at Christ's death (Matt. 27:51), signaling the end of the typical system."
+        }
+      ],
+      "keyScriptures": [
+        "Matthew 21:12-13",
+        "Luke 21:5-6",
+        "Matthew 27:51"
+      ],
+      "diagram": "<pre style=\"color:#f5f0e8;background:transparent;margin:0;white-space:pre\">\n ┌───────────────────────────────────────────────────────────────┐\n │                   HEROD'S TEMPLE MOUNT                        │\n │                                                               │\n │  COURT OF THE GENTILES (accessible to all nations)           │\n │  ┌──── SOREG (barrier — Gentiles forbidden beyond) ────┐     │\n │  │    COURT OF WOMEN (Jewish women & men)               │     │\n │  │  ┌── COURT OF ISRAEL (Jewish men) ───────────────┐  │     │\n │  │  │  ┌── COURT OF PRIESTS ────────────────────┐   │  │     │\n │  │  │  │  [BRAZEN ALTAR]   [BRONZE LAVER]        │   │  │     │\n │  │  │  │  ┌──────────────────────────────────┐   │   │  │     │\n │  │  │  │  │    THE NAOS (Temple Building)    │   │   │  │     │\n │  │  │  │  │  HOLY PLACE: Menorah, Shewbread  │   │   │  │     │\n │  │  │  │  │  ═══ GREAT VEIL (torn AD 31) ═══  │   │   │  │     │\n │  │  │  │  │  MOST HOLY PLACE (empty Ark)     │   │   │  │     │\n │  │  │  │  └──────────────────────────────────┘   │   │  │     │\n │  │  │  └────────────────────────────────────────┘   │  │     │\n │  │  └────────────────────────────────────────────────┘  │     │\n │  └──────────────────────────────────────────────────────┘     │\n └───────────────────────────────────────────────────────────────┘</pre>"
+    },
+    {
+      "content_id": "explorer.model.heavenly-explorer",
+      "legacy_index": 3,
+      "id": "heavenly-explorer",
+      "label": "Heavenly Sanctuary",
+      "icon": "✨",
+      "period": "Eternal",
+      "color": "#0f766e",
+      "desc": "The original sanctuary — the true tabernacle which the Lord pitched and not man (Heb. 8:2). The earthly was built as a copy of this heavenly original.",
+      "zones": [
+        {
+          "name": "The Heavenly Courts",
+          "desc": "Revelation 4-5 describes the heavenly courts surrounding the throne of God — four living creatures, twenty-four elders, thousands of angels, and the sea of glass before the throne."
+        },
+        {
+          "name": "The Seven Lamps of Fire",
+          "desc": "\"And there were seven lamps of fire burning before the throne, which are the seven Spirits of God.\" — Revelation 4:5. The sevenfold Spirit in the heavenly Holy Place."
+        },
+        {
+          "name": "The Heavenly Altar",
+          "desc": "\"And another angel came and stood at the altar, having a golden censer; and there was given unto him much incense, that he should offer it with the prayers of all saints.\" — Revelation 8:3."
+        },
+        {
+          "name": "The Ark Revealed",
+          "desc": "\"And the temple of God was opened in heaven, and there was seen in his temple the ark of his testament.\" — Revelation 11:19. The ark is really there."
+        },
+        {
+          "name": "Christ the High Priest",
+          "desc": "\"We have such an high priest, who is set on the right hand of the throne of the Majesty in the heavens; A minister of the sanctuary.\" — Hebrews 8:1-2."
+        },
+        {
+          "name": "The Throne of Grace",
+          "desc": "The ultimate destination — the throne of God and of the Lamb. \"Let us therefore come boldly unto the throne of grace.\" — Hebrews 4:16. Open to all through Christ."
+        }
+      ],
+      "keyScriptures": [
+        "Hebrews 8:1-2",
+        "Revelation 4-5",
+        "Revelation 11:19"
+      ],
+      "diagram": "<pre style=\"color:#f5f0e8;background:transparent;margin:0;white-space:pre\">\n ┌──────────────────────────────────────────────────────────────┐\n │              THE HEAVENLY SANCTUARY (Heb. 8:2)              │\n │                                                              │\n │   ✦ SEA OF GLASS before the Throne (Rev. 4:6)               │\n │   ✦ FOUR LIVING CREATURES — Cherubim (Rev. 4:6-8)           │\n │   ✦ TWENTY-FOUR ELDERS on their thrones (Rev. 4:4)          │\n │                                                              │\n │  ┌──────────────────────────────────────────────────┐        │\n │  │     HEAVENLY HOLY PLACE                          │        │\n │  │  🕯 Seven Lamps = Seven Spirits (Rev. 4:5)       │        │\n │  │  🌿 Golden Censer / Altar of Incense (Rev. 8:3)  │        │\n │  │  💫 Christ ministers here 31 AD – 1844 AD        │        │\n │  │                    ═══════ VEIL ══════════        │        │\n │  │  ┌────────────────────────────────────────┐      │        │\n │  │  │  HEAVENLY MOST HOLY PLACE              │      │        │\n │  │  │  📦 ARK OF THE TESTAMENT (Rev. 11:19)  │      │        │\n │  │  │  🌟 THRONE OF GOD AND OF THE LAMB      │      │        │\n │  │  │  ✝️  CHRIST — Great High Priest (NOW)  │      │        │\n │  │  │  Ministry began 1844 (Dan. 8:14)       │      │        │\n │  │  └────────────────────────────────────────┘      │        │\n │  └──────────────────────────────────────────────────┘        │\n └──────────────────────────────────────────────────────────────┘</pre>"
+    }
+  ],
+  "specialized_tools": [
+    {
+      "content_id": "explorer.tool.heavenly",
+      "legacy_index": 0,
+      "id": "heavenly",
+      "title": "Heavenly Portal",
+      "desc": "Progressive journey from outer court to the throne room of God.",
+      "features": [
+        "4-Stage Journey",
+        "Scripture Overlays",
+        "Theological Context",
+        "Ambient Experience"
+      ],
+      "icon": "⭐",
+      "page": "heavenly",
+      "integration_status": "legacy-route-preserved"
+    },
+    {
+      "content_id": "explorer.tool.judgment",
+      "legacy_index": 1,
+      "id": "judgment",
+      "title": "Investigative Judgment",
+      "desc": "Interactive learning about this cornerstone of Adventist doctrine.",
+      "features": [
+        "Daniel 8:14 Timeline",
+        "1844 Historical Context",
+        "Biblical Foundation",
+        "Knowledge Checks"
+      ],
+      "icon": "🛡",
+      "page": "judgment",
+      "integration_status": "legacy-route-preserved"
+    },
+    {
+      "content_id": "explorer.tool.myths",
+      "legacy_index": 2,
+      "id": "myths",
+      "title": "Myth vs. Fact",
+      "desc": "Clarify common doctrinal misconceptions with biblical evidence.",
+      "features": [
+        "10 Common Myths",
+        "Scripture Defense",
+        "Multiple Categories",
+        "Biblical Evidence"
+      ],
+      "icon": "❓",
+      "page": "myths",
+      "integration_status": "legacy-route-preserved"
+    },
+    {
+      "content_id": "explorer.tool.media",
+      "legacy_index": 3,
+      "id": "media",
+      "title": "Companion Media",
+      "desc": "Podcasts and video series with expert scholars.",
+      "features": [
+        "6 Podcast Episodes",
+        "4 Video Series",
+        "Discussion Guides",
+        "Expert Scholars"
+      ],
+      "icon": "🎧",
+      "page": "media",
+      "integration_status": "legacy-route-preserved"
+    },
+    {
+      "content_id": "explorer.tool.forums",
+      "legacy_index": 4,
+      "id": "forums",
+      "title": "Discussion Forums",
+      "desc": "Moderated community dialogue and study groups.",
+      "features": [
+        "7 Topic Categories",
+        "Moderated Threads",
+        "Scholar Participation",
+        "Community Guidelines"
+      ],
+      "icon": "💬",
+      "page": "forums",
+      "integration_status": "legacy-route-preserved"
+    },
+    {
+      "content_id": "explorer.tool.profiles",
+      "legacy_index": 5,
+      "id": "profiles",
+      "title": "Learning Profile",
+      "desc": "Track your progress and achievements across all modules.",
+      "features": [
+        "Progress Tracking",
+        "12 Achievements",
+        "Bookmarks",
+        "Activity History"
+      ],
+      "icon": "👤",
+      "page": "profiles",
+      "integration_status": "legacy-route-preserved"
+    }
+  ],
+  "scripture_references": [
+    {
+      "id": "scripture.reference.hebrews-8-5",
+      "reference": "Hebrews 8:5",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.hebrews-9-2-8",
+      "reference": "Hebrews 9:2-8",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.1-kings-6-8",
+      "reference": "1 Kings 6-8",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.2-chronicles-3-7",
+      "reference": "2 Chronicles 3-7",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.psalm-48-1-2",
+      "reference": "Psalm 48:1-2",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.matthew-21-12-13",
+      "reference": "Matthew 21:12-13",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.luke-21-5-6",
+      "reference": "Luke 21:5-6",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.hebrews-8-1-2",
+      "reference": "Hebrews 8:1-2",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    },
+    {
+      "id": "scripture.reference.revelation-4-5",
+      "reference": "Revelation 4-5",
+      "kind": "Scripture reference",
+      "source": "legacy Sanctuary model and Explorer data"
+    }
+  ]
+}
