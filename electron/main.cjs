@@ -76,7 +76,7 @@ function createWindow() {
   if (process.env.SANCTUARY_DEVTOOLS === '1') window.webContents.openDevTools();
 }
 
-function createLegacyWindow() {
+function createLegacyWindow(initialRoute = '') {
   const window = new BrowserWindow({
     width: 1440,
     height: 960,
@@ -93,8 +93,16 @@ function createLegacyWindow() {
   });
 
   configureWindow(window, legacyEntrypoint);
+  if (initialRoute) window.webContents.once('did-finish-load', () => { window.webContents.executeJavaScript(`navigate(${JSON.stringify(initialRoute)})`).catch(() => {}); });
   window.loadFile(legacyEntrypoint);
   return window;
+}
+
+const LEGACY_ROUTES = new Set(['explorer', 'heavenly', 'compare', 'symbolism', 'colors', 'bible', 'scripture', 'timeline', 'judgment', 'library', 'media', 'educators', 'forums', 'profiles', 'myths']);
+
+function createLegacyRouteWindow(route) {
+  if (!LEGACY_ROUTES.has(route)) throw new Error('The requested legacy route is not available offline.');
+  return createLegacyWindow(route);
 }
 
 app.whenReady().then(() => {
@@ -279,6 +287,10 @@ app.whenReady().then(() => {
   });
   ipcMain.handle('ui:open-legacy', () => {
     createLegacyWindow();
+    return true;
+  });
+  ipcMain.handle('ui:open-legacy-route', (_event, route) => {
+    createLegacyRouteWindow(String(route || ''));
     return true;
   });
 

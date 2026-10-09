@@ -14,7 +14,8 @@ const { loadExplorerPackage, explorerPackageToItems, explorerPackageToRelationsh
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-sanctuary-learning-explorer-${process.pid}`);
 const databasePath = path.join(temporaryRoot, 'data.json');
-const report = { localOnly: true, packagesLoaded: false, sanctuarySearch: false, learningSearch: false, explorerSearch: false, attached: false, modeIntegration: false, exportRoundTrip: false, noExternalDependency: true };
+const report = { localOnly: true, packagesLoaded: false, sanctuarySearch: false, learningSearch: false, explorerSearch: false, explorerSpatialView: false, explorerSourceTrail: false, explorerLegacyRouteAction: false, attached: false, modeIntegration: false, exportRoundTrip: false, noExternalDependency: true };
+let openedLegacyRoute = false;
 
 function registerHandlers(store) {
   ipcMain.handle('data:snapshot', () => store.snapshot());
@@ -31,6 +32,7 @@ function registerHandlers(store) {
   ipcMain.handle('content:attach-sanctuary', (_event, input) => { const packageData = loadSanctuaryPackage(); return store.attachContentPackage({ studyId: input.studyId, packageData, items: sanctuaryPackageToItems(packageData), relationships: sanctuaryPackageToRelationships(packageData), sourceName: 'test Sanctuary', sourcePath: 'test/sanctuary', sourceRevision: 'test', licenseStatus: 'review-required' }); });
   ipcMain.handle('content:attach-learning', (_event, input) => { const packageData = loadLearningPackage(); return store.attachContentPackage({ studyId: input.studyId, packageData, items: learningPackageToItems(packageData), relationships: learningPackageToRelationships(packageData), sourceName: 'test Learning', sourcePath: 'test/learning', sourceRevision: 'test', licenseStatus: 'review-required' }); });
   ipcMain.handle('content:attach-explorer', (_event, input) => { const packageData = loadExplorerPackage(); return store.attachContentPackage({ studyId: input.studyId, packageData, items: explorerPackageToItems(packageData), relationships: explorerPackageToRelationships(packageData), sourceName: 'test Explorer', sourcePath: 'test/explorer', sourceRevision: 'test', licenseStatus: 'review-required' }); });
+  ipcMain.handle('ui:open-legacy-route', (_event, route) => { if (route !== 'heavenly') throw new Error(`Unexpected test route: ${route}`); openedLegacyRoute = true; return true; });
 }
 
 async function run() {
@@ -61,6 +63,12 @@ async function run() {
     document.querySelector('#learning-attach')?.click(); await wait(250);
     document.querySelector('[data-study-section="explorer"]')?.click(); await wait(100);
     const explorerText = document.querySelector('#record-table-wrap')?.textContent || '';
+    const spatialView = Boolean(document.querySelector('#explorer-view')?.value === 'spatial' && document.querySelector('.explorer-spatial-zone'));
+    document.querySelector('#explorer-view').value = 'sources'; document.querySelector('#explorer-view').dispatchEvent(new Event('change', { bubbles: true })); await wait(80);
+    const sourceTrailText = document.querySelector('#record-table-wrap')?.textContent || '';
+    const sourceTrailView = Boolean(document.querySelector('.explorer-source-panel') && sourceTrailText.includes('Exodus 25'));
+    document.querySelector('[data-explorer-tool-route="heavenly"]')?.click(); await wait(80);
+    const legacyRouteAction = Boolean(document.querySelector('[data-explorer-tool-route="heavenly"]'));
     document.querySelector('#explorer-search').value = 'Solomon'; document.querySelector('#explorer-search').dispatchEvent(new Event('input', { bubbles: true })); await wait(80);
     const explorerSearchText = document.querySelector('#record-table-wrap')?.textContent || '';
     document.querySelector('#explorer-attach')?.click(); await wait(250);
@@ -68,7 +76,7 @@ async function run() {
     const select = document.querySelector('#workspace-mode');
     for (const mode of ['desk', 'codex', 'folio', 'evidence']) { select.value = mode; select.dispatchEvent(new Event('change', { bubbles: true })); await wait(160); modeText[mode] = document.querySelector('#record-table-wrap')?.textContent || ''; }
     const bundle = await window.sanctuaryDesktop.data.exportBundle();
-    return { studyId: study.id, sanctuaryText, sanctuarySearchText, learningText, learningSearchText, explorerText, explorerSearchText, modeText, bundle };
+    return { studyId: study.id, sanctuaryText, sanctuarySearchText, learningText, learningSearchText, explorerText, explorerSearchText, spatialView, sourceTrailView, legacyRouteAction, modeText, bundle };
   })()`);
   const sanctuary = loadSanctuaryPackage();
   const learning = loadLearningPackage();
@@ -77,6 +85,9 @@ async function run() {
   report.sanctuarySearch = result.sanctuaryText.includes('Wilderness Tabernacle') && result.sanctuarySearchText.includes('Wilderness Tabernacle');
   report.learningSearch = result.learningText.includes('Build a Tabernacle Model') && result.learningSearchText.includes('Build a Tabernacle Model');
   report.explorerSearch = result.explorerText.includes('Solomon’s Temple') || result.explorerText.includes("Solomon's Temple") || result.explorerSearchText.includes('Solomon');
+  report.explorerSpatialView = result.spatialView;
+  report.explorerSourceTrail = result.sourceTrailView;
+  report.explorerLegacyRouteAction = result.legacyRouteAction && openedLegacyRoute;
   report.attached = store.listStudyContent({ studyId: result.studyId, contentType: 'sanctuary_model' }).length === 4 && store.listStudyContent({ studyId: result.studyId, contentType: 'educator_resource' }).length === 9 && store.listStudyContent({ studyId: result.studyId, contentType: 'explorer_model' }).length === 4;
   report.modeIntegration = result.modeText.desk.includes('Structures and stages') && result.modeText.codex.includes('Models and tools') && result.modeText.folio.includes('Educator resources') && result.modeText.evidence.toLowerCase().includes('sanctuary model') && result.modeText.evidence.toLowerCase().includes('educator resource') && result.modeText.evidence.toLowerCase().includes('explorer model');
   report.exportRoundTrip = result.bundle.data.content_items.some((item) => item.content_type === 'sanctuary_model') && result.bundle.data.content_items.some((item) => item.content_type === 'educator_resource') && result.bundle.data.content_items.some((item) => item.content_type === 'explorer_model') && result.bundle.data.content_relationships.some((relationship) => relationship.relationship_type === 'contains_zone');
