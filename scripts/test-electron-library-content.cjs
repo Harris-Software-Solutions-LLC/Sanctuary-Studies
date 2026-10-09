@@ -6,6 +6,8 @@ const { createStore } = require('../shared/store.cjs');
 const { loadTimelinePackage } = require('../shared/content/timeline/index.cjs');
 const { loadScripturePackage } = require('../shared/content/scripture/index.cjs');
 const { loadLibraryPackage, libraryPackageToItems, libraryPackageToRelationships } = require('../shared/content/library/index.cjs');
+const { loadSymbolismPackage } = require('../shared/content/symbolism/index.cjs');
+const { loadColorsPackage } = require('../shared/content/colors/index.cjs');
 
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-library-content-${process.pid}`);
@@ -20,6 +22,8 @@ function registerHandlers(store) {
   ipcMain.handle('content:timeline', () => loadTimelinePackage());
   ipcMain.handle('content:scripture', () => loadScripturePackage());
   ipcMain.handle('content:library', () => loadLibraryPackage());
+  ipcMain.handle('content:symbolism', () => loadSymbolismPackage());
+  ipcMain.handle('content:colors', () => loadColorsPackage());
   ipcMain.handle('content:attach-library', (_event, input) => {
     const packageData = loadLibraryPackage();
     return store.attachContentPackage({ studyId: input?.studyId, packageData, items: libraryPackageToItems(packageData), relationships: libraryPackageToRelationships(packageData), sourceName: 'test Digital Library', sourcePath: 'test/library', sourceRevision: 'test', licenseStatus: 'review-required' });

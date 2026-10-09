@@ -1,0 +1,10 @@
+{
+  "content_type": "colors",
+  "source_files": ["app-data.js", "app-pages2.js"],
+  "source_revision": "5c8ae58e7432bf3cd8073eeab9c4c094e192b5ab",
+  "import_method": "Node VM extraction of SACRED_COLORS followed by stable-ID normalization",
+  "license_status": "review-required",
+  "offline_only": true,
+  "legacy_routes_preserved": ["colors"],
+  "notes": "No hosted UI, network service, or external asset was imported."
+}

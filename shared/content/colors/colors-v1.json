@@ -1,0 +1,837 @@
+{
+  "format": "sanctuary-studies-content",
+  "content_type": "colors",
+  "content_version": 1,
+  "title": "Sacred Colors of the Sanctuary",
+  "source_revision": "5c8ae58e7432bf3cd8073eeab9c4c094e192b5ab",
+  "imported_at": "2026-10-09T12:34:14.502Z",
+  "source_files": [
+    "app-data.js",
+    "app-pages2.js"
+  ],
+  "license_status": "review-required",
+  "runtime": "offline-local",
+  "counts": {
+    "records": 8,
+    "scripture_references": 55
+  },
+  "record_count": 8,
+  "scripture_reference_count": 55,
+  "categories": {},
+  "colors": [
+    {
+      "content_id": "color.blue",
+      "legacy_index": 0,
+      "id": "blue",
+      "name": "Blue",
+      "hex": "#3b6ea8",
+      "hebrewWord": "tekeleth (תְּכֵלֶת)",
+      "greekWord": "hyakinthos (ὑάκινθος)",
+      "symbolism": "Blue represents the Law of God and divine authority. The blue thread woven throughout the sanctuary garments was made from a specific dye (likely from the chilazon shellfish), symbolizing heaven and the divine Law written on the two tables of stone.",
+      "sanctuaryUse": "Blue yarn used in the tabernacle curtains (Exodus 26:1), the veil (Exodus 26:31), the high priest's robe of the ephod (Exodus 28:31), the breastplate, girdle of the ephod, and the ribbons binding the golden plate to the mitre.",
+      "scriptures": [
+        {
+          "ref": "Exodus 26:1",
+          "text": "Moreover thou shalt make the tabernacle with ten curtains of fine twined linen, and blue, and purple, and scarlet."
+        },
+        {
+          "ref": "Numbers 15:38",
+          "text": "Speak unto the children of Israel, and bid them that they make them fringes in the borders of their garments throughout their generations, and that they put upon the fringe of the borders a ribband of blue:"
+        },
+        {
+          "ref": "Numbers 15:39",
+          "text": "And it shall be unto you for a fringe, that ye may look upon it, and remember all the commandments of the LORD, and do them."
+        }
+      ],
+      "scripture_references": [
+        "Exodus 26:1",
+        "Numbers 15:38",
+        "Numbers 15:39"
+      ]
+    },
+    {
+      "content_id": "color.red",
+      "legacy_index": 1,
+      "id": "red",
+      "name": "Red/Scarlet",
+      "hex": "#b72b2b",
+      "hebrewWord": "shani (שָׁנִי) / tola'at shani",
+      "greekWord": "kokkinos (κόκκινος)",
+      "symbolism": "Scarlet/red represents the blood of Christ, sacrifice, and redemption. The double thread of crimson (tola'at shani — literally 'worm scarlet', from the crimson worm Coccus ilicis) powerfully symbolizes the sacrificial atonement.",
+      "sanctuaryUse": "Scarlet used in the curtains, veil, gate covering, and high priest's garments. Also used in the cleansing ritual (Leviticus 14) with cedar wood and hyssop — a rich typology of cleansing through blood.",
+      "scriptures": [
+        {
+          "ref": "Isaiah 1:18",
+          "text": "Come now, and let us reason together, saith the LORD: though your sins be as scarlet, they shall be as white as snow; though they be red like crimson, they shall be as wool."
+        },
+        {
+          "ref": "Hebrews 9:22",
+          "text": "And almost all things are by the law purged with blood; and without shedding of blood is no remission."
+        },
+        {
+          "ref": "Revelation 1:5",
+          "text": "And from Jesus Christ, who is the faithful witness, and the first begotten of the dead, and the prince of the kings of the earth. Unto him that loved us, and washed us from our sins in his own blood,"
+        }
+      ],
+      "scripture_references": [
+        "Isaiah 1:18",
+        "Hebrews 9:22",
+        "Revelation 1:5"
+      ]
+    },
+    {
+      "content_id": "color.white",
+      "legacy_index": 2,
+      "id": "white",
+      "name": "White/Linen",
+      "hex": "#f5f0e8",
+      "hebrewWord": "bad (בַּד) / shesh (שֵׁשׁ)",
+      "greekWord": "byssinos (βύσσινος)",
+      "symbolism": "White represents righteousness, purity, and the imputed righteousness of Christ. Fine white linen (shesh) was the fabric of the priestly garments, signifying the righteousness that must clothe those who serve in God's presence.",
+      "sanctuaryUse": "Fine twined linen used throughout the tabernacle — the curtains, gate screens, court hangings, and all priestly garments. The high priest wore white linen on the Day of Atonement, laying aside his ornate colored garments.",
+      "scriptures": [
+        {
+          "ref": "Revelation 19:8",
+          "text": "And to her was granted that she should be arrayed in fine linen, clean and white: for the fine linen is the righteousness of saints."
+        },
+        {
+          "ref": "Isaiah 61:10",
+          "text": "I will greatly rejoice in the LORD, my soul shall be joyful in my God; for he hath clothed me with the garments of salvation, he hath covered me with the robe of righteousness."
+        },
+        {
+          "ref": "Leviticus 16:4",
+          "text": "He shall put on the holy linen coat, and he shall have the linen breeches upon his flesh, and shall be girded with a linen girdle, and with the linen mitre shall he be attired: these are holy garments; therefore shall he wash his flesh in water, and so put them on."
+        }
+      ],
+      "scripture_references": [
+        "Revelation 19:8",
+        "Isaiah 61:10",
+        "Leviticus 16:4"
+      ]
+    },
+    {
+      "content_id": "color.gold",
+      "legacy_index": 3,
+      "id": "gold",
+      "name": "Gold",
+      "hex": "#c9960c",
+      "hebrewWord": "zahav (זָהָב)",
+      "greekWord": "chrysos (χρυσός)",
+      "symbolism": "Gold represents divinity, the nature of God, and the divine character. The most sacred sanctuary objects — the Ark, mercy seat, lampstand, and altar of incense — were all made of pure gold. Gold cannot be corrupted or tarnished, symbolizing God's incorruptible nature.",
+      "sanctuaryUse": "The Ark of the Covenant overlaid with pure gold, the mercy seat of solid gold, the golden lampstand beaten from one piece, the altar of incense overlaid with gold, and the crown of gold on the high priest's mitre.",
+      "scriptures": [
+        {
+          "ref": "Exodus 25:11",
+          "text": "And thou shalt overlay it with pure gold, within and without shalt thou overlay it, and shalt make upon it a crown of gold round about."
+        },
+        {
+          "ref": "Revelation 21:18",
+          "text": "And the building of the wall of it was of jasper: and the city was pure gold, like unto clear glass."
+        },
+        {
+          "ref": "1 Peter 1:7",
+          "text": "That the trial of your faith, being much more precious than of gold that perisheth, though it be tried with fire, might be found unto praise and honour and glory at the appearing of Jesus Christ:"
+        }
+      ],
+      "scripture_references": [
+        "Exodus 25:11",
+        "Revelation 21:18",
+        "1 Peter 1:7"
+      ]
+    },
+    {
+      "content_id": "color.purple",
+      "legacy_index": 4,
+      "id": "purple",
+      "name": "Purple",
+      "hex": "#6b3fa0",
+      "hebrewWord": "argaman (אַרְגָּמָן)",
+      "greekWord": "porphyra (πορφύρα)",
+      "symbolism": "Purple represents royalty and kingship. Derived from rare mollusks (Murex) along the Phoenician coast, purple dye was extraordinarily expensive and worn only by royalty and the highest nobility. Christ is both Priest and King.",
+      "sanctuaryUse": "Purple woven throughout the sanctuary curtains and the high priest's garments, signifying that the One served in the sanctuary is not merely a priest but the King of the universe.",
+      "scriptures": [
+        {
+          "ref": "Judges 8:26",
+          "text": "And the weight of the golden earrings that he requested was a thousand and seven hundred shekels of gold; beside ornaments, and collars, and purple raiment that was on the kings of Midian."
+        },
+        {
+          "ref": "John 19:2",
+          "text": "And the soldiers platted a crown of thorns, and put it on his head, and they put on him a purple robe,"
+        },
+        {
+          "ref": "Revelation 17:4",
+          "text": "And the woman was arrayed in purple and scarlet colour, and decked with gold and precious stones and pearls."
+        }
+      ],
+      "scripture_references": [
+        "Judges 8:26",
+        "John 19:2",
+        "Revelation 17:4"
+      ]
+    },
+    {
+      "content_id": "color.brass",
+      "legacy_index": 5,
+      "id": "brass",
+      "name": "Brass/Bronze",
+      "hex": "#8a6130",
+      "hebrewWord": "nechosheth (נְחֹשֶׁת)",
+      "greekWord": "chalkos (χαλκός)",
+      "symbolism": "Brass (bronze) represents judgment and the endurance of divine justice. The two great bronze objects — the altar of burnt offering and the laver — stand in the outer court as the first objects encountered, representing judgment (for sin) and cleansing (preparation for worship).",
+      "sanctuaryUse": "The altar of burnt offering was made of shittim wood overlaid with brass. The laver was solid brass, made from the polished mirrors of the women of Israel. The court pillars had brass sockets.",
+      "scriptures": [
+        {
+          "ref": "Exodus 27:1-2",
+          "text": "And thou shalt make an altar of shittim wood, five cubits long, and five cubits broad; the altar shall be foursquare: and the height thereof shall be three cubits. And thou shalt make the horns of it upon the four corners thereof: his horns shall be of the same: and thou shalt overlay it with brass."
+        },
+        {
+          "ref": "Numbers 21:9",
+          "text": "And Moses made a serpent of brass, and put it upon a pole, and it came to pass, that if a serpent had bitten any man, when he beheld the serpent of brass, he lived."
+        },
+        {
+          "ref": "John 3:14",
+          "text": "And as Moses lifted up the serpent in the wilderness, even so must the Son of man be lifted up:"
+        }
+      ],
+      "scripture_references": [
+        "Exodus 27:1-2",
+        "Numbers 21:9",
+        "John 3:14"
+      ]
+    },
+    {
+      "content_id": "color.silver",
+      "legacy_index": 6,
+      "id": "silver",
+      "name": "Silver",
+      "hex": "#9e9e9e",
+      "hebrewWord": "keseph (כֶּסֶף)",
+      "greekWord": "argyros (ἄργυρος)",
+      "symbolism": "Silver represents redemption and the atonement money. Each Israelite paid a 'ransom' or 'atonement money' (the half-shekel tax) in silver — symbolizing that all stand equally in need of redemption. Silver is also connected to the refinement and purification of character.",
+      "sanctuaryUse": "The 100 silver sockets (adonim) held the tabernacle boards — the foundation rested on redemption. The 20 silver hooks held the court curtains. All came from the census ransom money.",
+      "scriptures": [
+        {
+          "ref": "Exodus 38:27",
+          "text": "And of the hundred talents of silver were cast the sockets of the sanctuary, and the sockets of the vail; an hundred sockets of the hundred talents, a talent for a socket."
+        },
+        {
+          "ref": "Psalm 12:6",
+          "text": "The words of the LORD are pure words: as silver tried in a furnace of earth, purified seven times."
+        },
+        {
+          "ref": "1 Peter 1:18-19",
+          "text": "Forasmuch as ye know that ye were not redeemed with corruptible things, as silver and gold, from your vain conversation received by tradition from your fathers; But with the precious blood of Christ, as of a lamb without blemish and without spot:"
+        }
+      ],
+      "scripture_references": [
+        "Exodus 38:27",
+        "Psalm 12:6",
+        "1 Peter 1:18-19"
+      ]
+    },
+    {
+      "content_id": "color.dark",
+      "legacy_index": 7,
+      "id": "dark",
+      "name": "Dark/Black",
+      "hex": "#2a2a2a",
+      "hebrewWord": "techelet shachur (darkness)",
+      "greekWord": "skotos (σκότος)",
+      "symbolism": "Darkness and the dark (badgers') skin coverings represent sin, separation from God, and the concealment of sacred things from unworthy eyes. The outer covering of the tabernacle (badgers' or seal skins — tachash) was dark, plain, and unadorned — beauty hidden within.",
+      "sanctuaryUse": "The outermost covering of the tabernacle was made of badgers'/tachash skins — dark and rough, protecting the beautiful inner coverings from weather and concealing the glory within from casual observers.",
+      "scriptures": [
+        {
+          "ref": "Exodus 26:14",
+          "text": "And thou shalt make a covering for the tent of rams' skins dyed red, and a covering above of badgers' skins."
+        },
+        {
+          "ref": "Isaiah 53:2",
+          "text": "For he shall grow up before him as a tender plant, and as a root out of a dry ground: he hath no form nor comeliness; and when we shall see him, there is no beauty that we should desire him."
+        },
+        {
+          "ref": "2 Corinthians 5:21",
+          "text": "For he hath made him to be sin for us, who knew no sin; that we might be made the righteousness of God in him."
+        }
+      ],
+      "scripture_references": [
+        "Exodus 26:14",
+        "Isaiah 53:2",
+        "2 Corinthians 5:21"
+      ]
+    }
+  ],
+  "records": [
+    {
+      "content_id": "color.blue",
+      "legacy_index": 0,
+      "id": "blue",
+      "name": "Blue",
+      "hex": "#3b6ea8",
+      "hebrewWord": "tekeleth (תְּכֵלֶת)",
+      "greekWord": "hyakinthos (ὑάκινθος)",
+      "symbolism": "Blue represents the Law of God and divine authority. The blue thread woven throughout the sanctuary garments was made from a specific dye (likely from the chilazon shellfish), symbolizing heaven and the divine Law written on the two tables of stone.",
+      "sanctuaryUse": "Blue yarn used in the tabernacle curtains (Exodus 26:1), the veil (Exodus 26:31), the high priest's robe of the ephod (Exodus 28:31), the breastplate, girdle of the ephod, and the ribbons binding the golden plate to the mitre.",
+      "scriptures": [
+        {
+          "ref": "Exodus 26:1",
+          "text": "Moreover thou shalt make the tabernacle with ten curtains of fine twined linen, and blue, and purple, and scarlet."
+        },
+        {
+          "ref": "Numbers 15:38",
+          "text": "Speak unto the children of Israel, and bid them that they make them fringes in the borders of their garments throughout their generations, and that they put upon the fringe of the borders a ribband of blue:"
+        },
+        {
+          "ref": "Numbers 15:39",
+          "text": "And it shall be unto you for a fringe, that ye may look upon it, and remember all the commandments of the LORD, and do them."
+        }
+      ],
+      "scripture_references": [
+        "Exodus 26:1",
+        "Numbers 15:38",
+        "Numbers 15:39"
+      ]
+    },
+    {
+      "content_id": "color.red",
+      "legacy_index": 1,
+      "id": "red",
+      "name": "Red/Scarlet",
+      "hex": "#b72b2b",
+      "hebrewWord": "shani (שָׁנִי) / tola'at shani",
+      "greekWord": "kokkinos (κόκκινος)",
+      "symbolism": "Scarlet/red represents the blood of Christ, sacrifice, and redemption. The double thread of crimson (tola'at shani — literally 'worm scarlet', from the crimson worm Coccus ilicis) powerfully symbolizes the sacrificial atonement.",
+      "sanctuaryUse": "Scarlet used in the curtains, veil, gate covering, and high priest's garments. Also used in the cleansing ritual (Leviticus 14) with cedar wood and hyssop — a rich typology of cleansing through blood.",
+      "scriptures": [
+        {
+          "ref": "Isaiah 1:18",
+          "text": "Come now, and let us reason together, saith the LORD: though your sins be as scarlet, they shall be as white as snow; though they be red like crimson, they shall be as wool."
+        },
+        {
+          "ref": "Hebrews 9:22",
+          "text": "And almost all things are by the law purged with blood; and without shedding of blood is no remission."
+        },
+        {
+          "ref": "Revelation 1:5",
+          "text": "And from Jesus Christ, who is the faithful witness, and the first begotten of the dead, and the prince of the kings of the earth. Unto him that loved us, and washed us from our sins in his own blood,"
+        }
+      ],
+      "scripture_references": [
+        "Isaiah 1:18",
+        "Hebrews 9:22",
+        "Revelation 1:5"
+      ]
+    },
+    {
+      "content_id": "color.white",
+      "legacy_index": 2,
+      "id": "white",
+      "name": "White/Linen",
+      "hex": "#f5f0e8",
+      "hebrewWord": "bad (בַּד) / shesh (שֵׁשׁ)",
+      "greekWord": "byssinos (βύσσινος)",
+      "symbolism": "White represents righteousness, purity, and the imputed righteousness of Christ. Fine white linen (shesh) was the fabric of the priestly garments, signifying the righteousness that must clothe those who serve in God's presence.",
+      "sanctuaryUse": "Fine twined linen used throughout the tabernacle — the curtains, gate screens, court hangings, and all priestly garments. The high priest wore white linen on the Day of Atonement, laying aside his ornate colored garments.",
+      "scriptures": [
+        {
+          "ref": "Revelation 19:8",
+          "text": "And to her was granted that she should be arrayed in fine linen, clean and white: for the fine linen is the righteousness of saints."
+        },
+        {
+          "ref": "Isaiah 61:10",
+          "text": "I will greatly rejoice in the LORD, my soul shall be joyful in my God; for he hath clothed me with the garments of salvation, he hath covered me with the robe of righteousness."
+        },
+        {
+          "ref": "Leviticus 16:4",
+          "text": "He shall put on the holy linen coat, and he shall have the linen breeches upon his flesh, and shall be girded with a linen girdle, and with the linen mitre shall he be attired: these are holy garments; therefore shall he wash his flesh in water, and so put them on."
+        }
+      ],
+      "scripture_references": [
+        "Revelation 19:8",
+        "Isaiah 61:10",
+        "Leviticus 16:4"
+      ]
+    },
+    {
+      "content_id": "color.gold",
+      "legacy_index": 3,
+      "id": "gold",
+      "name": "Gold",
+      "hex": "#c9960c",
+      "hebrewWord": "zahav (זָהָב)",
+      "greekWord": "chrysos (χρυσός)",
+      "symbolism": "Gold represents divinity, the nature of God, and the divine character. The most sacred sanctuary objects — the Ark, mercy seat, lampstand, and altar of incense — were all made of pure gold. Gold cannot be corrupted or tarnished, symbolizing God's incorruptible nature.",
+      "sanctuaryUse": "The Ark of the Covenant overlaid with pure gold, the mercy seat of solid gold, the golden lampstand beaten from one piece, the altar of incense overlaid with gold, and the crown of gold on the high priest's mitre.",
+      "scriptures": [
+        {
+          "ref": "Exodus 25:11",
+          "text": "And thou shalt overlay it with pure gold, within and without shalt thou overlay it, and shalt make upon it a crown of gold round about."
+        },
+        {
+          "ref": "Revelation 21:18",
+          "text": "And the building of the wall of it was of jasper: and the city was pure gold, like unto clear glass."
+        },
+        {
+          "ref": "1 Peter 1:7",
+          "text": "That the trial of your faith, being much more precious than of gold that perisheth, though it be tried with fire, might be found unto praise and honour and glory at the appearing of Jesus Christ:"
+        }
+      ],
+      "scripture_references": [
+        "Exodus 25:11",
+        "Revelation 21:18",
+        "1 Peter 1:7"
+      ]
+    },
+    {
+      "content_id": "color.purple",
+      "legacy_index": 4,
+      "id": "purple",
+      "name": "Purple",
+      "hex": "#6b3fa0",
+      "hebrewWord": "argaman (אַרְגָּמָן)",
+      "greekWord": "porphyra (πορφύρα)",
+      "symbolism": "Purple represents royalty and kingship. Derived from rare mollusks (Murex) along the Phoenician coast, purple dye was extraordinarily expensive and worn only by royalty and the highest nobility. Christ is both Priest and King.",
+      "sanctuaryUse": "Purple woven throughout the sanctuary curtains and the high priest's garments, signifying that the One served in the sanctuary is not merely a priest but the King of the universe.",
+      "scriptures": [
+        {
+          "ref": "Judges 8:26",
+          "text": "And the weight of the golden earrings that he requested was a thousand and seven hundred shekels of gold; beside ornaments, and collars, and purple raiment that was on the kings of Midian."
+        },
+        {
+          "ref": "John 19:2",
+          "text": "And the soldiers platted a crown of thorns, and put it on his head, and they put on him a purple robe,"
+        },
+        {
+          "ref": "Revelation 17:4",
+          "text": "And the woman was arrayed in purple and scarlet colour, and decked with gold and precious stones and pearls."
+        }
+      ],
+      "scripture_references": [
+        "Judges 8:26",
+        "John 19:2",
+        "Revelation 17:4"
+      ]
+    },
+    {
+      "content_id": "color.brass",
+      "legacy_index": 5,
+      "id": "brass",
+      "name": "Brass/Bronze",
+      "hex": "#8a6130",
+      "hebrewWord": "nechosheth (נְחֹשֶׁת)",
+      "greekWord": "chalkos (χαλκός)",
+      "symbolism": "Brass (bronze) represents judgment and the endurance of divine justice. The two great bronze objects — the altar of burnt offering and the laver — stand in the outer court as the first objects encountered, representing judgment (for sin) and cleansing (preparation for worship).",
+      "sanctuaryUse": "The altar of burnt offering was made of shittim wood overlaid with brass. The laver was solid brass, made from the polished mirrors of the women of Israel. The court pillars had brass sockets.",
+      "scriptures": [
+        {
+          "ref": "Exodus 27:1-2",
+          "text": "And thou shalt make an altar of shittim wood, five cubits long, and five cubits broad; the altar shall be foursquare: and the height thereof shall be three cubits. And thou shalt make the horns of it upon the four corners thereof: his horns shall be of the same: and thou shalt overlay it with brass."
+        },
+        {
+          "ref": "Numbers 21:9",
+          "text": "And Moses made a serpent of brass, and put it upon a pole, and it came to pass, that if a serpent had bitten any man, when he beheld the serpent of brass, he lived."
+        },
+        {
+          "ref": "John 3:14",
+          "text": "And as Moses lifted up the serpent in the wilderness, even so must the Son of man be lifted up:"
+        }
+      ],
+      "scripture_references": [
+        "Exodus 27:1-2",
+        "Numbers 21:9",
+        "John 3:14"
+      ]
+    },
+    {
+      "content_id": "color.silver",
+      "legacy_index": 6,
+      "id": "silver",
+      "name": "Silver",
+      "hex": "#9e9e9e",
+      "hebrewWord": "keseph (כֶּסֶף)",
+      "greekWord": "argyros (ἄργυρος)",
+      "symbolism": "Silver represents redemption and the atonement money. Each Israelite paid a 'ransom' or 'atonement money' (the half-shekel tax) in silver — symbolizing that all stand equally in need of redemption. Silver is also connected to the refinement and purification of character.",
+      "sanctuaryUse": "The 100 silver sockets (adonim) held the tabernacle boards — the foundation rested on redemption. The 20 silver hooks held the court curtains. All came from the census ransom money.",
+      "scriptures": [
+        {
+          "ref": "Exodus 38:27",
+          "text": "And of the hundred talents of silver were cast the sockets of the sanctuary, and the sockets of the vail; an hundred sockets of the hundred talents, a talent for a socket."
+        },
+        {
+          "ref": "Psalm 12:6",
+          "text": "The words of the LORD are pure words: as silver tried in a furnace of earth, purified seven times."
+        },
+        {
+          "ref": "1 Peter 1:18-19",
+          "text": "Forasmuch as ye know that ye were not redeemed with corruptible things, as silver and gold, from your vain conversation received by tradition from your fathers; But with the precious blood of Christ, as of a lamb without blemish and without spot:"
+        }
+      ],
+      "scripture_references": [
+        "Exodus 38:27",
+        "Psalm 12:6",
+        "1 Peter 1:18-19"
+      ]
+    },
+    {
+      "content_id": "color.dark",
+      "legacy_index": 7,
+      "id": "dark",
+      "name": "Dark/Black",
+      "hex": "#2a2a2a",
+      "hebrewWord": "techelet shachur (darkness)",
+      "greekWord": "skotos (σκότος)",
+      "symbolism": "Darkness and the dark (badgers') skin coverings represent sin, separation from God, and the concealment of sacred things from unworthy eyes. The outer covering of the tabernacle (badgers' or seal skins — tachash) was dark, plain, and unadorned — beauty hidden within.",
+      "sanctuaryUse": "The outermost covering of the tabernacle was made of badgers'/tachash skins — dark and rough, protecting the beautiful inner coverings from weather and concealing the glory within from casual observers.",
+      "scriptures": [
+        {
+          "ref": "Exodus 26:14",
+          "text": "And thou shalt make a covering for the tent of rams' skins dyed red, and a covering above of badgers' skins."
+        },
+        {
+          "ref": "Isaiah 53:2",
+          "text": "For he shall grow up before him as a tender plant, and as a root out of a dry ground: he hath no form nor comeliness; and when we shall see him, there is no beauty that we should desire him."
+        },
+        {
+          "ref": "2 Corinthians 5:21",
+          "text": "For he hath made him to be sin for us, who knew no sin; that we might be made the righteousness of God in him."
+        }
+      ],
+      "scripture_references": [
+        "Exodus 26:14",
+        "Isaiah 53:2",
+        "2 Corinthians 5:21"
+      ]
+    }
+  ],
+  "scripture_references": [
+    {
+      "id": "scripture.reference.exodus-27-1-8",
+      "reference": "Exodus 27:1-8",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.hebrews-9-12",
+      "reference": "Hebrews 9:12",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-30-17-21",
+      "reference": "Exodus 30:17-21",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.john-13-10",
+      "reference": "John 13:10",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-25-31-40",
+      "reference": "Exodus 25:31-40",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-1-12-13",
+      "reference": "Revelation 1:12-13",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-25-23-30",
+      "reference": "Exodus 25:23-30",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.john-6-35",
+      "reference": "John 6:35",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-30-1-10",
+      "reference": "Exodus 30:1-10",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-8-3-4",
+      "reference": "Revelation 8:3-4",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-25-10-16",
+      "reference": "Exodus 25:10-16",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.hebrews-9-4",
+      "reference": "Hebrews 9:4",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-25-17-22",
+      "reference": "Exodus 25:17-22",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.romans-3-25",
+      "reference": "Romans 3:25",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-16",
+      "reference": "Leviticus 16",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.hebrews-4-14-16",
+      "reference": "Hebrews 4:14-16",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-28",
+      "reference": "Exodus 28",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.zechariah-3-1-5",
+      "reference": "Zechariah 3:1-5",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-29",
+      "reference": "Exodus 29",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.1-peter-2-9",
+      "reference": "1 Peter 2:9",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.numbers-1-47-54",
+      "reference": "Numbers 1:47-54",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.numbers-3-6-9",
+      "reference": "Numbers 3:6-9",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-1",
+      "reference": "Leviticus 1",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.romans-12-1",
+      "reference": "Romans 12:1",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-2",
+      "reference": "Leviticus 2",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-3",
+      "reference": "Leviticus 3",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.romans-5-1",
+      "reference": "Romans 5:1",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-4",
+      "reference": "Leviticus 4",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.hebrews-13-12",
+      "reference": "Hebrews 13:12",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-5-6",
+      "reference": "Leviticus 5-6",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.1-peter-3-18",
+      "reference": "1 Peter 3:18",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-26-1",
+      "reference": "Exodus 26:1",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.numbers-15-38",
+      "reference": "Numbers 15:38",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.numbers-15-39",
+      "reference": "Numbers 15:39",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.isaiah-1-18",
+      "reference": "Isaiah 1:18",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.hebrews-9-22",
+      "reference": "Hebrews 9:22",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-1-5",
+      "reference": "Revelation 1:5",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-19-8",
+      "reference": "Revelation 19:8",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.isaiah-61-10",
+      "reference": "Isaiah 61:10",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-16-4",
+      "reference": "Leviticus 16:4",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-25-11",
+      "reference": "Exodus 25:11",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-21-18",
+      "reference": "Revelation 21:18",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.1-peter-1-7",
+      "reference": "1 Peter 1:7",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.judges-8-26",
+      "reference": "Judges 8:26",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.john-19-2",
+      "reference": "John 19:2",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-17-4",
+      "reference": "Revelation 17:4",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-27-1-2",
+      "reference": "Exodus 27:1-2",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.numbers-21-9",
+      "reference": "Numbers 21:9",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.john-3-14",
+      "reference": "John 3:14",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-38-27",
+      "reference": "Exodus 38:27",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.psalm-12-6",
+      "reference": "Psalm 12:6",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.1-peter-1-18-19",
+      "reference": "1 Peter 1:18-19",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-26-14",
+      "reference": "Exodus 26:14",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.isaiah-53-2",
+      "reference": "Isaiah 53:2",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.2-corinthians-5-21",
+      "reference": "2 Corinthians 5:21",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    }
+  ]
+}

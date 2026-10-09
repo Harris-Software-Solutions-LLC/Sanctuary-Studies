@@ -1,0 +1,744 @@
+{
+  "format": "sanctuary-studies-content",
+  "content_type": "symbolism",
+  "content_version": 1,
+  "title": "Sanctuary Symbolism",
+  "source_revision": "5c8ae58e7432bf3cd8073eeab9c4c094e192b5ab",
+  "imported_at": "2026-10-09T12:34:14.502Z",
+  "source_files": [
+    "app-pages2.js"
+  ],
+  "license_status": "review-required",
+  "runtime": "offline-local",
+  "counts": {
+    "records": 16,
+    "scripture_references": 55
+  },
+  "record_count": 16,
+  "scripture_reference_count": 55,
+  "categories": {
+    "furnishings": [
+      {
+        "name": "Brazen Altar",
+        "zone": "Outer Court",
+        "heb": "Mizbeach",
+        "desc": "The large bronze altar at the entrance of the sanctuary where animals were sacrificed daily. The first piece of furniture encountered when entering the sanctuary.",
+        "type": "Represents the cross of Christ — the place of sacrifice where sin is atoned for by blood.",
+        "scripture": "Exodus 27:1-8; Hebrews 9:12",
+        "color": "#b45309"
+      },
+      {
+        "name": "Brazen Laver",
+        "zone": "Outer Court",
+        "heb": "Kiyor",
+        "desc": "The large bronze basin filled with water, located between the altar and the tabernacle entrance. Priests washed hands and feet before serving.",
+        "type": "Represents baptism and the cleansing power of the Word of God. Titus 3:5; Ephesians 5:26.",
+        "scripture": "Exodus 30:17-21; John 13:10",
+        "color": "#0891b2"
+      },
+      {
+        "name": "Golden Lampstand",
+        "zone": "Holy Place",
+        "heb": "Menorah",
+        "desc": "The seven-branched golden lampstand on the south side of the Holy Place, fueled by pure olive oil. It burned continually, providing the only light in the Holy Place.",
+        "type": "Represents Christ as the Light of the world (John 8:12) and the Holy Spirit as the sevenfold spirit. The seven lamps parallel the seven spirits of God (Rev. 4:5).",
+        "scripture": "Exodus 25:31-40; Revelation 1:12-13",
+        "color": "#ca8a04"
+      },
+      {
+        "name": "Table of Shewbread",
+        "zone": "Holy Place",
+        "heb": "Shulchan",
+        "desc": "The golden-overlaid table on the north side of the Holy Place, holding twelve loaves of bread replaced every Sabbath. The bread was eaten by the priests.",
+        "type": "Represents Christ as the Bread of Life (John 6:35). The twelve loaves symbolize the twelve tribes — all of God's people — sustained by Christ's presence.",
+        "scripture": "Exodus 25:23-30; John 6:35",
+        "color": "#b45309"
+      },
+      {
+        "name": "Altar of Incense",
+        "zone": "Holy Place",
+        "heb": "Mizbeach haQetoret",
+        "desc": "The small golden altar placed directly in front of the veil leading to the Most Holy Place. Incense was burned on it morning and evening, filling the sanctuary with fragrant smoke.",
+        "type": "Represents the prayers of the saints, ascending to God through Christ's intercession (Rev. 8:3-4). The sweet fragrance = the merits of Christ covering our prayers.",
+        "scripture": "Exodus 30:1-10; Revelation 8:3-4",
+        "color": "#d97706"
+      },
+      {
+        "name": "Ark of the Covenant",
+        "zone": "Most Holy Place",
+        "heb": "Aron Habrit",
+        "desc": "The most sacred object — an acacia wood chest overlaid entirely with gold, containing the two tables of the Ten Commandments, Aaron's rod that budded, and a golden pot of manna.",
+        "type": "Represents the throne of God and His government of law. The Law (commandments) inside = God's unchanging moral standard. Christ's blood on the mercy seat above = grace meeting justice.",
+        "scripture": "Exodus 25:10-16; Hebrews 9:4",
+        "color": "#ca8a04"
+      },
+      {
+        "name": "Mercy Seat",
+        "zone": "Most Holy Place",
+        "heb": "Kapporeth",
+        "desc": "The pure gold cover of the Ark of the Covenant, flanked by two golden cherubim facing each other with outstretched wings. The Shekinah glory of God appeared between the cherubim.",
+        "type": "Represents the throne of grace — where God's law (justice) and Christ's blood (mercy) meet. \"Mercy and truth are met together; righteousness and peace have kissed each other.\" (Ps. 85:10)",
+        "scripture": "Exodus 25:17-22; Romans 3:25",
+        "color": "#ca8a04"
+      }
+    ],
+    "priesthood": [
+      {
+        "name": "The High Priest",
+        "role": "Chief Mediator",
+        "desc": "Aaron and his successors served as the supreme mediator between God and Israel. He alone entered the Most Holy Place on the Day of Atonement.",
+        "type": "Type of Christ our Great High Priest, who \"ever liveth to make intercession\" (Heb. 7:25) in the heavenly sanctuary.",
+        "scripture": "Leviticus 16; Hebrews 4:14-16",
+        "color": "#1d4e89"
+      },
+      {
+        "name": "The Priestly Garments",
+        "role": "Vestments",
+        "desc": "Aaron wore eight special garments: the breastplate, ephod, robe, tunic, turban, sash, breeches, and golden plate engraved \"Holiness to the LORD.\"",
+        "type": "The garments represent Christ's character — His holiness, His intercession for all twelve tribes (breastplate), and His royal-priestly office.",
+        "scripture": "Exodus 28; Zechariah 3:1-5",
+        "color": "#5b21b6"
+      },
+      {
+        "name": "The Common Priests",
+        "role": "Daily Ministers",
+        "desc": "The sons of Aaron served as the regular priests, tending the lamps, replacing the shewbread, offering the daily sacrifices, and ministering in the Holy Place.",
+        "type": "Represent believers — a \"royal priesthood\" (1 Pet. 2:9) who through Christ have access to the Holy Place (the presence of God) through prayer and the Holy Spirit.",
+        "scripture": "Exodus 29; 1 Peter 2:9",
+        "color": "#0f766e"
+      },
+      {
+        "name": "The Levites",
+        "role": "Sanctuary Servants",
+        "desc": "The tribe of Levi was set apart to assist the priests, transport the tabernacle, guard its gates, and lead worship in music and song.",
+        "type": "Represent the broader body of believers called to service — supporting the work of ministry in various capacities. Also: the angels who minister in the heavenly sanctuary.",
+        "scripture": "Numbers 1:47-54; Numbers 3:6-9",
+        "color": "#b45309"
+      }
+    ],
+    "offerings": [
+      {
+        "name": "The Burnt Offering (Olah)",
+        "freq": "Daily & Voluntary",
+        "desc": "An animal entirely consumed by fire on the altar. Nothing held back — wholly given to God. Voluntary act of complete consecration.",
+        "type": "Represents total consecration to God — Christ's complete surrender to the Father's will (\"Not my will, but thine\"). Also: the believer's dedication of self.",
+        "scripture": "Leviticus 1; Romans 12:1",
+        "color": "#dc2626"
+      },
+      {
+        "name": "The Meal Offering (Minchah)",
+        "freq": "Daily",
+        "desc": "An offering of fine flour, oil, salt, and frankincense — the work of human hands presented to God. No leaven (sin); no honey (natural sweetness).",
+        "type": "Represents Christ as the perfect sinless Man — human, yet without the corruption of sin (no leaven). His perfect obedient life offered to God on our behalf.",
+        "scripture": "Leviticus 2; John 6:35",
+        "color": "#d97706"
+      },
+      {
+        "name": "The Peace Offering (Shelamim)",
+        "freq": "Voluntary",
+        "desc": "A shared communion meal — portions burned for God, portions for the priests, portions for the worshiper. A celebration of restored fellowship.",
+        "type": "Represents justification and fellowship restored through Christ. \"Therefore being justified by faith, we have peace with God through our Lord Jesus Christ.\" (Rom. 5:1)",
+        "scripture": "Leviticus 3; Romans 5:1",
+        "color": "#15803d"
+      },
+      {
+        "name": "The Sin Offering (Chatat)",
+        "freq": "For unintentional sin",
+        "desc": "Required when sin was committed unwittingly. Blood applied to the altar horns; the animal's body burned outside the camp.",
+        "type": "Represents Christ bearing our sin outside the gate (Heb. 13:12-13). His blood applied to the heavenly altar removes the record of confessed sin.",
+        "scripture": "Leviticus 4; Hebrews 13:12",
+        "color": "#7c3aed"
+      },
+      {
+        "name": "The Trespass Offering (Asham)",
+        "freq": "For specific transgressions",
+        "desc": "Required when a specific wrong was done — especially involving a breach of trust or defilement of holy things. Restitution required in addition to the offering.",
+        "type": "Represents Christ making restitution for us — not just covering sin, but making right what was wrong. His perfect life more than compensates for all our failures.",
+        "scripture": "Leviticus 5-6; 1 Peter 3:18",
+        "color": "#be185d"
+      }
+    ]
+  },
+  "colors": [],
+  "records": [
+    {
+      "content_id": "symbolism.furnishings.brazen-altar",
+      "category": "furnishings",
+      "legacy_index": 0,
+      "name": "Brazen Altar",
+      "zone": "Outer Court",
+      "heb": "Mizbeach",
+      "desc": "The large bronze altar at the entrance of the sanctuary where animals were sacrificed daily. The first piece of furniture encountered when entering the sanctuary.",
+      "type": "Represents the cross of Christ — the place of sacrifice where sin is atoned for by blood.",
+      "scripture": "Exodus 27:1-8; Hebrews 9:12",
+      "color": "#b45309",
+      "scripture_references": [
+        "Exodus 27:1-8",
+        "Hebrews 9:12"
+      ]
+    },
+    {
+      "content_id": "symbolism.furnishings.brazen-laver",
+      "category": "furnishings",
+      "legacy_index": 1,
+      "name": "Brazen Laver",
+      "zone": "Outer Court",
+      "heb": "Kiyor",
+      "desc": "The large bronze basin filled with water, located between the altar and the tabernacle entrance. Priests washed hands and feet before serving.",
+      "type": "Represents baptism and the cleansing power of the Word of God. Titus 3:5; Ephesians 5:26.",
+      "scripture": "Exodus 30:17-21; John 13:10",
+      "color": "#0891b2",
+      "scripture_references": [
+        "Exodus 30:17-21",
+        "John 13:10"
+      ]
+    },
+    {
+      "content_id": "symbolism.furnishings.golden-lampstand",
+      "category": "furnishings",
+      "legacy_index": 2,
+      "name": "Golden Lampstand",
+      "zone": "Holy Place",
+      "heb": "Menorah",
+      "desc": "The seven-branched golden lampstand on the south side of the Holy Place, fueled by pure olive oil. It burned continually, providing the only light in the Holy Place.",
+      "type": "Represents Christ as the Light of the world (John 8:12) and the Holy Spirit as the sevenfold spirit. The seven lamps parallel the seven spirits of God (Rev. 4:5).",
+      "scripture": "Exodus 25:31-40; Revelation 1:12-13",
+      "color": "#ca8a04",
+      "scripture_references": [
+        "Exodus 25:31-40",
+        "Revelation 1:12-13"
+      ]
+    },
+    {
+      "content_id": "symbolism.furnishings.table-of-shewbread",
+      "category": "furnishings",
+      "legacy_index": 3,
+      "name": "Table of Shewbread",
+      "zone": "Holy Place",
+      "heb": "Shulchan",
+      "desc": "The golden-overlaid table on the north side of the Holy Place, holding twelve loaves of bread replaced every Sabbath. The bread was eaten by the priests.",
+      "type": "Represents Christ as the Bread of Life (John 6:35). The twelve loaves symbolize the twelve tribes — all of God's people — sustained by Christ's presence.",
+      "scripture": "Exodus 25:23-30; John 6:35",
+      "color": "#b45309",
+      "scripture_references": [
+        "Exodus 25:23-30",
+        "John 6:35"
+      ]
+    },
+    {
+      "content_id": "symbolism.furnishings.altar-of-incense",
+      "category": "furnishings",
+      "legacy_index": 4,
+      "name": "Altar of Incense",
+      "zone": "Holy Place",
+      "heb": "Mizbeach haQetoret",
+      "desc": "The small golden altar placed directly in front of the veil leading to the Most Holy Place. Incense was burned on it morning and evening, filling the sanctuary with fragrant smoke.",
+      "type": "Represents the prayers of the saints, ascending to God through Christ's intercession (Rev. 8:3-4). The sweet fragrance = the merits of Christ covering our prayers.",
+      "scripture": "Exodus 30:1-10; Revelation 8:3-4",
+      "color": "#d97706",
+      "scripture_references": [
+        "Exodus 30:1-10",
+        "Revelation 8:3-4"
+      ]
+    },
+    {
+      "content_id": "symbolism.furnishings.ark-of-the-covenant",
+      "category": "furnishings",
+      "legacy_index": 5,
+      "name": "Ark of the Covenant",
+      "zone": "Most Holy Place",
+      "heb": "Aron Habrit",
+      "desc": "The most sacred object — an acacia wood chest overlaid entirely with gold, containing the two tables of the Ten Commandments, Aaron's rod that budded, and a golden pot of manna.",
+      "type": "Represents the throne of God and His government of law. The Law (commandments) inside = God's unchanging moral standard. Christ's blood on the mercy seat above = grace meeting justice.",
+      "scripture": "Exodus 25:10-16; Hebrews 9:4",
+      "color": "#ca8a04",
+      "scripture_references": [
+        "Exodus 25:10-16",
+        "Hebrews 9:4"
+      ]
+    },
+    {
+      "content_id": "symbolism.furnishings.mercy-seat",
+      "category": "furnishings",
+      "legacy_index": 6,
+      "name": "Mercy Seat",
+      "zone": "Most Holy Place",
+      "heb": "Kapporeth",
+      "desc": "The pure gold cover of the Ark of the Covenant, flanked by two golden cherubim facing each other with outstretched wings. The Shekinah glory of God appeared between the cherubim.",
+      "type": "Represents the throne of grace — where God's law (justice) and Christ's blood (mercy) meet. \"Mercy and truth are met together; righteousness and peace have kissed each other.\" (Ps. 85:10)",
+      "scripture": "Exodus 25:17-22; Romans 3:25",
+      "color": "#ca8a04",
+      "scripture_references": [
+        "Exodus 25:17-22",
+        "Romans 3:25"
+      ]
+    },
+    {
+      "content_id": "symbolism.priesthood.the-high-priest",
+      "category": "priesthood",
+      "legacy_index": 0,
+      "name": "The High Priest",
+      "role": "Chief Mediator",
+      "desc": "Aaron and his successors served as the supreme mediator between God and Israel. He alone entered the Most Holy Place on the Day of Atonement.",
+      "type": "Type of Christ our Great High Priest, who \"ever liveth to make intercession\" (Heb. 7:25) in the heavenly sanctuary.",
+      "scripture": "Leviticus 16; Hebrews 4:14-16",
+      "color": "#1d4e89",
+      "scripture_references": [
+        "Leviticus 16",
+        "Hebrews 4:14-16"
+      ]
+    },
+    {
+      "content_id": "symbolism.priesthood.the-priestly-garments",
+      "category": "priesthood",
+      "legacy_index": 1,
+      "name": "The Priestly Garments",
+      "role": "Vestments",
+      "desc": "Aaron wore eight special garments: the breastplate, ephod, robe, tunic, turban, sash, breeches, and golden plate engraved \"Holiness to the LORD.\"",
+      "type": "The garments represent Christ's character — His holiness, His intercession for all twelve tribes (breastplate), and His royal-priestly office.",
+      "scripture": "Exodus 28; Zechariah 3:1-5",
+      "color": "#5b21b6",
+      "scripture_references": [
+        "Exodus 28",
+        "Zechariah 3:1-5"
+      ]
+    },
+    {
+      "content_id": "symbolism.priesthood.the-common-priests",
+      "category": "priesthood",
+      "legacy_index": 2,
+      "name": "The Common Priests",
+      "role": "Daily Ministers",
+      "desc": "The sons of Aaron served as the regular priests, tending the lamps, replacing the shewbread, offering the daily sacrifices, and ministering in the Holy Place.",
+      "type": "Represent believers — a \"royal priesthood\" (1 Pet. 2:9) who through Christ have access to the Holy Place (the presence of God) through prayer and the Holy Spirit.",
+      "scripture": "Exodus 29; 1 Peter 2:9",
+      "color": "#0f766e",
+      "scripture_references": [
+        "Exodus 29",
+        "1 Peter 2:9"
+      ]
+    },
+    {
+      "content_id": "symbolism.priesthood.the-levites",
+      "category": "priesthood",
+      "legacy_index": 3,
+      "name": "The Levites",
+      "role": "Sanctuary Servants",
+      "desc": "The tribe of Levi was set apart to assist the priests, transport the tabernacle, guard its gates, and lead worship in music and song.",
+      "type": "Represent the broader body of believers called to service — supporting the work of ministry in various capacities. Also: the angels who minister in the heavenly sanctuary.",
+      "scripture": "Numbers 1:47-54; Numbers 3:6-9",
+      "color": "#b45309",
+      "scripture_references": [
+        "Numbers 1:47-54",
+        "Numbers 3:6-9"
+      ]
+    },
+    {
+      "content_id": "symbolism.offerings.the-burnt-offering-olah",
+      "category": "offerings",
+      "legacy_index": 0,
+      "name": "The Burnt Offering (Olah)",
+      "freq": "Daily & Voluntary",
+      "desc": "An animal entirely consumed by fire on the altar. Nothing held back — wholly given to God. Voluntary act of complete consecration.",
+      "type": "Represents total consecration to God — Christ's complete surrender to the Father's will (\"Not my will, but thine\"). Also: the believer's dedication of self.",
+      "scripture": "Leviticus 1; Romans 12:1",
+      "color": "#dc2626",
+      "scripture_references": [
+        "Leviticus 1",
+        "Romans 12:1"
+      ]
+    },
+    {
+      "content_id": "symbolism.offerings.the-meal-offering-minchah",
+      "category": "offerings",
+      "legacy_index": 1,
+      "name": "The Meal Offering (Minchah)",
+      "freq": "Daily",
+      "desc": "An offering of fine flour, oil, salt, and frankincense — the work of human hands presented to God. No leaven (sin); no honey (natural sweetness).",
+      "type": "Represents Christ as the perfect sinless Man — human, yet without the corruption of sin (no leaven). His perfect obedient life offered to God on our behalf.",
+      "scripture": "Leviticus 2; John 6:35",
+      "color": "#d97706",
+      "scripture_references": [
+        "Leviticus 2",
+        "John 6:35"
+      ]
+    },
+    {
+      "content_id": "symbolism.offerings.the-peace-offering-shelamim",
+      "category": "offerings",
+      "legacy_index": 2,
+      "name": "The Peace Offering (Shelamim)",
+      "freq": "Voluntary",
+      "desc": "A shared communion meal — portions burned for God, portions for the priests, portions for the worshiper. A celebration of restored fellowship.",
+      "type": "Represents justification and fellowship restored through Christ. \"Therefore being justified by faith, we have peace with God through our Lord Jesus Christ.\" (Rom. 5:1)",
+      "scripture": "Leviticus 3; Romans 5:1",
+      "color": "#15803d",
+      "scripture_references": [
+        "Leviticus 3",
+        "Romans 5:1"
+      ]
+    },
+    {
+      "content_id": "symbolism.offerings.the-sin-offering-chatat",
+      "category": "offerings",
+      "legacy_index": 3,
+      "name": "The Sin Offering (Chatat)",
+      "freq": "For unintentional sin",
+      "desc": "Required when sin was committed unwittingly. Blood applied to the altar horns; the animal's body burned outside the camp.",
+      "type": "Represents Christ bearing our sin outside the gate (Heb. 13:12-13). His blood applied to the heavenly altar removes the record of confessed sin.",
+      "scripture": "Leviticus 4; Hebrews 13:12",
+      "color": "#7c3aed",
+      "scripture_references": [
+        "Leviticus 4",
+        "Hebrews 13:12"
+      ]
+    },
+    {
+      "content_id": "symbolism.offerings.the-trespass-offering-asham",
+      "category": "offerings",
+      "legacy_index": 4,
+      "name": "The Trespass Offering (Asham)",
+      "freq": "For specific transgressions",
+      "desc": "Required when a specific wrong was done — especially involving a breach of trust or defilement of holy things. Restitution required in addition to the offering.",
+      "type": "Represents Christ making restitution for us — not just covering sin, but making right what was wrong. His perfect life more than compensates for all our failures.",
+      "scripture": "Leviticus 5-6; 1 Peter 3:18",
+      "color": "#be185d",
+      "scripture_references": [
+        "Leviticus 5-6",
+        "1 Peter 3:18"
+      ]
+    }
+  ],
+  "scripture_references": [
+    {
+      "id": "scripture.reference.exodus-27-1-8",
+      "reference": "Exodus 27:1-8",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.hebrews-9-12",
+      "reference": "Hebrews 9:12",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-30-17-21",
+      "reference": "Exodus 30:17-21",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.john-13-10",
+      "reference": "John 13:10",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-25-31-40",
+      "reference": "Exodus 25:31-40",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-1-12-13",
+      "reference": "Revelation 1:12-13",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-25-23-30",
+      "reference": "Exodus 25:23-30",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.john-6-35",
+      "reference": "John 6:35",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-30-1-10",
+      "reference": "Exodus 30:1-10",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-8-3-4",
+      "reference": "Revelation 8:3-4",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-25-10-16",
+      "reference": "Exodus 25:10-16",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.hebrews-9-4",
+      "reference": "Hebrews 9:4",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-25-17-22",
+      "reference": "Exodus 25:17-22",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.romans-3-25",
+      "reference": "Romans 3:25",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-16",
+      "reference": "Leviticus 16",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.hebrews-4-14-16",
+      "reference": "Hebrews 4:14-16",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-28",
+      "reference": "Exodus 28",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.zechariah-3-1-5",
+      "reference": "Zechariah 3:1-5",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-29",
+      "reference": "Exodus 29",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.1-peter-2-9",
+      "reference": "1 Peter 2:9",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.numbers-1-47-54",
+      "reference": "Numbers 1:47-54",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.numbers-3-6-9",
+      "reference": "Numbers 3:6-9",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-1",
+      "reference": "Leviticus 1",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.romans-12-1",
+      "reference": "Romans 12:1",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-2",
+      "reference": "Leviticus 2",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-3",
+      "reference": "Leviticus 3",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.romans-5-1",
+      "reference": "Romans 5:1",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-4",
+      "reference": "Leviticus 4",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.hebrews-13-12",
+      "reference": "Hebrews 13:12",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-5-6",
+      "reference": "Leviticus 5-6",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.1-peter-3-18",
+      "reference": "1 Peter 3:18",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-26-1",
+      "reference": "Exodus 26:1",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.numbers-15-38",
+      "reference": "Numbers 15:38",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.numbers-15-39",
+      "reference": "Numbers 15:39",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.isaiah-1-18",
+      "reference": "Isaiah 1:18",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.hebrews-9-22",
+      "reference": "Hebrews 9:22",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-1-5",
+      "reference": "Revelation 1:5",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-19-8",
+      "reference": "Revelation 19:8",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.isaiah-61-10",
+      "reference": "Isaiah 61:10",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.leviticus-16-4",
+      "reference": "Leviticus 16:4",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-25-11",
+      "reference": "Exodus 25:11",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-21-18",
+      "reference": "Revelation 21:18",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.1-peter-1-7",
+      "reference": "1 Peter 1:7",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.judges-8-26",
+      "reference": "Judges 8:26",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.john-19-2",
+      "reference": "John 19:2",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.revelation-17-4",
+      "reference": "Revelation 17:4",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-27-1-2",
+      "reference": "Exodus 27:1-2",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.numbers-21-9",
+      "reference": "Numbers 21:9",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.john-3-14",
+      "reference": "John 3:14",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-38-27",
+      "reference": "Exodus 38:27",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.psalm-12-6",
+      "reference": "Psalm 12:6",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.1-peter-1-18-19",
+      "reference": "1 Peter 1:18-19",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.exodus-26-14",
+      "reference": "Exodus 26:14",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.isaiah-53-2",
+      "reference": "Isaiah 53:2",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    },
+    {
+      "id": "scripture.reference.2-corinthians-5-21",
+      "reference": "2 Corinthians 5:21",
+      "kind": "Scripture reference",
+      "source": "legacy Symbolism and sacred Colors content"
+    }
+  ]
+}
