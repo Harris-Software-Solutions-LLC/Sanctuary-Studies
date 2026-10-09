@@ -1,6 +1,11 @@
 {
   "format": "sanctuary-studies-database",
   "schema_version": 1,
+  "common_columns": {
+    "deleted_at": "datetime|null",
+    "created_at": "datetime",
+    "updated_at": "datetime"
+  },
   "tables": {
     "studies": {
       "primary_key": ["id"],

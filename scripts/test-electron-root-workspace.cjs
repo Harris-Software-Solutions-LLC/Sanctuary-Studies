@@ -1,4 +1,5 @@
 const path = require('node:path');
+const fs = require('node:fs');
 const { app, BrowserWindow, session } = require('electron');
 
 const root = path.resolve(__dirname, '..');
@@ -24,6 +25,10 @@ function wait(milliseconds) {
 }
 
 async function run() {
+  const testProfile = path.join(root, `.audit-temp-electron-root-${process.pid}`);
+  fs.mkdirSync(testProfile, { recursive: true });
+  app.setPath('userData', testProfile);
+  app.setPath('cache', path.join(testProfile, 'cache'));
   await app.whenReady();
 
   session.defaultSession.webRequest.onBeforeRequest({ urls: ['http://*/*', 'https://*/*'] }, (details, callback) => {

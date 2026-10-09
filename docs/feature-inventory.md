@@ -13,16 +13,16 @@
 
 | Surface | Location | Status | Finding |
 |---|---|---|---|
-| Study Library table | `ui/index.html`, `ui/app.js` | Partially working | Renders three demo studies and supports row selection; records are not yet loaded from the shared store. |
-| Global and table search | `ui/app.js` | Working for demo data | Search filters title, description, and tags and keeps the two search fields synchronized. |
-| Study inspector | `ui/app.js` | Working for demo data | Selected study status, counts, tags, and updated text render correctly. |
-| New Study dialog | `ui/index.html`, `ui/app.js` | Partially working | Opens and enforces the HTML required title field, but submission only closes the dialog; it does not create a persisted study. |
+| Study Library table | `ui/index.html`, `ui/app.js`, Electron IPC | Working | Loads active studies from the shared local store, supports row selection, and calculates live record counts. |
+| Global and table search | `ui/app.js` | Working | Search filters persisted study titles, descriptions, and statuses and keeps the two search fields synchronized. |
+| Study inspector | `ui/app.js` | Working | Selected study status, live counts, tags, updated time, and local-storage state render from shared records. |
+| New Study dialog | `ui/index.html`, `ui/app.js`, `shared/store.cjs` | Working | Validates the title, persists the study through Electron IPC, and displays errors without closing on failure. |
 | Existing Study Workspace | `ui/app.js`, Electron preload/main | Not yet verified end-to-end | The local IPC bridge is present and the root workspace loads independently, but a real click-through from the new window was not automated in this audit. |
-| Collections | `ui/index.html` | Unimplemented | Navigation control has no action. |
-| Data Model | `ui/index.html` | Unimplemented | Navigation control has no action. |
-| Import / Export | `ui/index.html` | Unimplemented | Navigation control has no action in the new shell. |
-| Settings | `ui/index.html` | Unimplemented | Navigation control has no action. |
-| Filter and Sort controls | `ui/index.html` | Unimplemented | Buttons are visual placeholders with no handlers. |
+| Collections | `ui/index.html`, `ui/app.js` | Partially working | Opens an explicit explanatory workspace surface; collection persistence is deferred. |
+| Data Model | `ui/index.html`, `ui/app.js` | Working | Opens the version-1 shared-contract summary. |
+| Import / Export | `ui/index.html`, `ui/app.js`, Electron IPC | Working | Native Electron dialogs import and export validated `.ssbundle` files. |
+| Settings | `ui/index.html`, `ui/app.js` | Partially working | Opens the local-runtime settings surface; preference persistence is deferred. |
+| Filter and Sort controls | `ui/index.html`, `ui/app.js` | Working | Cycles status filters and toggles updated/title sorting. |
 
 ## Preserved root Study Workspace
 
@@ -58,11 +58,11 @@ The root application remains in `index.html`, `app-core.js`, `app-data.js`, `app
 | Shared schema v1 | Working | Schema and model validation pass for studies, sources, notes, entities, relationships, tags, and study tags. |
 | Shared store persistence | Working | A study and note survived store reopening in the E: persistence test. |
 | Shared store invalid input | Working | Empty study titles and missing-study records return errors. |
-| New UI to shared store | Unimplemented | The new renderer uses hard-coded demo records and does not call `sanctuaryDesktop.data`. |
+| New UI to shared store | Working | The renderer reads snapshots and persists studies and section records through the restricted Electron preload bridge. |
 | Root workspace study persistence | Partially working | Local storage is used for the donation dismissal; no complete study/notes persistence workflow is present in the root UI. |
 | Export bundle model | Working | Shared model round-trip export/parse tests pass. |
-| Electron export IPC | Not yet verified | Handler exists in `electron/main.cjs` and preload, but no end-to-end renderer test was completed. |
-| Electron import IPC | Unimplemented | Store import exists, but no corresponding main/preload IPC path is exposed. |
+| Electron export IPC | Working | Native save-dialog export is exposed through main/preload and backed by the validated bundle model. |
+| Electron import IPC | Working | Native open-dialog import validates the bundle before replacing local data. |
 
 ## Local-runtime and safety findings
 

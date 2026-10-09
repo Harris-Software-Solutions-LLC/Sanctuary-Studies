@@ -39,11 +39,10 @@ function validateDatabase(database) {
   const tagIds = new Set(value.tags.map((tag) => tag.id));
   const errors = [];
 
-  for (const [table, rows] of Object.entries(value)) {
-    if (table === 'schema_version') continue;
-    if (!Array.isArray(rows)) errors.push(`${table} must be an array`);
+  for (const table of TABLES) {
+    if (!Array.isArray(value[table])) errors.push(`${table} must be an array`);
   }
-  for (const row of value.sources.concat(value.notes, value.entities, value.tags)) {
+  for (const row of [...value.sources, ...value.notes, ...value.entities, ...value.tags]) {
     if (!studyIds.has(row.study_id)) errors.push(`${row.id} references a missing study`);
   }
   for (const entity of value.entities) {

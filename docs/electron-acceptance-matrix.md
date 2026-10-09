@@ -1,6 +1,6 @@
 # Electron acceptance matrix
 
-Audit date: 2026-10-08. Branch: `UI`. No packaging was performed.
+Audit date: 2026-10-09. Branch: `UI`. No packaging was performed.
 
 | ID | Acceptance check | Evidence | Status |
 |---|---|---|---|
@@ -18,15 +18,15 @@ Audit date: 2026-10-08. Branch: `UI`. No packaging was performed.
 | EA-12 | New Study Library renders | Local Electron capture of `ui/index.html` | Passed |
 | EA-13 | Shared store persists data after reopening | `npm run test:store` | Passed |
 | EA-14 | Shared store rejects invalid input | `npm run test:store` | Passed |
-| EA-15 | New Library creates a persistent study | Current submit handler only closes the dialog | Not implemented |
-| EA-16 | New Library Filter and Sort controls work | No handlers are attached | Not implemented |
-| EA-17 | New Library loads shared-store records | Renderer still uses demo records | Not implemented |
+| EA-15 | New Library creates a persistent study | `npm run test:electron:library` creates through preload IPC and verifies after renderer reload | Passed |
+| EA-16 | New Library Filter and Sort controls work | Renderer handlers and live table assertions | Passed |
+| EA-17 | New Library loads shared-store records | `npm run test:electron:library` verifies persisted study text after reload | Passed |
 | EA-18 | New Library button opens root workspace through real main IPC | Bridge exists; click-through was not automated | Not yet verified |
 | EA-19 | Repeated legacy-window open/close preserves state | No lifecycle automation exists yet | Not yet verified |
-| EA-20 | Main/preload IPC snapshot/create/add/export works end-to-end | Static inspection only | Not yet verified |
+| EA-20 | Main/preload IPC snapshot/create/add/export works end-to-end | `npm run test:electron:library` plus store bundle round-trip | Passed |
 | EA-21 | Root notes, study references, and comparative data persist | No complete root persistence workflow was found | Not yet verified |
 | EA-22 | Main/UI ancestry comparison | Remote `main` is at `3525b7a8`; local checkout lacks the remote main object/ref, so no merge-base was attempted | Incomplete by design |
-| EA-23 | Google Drive archive recovery | Search can discover the folder; write operations return 404 | Unresolved |
+| EA-23 | Google Drive archive recovery | Existing folder opened through Drive search; feature inventory and task record uploaded and read back | Passed |
 
 ## Commands executed
 
@@ -37,6 +37,7 @@ npm run typecheck
 npm run test:shared
 npm run test:store
 npm run test:electron
+ npm run test:electron:library
 node --check scripts/test-electron-root-workspace.cjs
 electron scripts/capture-ui.cjs E:\Sanctuary Studies\sanctuary-studies-ui-branch-preview.png E:\Sanctuary Studies\ui\index.html
 ```

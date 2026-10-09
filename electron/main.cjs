@@ -1,6 +1,7 @@
 const path = require('node:path');
+const fs = require('node:fs/promises');
 const { fileURLToPath } = require('node:url');
-const { app, BrowserWindow, ipcMain, session } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, session } = require('electron');
 const { createStore } = require('../shared/store.cjs');
 
 const appRoot = path.resolve(__dirname, '..');
@@ -70,9 +71,35 @@ function createLegacyWindow() {
 app.whenReady().then(() => {
   store = createStore(path.join(app.getPath('userData'), 'sanctuary-studies-data.json'));
   ipcMain.handle('data:snapshot', () => store.snapshot());
+  ipcMain.handle('data:list-studies', () => store.listStudies());
+  ipcMain.handle('data:list-records', (_event, input) => store.listStudyRecords(input));
   ipcMain.handle('study:create', (_event, input) => store.createStudy(input));
+  ipcMain.handle('study:update', (_event, input) => store.updateStudy(input));
+  ipcMain.handle('study:delete', (_event, input) => store.deleteStudy(input));
   ipcMain.handle('study:add-record', (_event, input) => store.addStudyRecord(input));
   ipcMain.handle('data:export-bundle', () => store.exportBundle());
+  ipcMain.handle('data:export-file', async () => {
+    const result = await dialog.showSaveDialog({
+      title: 'Export Sanctuary Studies bundle',
+      filters: [{ name: 'Sanctuary Studies bundle', extensions: ['ssbundle'] }, { name: 'JSON', extensions: ['json'] }],
+      properties: ['createDirectory', 'showOverwriteConfirmation']
+    });
+    if (result.canceled || !result.filePath) return { canceled: true };
+    const bundle = store.exportBundle();
+    await fs.writeFile(result.filePath, JSON.stringify(bundle, null, 2), 'utf8');
+    return { canceled: false, path: result.filePath };
+  });
+  ipcMain.handle('data:import-file', async () => {
+    const result = await dialog.showOpenDialog({
+      title: 'Import Sanctuary Studies bundle',
+      filters: [{ name: 'Sanctuary Studies bundle', extensions: ['ssbundle', 'json'] }],
+      properties: ['openFile']
+    });
+    if (result.canceled || result.filePaths.length === 0) return { canceled: true };
+    const bundle = JSON.parse(await fs.readFile(result.filePaths[0], 'utf8'));
+    const database = store.importBundle(bundle);
+    return { canceled: false, path: result.filePaths[0], database };
+  });
   ipcMain.handle('ui:open-legacy', () => {
     createLegacyWindow();
     return true;

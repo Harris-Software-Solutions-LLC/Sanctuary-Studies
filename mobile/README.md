@@ -4,10 +4,11 @@ This is the native Flutter target for Android and iOS. It intentionally does not
 
 ## Current state
 
-- Native Flutter shell is scaffolded in `lib/main.dart`.
+- Native Flutter Study Library and Study Detail screens are implemented in `lib/main.dart`.
 - The shared data contract is defined in `../shared/schema/schema-v1.json`.
 - `study_model.dart` mirrors the platform-neutral Study concept and section names.
-- Persistence and `.ssbundle` import/export will be added after the Flutter SDK is available on the build machine.
+- `study_repository.dart` provides version-1 JSON persistence, study creation, section records, and `.ssbundle` import/export.
+- `path_provider` and `file_picker` are compiled into the mobile application; no browser, web server, or separately installed runtime is required.
 
 ## Local validation
 
@@ -19,4 +20,4 @@ flutter analyze
 flutter test
 ```
 
-No Flutter SDK was available during this change, so those commands remain pending.
+If the Flutter SDK is not present on the build machine, the source remains ready for validation but the commands remain pending.

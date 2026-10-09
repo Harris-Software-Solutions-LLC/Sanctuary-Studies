@@ -6,8 +6,14 @@ contextBridge.exposeInMainWorld('sanctuaryDesktop', Object.freeze({
   openLegacyWorkspace: () => ipcRenderer.invoke('ui:open-legacy'),
   data: Object.freeze({
     snapshot: () => ipcRenderer.invoke('data:snapshot'),
+    listStudies: () => ipcRenderer.invoke('data:list-studies'),
+    listRecords: (input) => ipcRenderer.invoke('data:list-records', input),
     createStudy: (input) => ipcRenderer.invoke('study:create', input),
+    updateStudy: (input) => ipcRenderer.invoke('study:update', input),
+    deleteStudy: (input) => ipcRenderer.invoke('study:delete', input),
     addStudyRecord: (input) => ipcRenderer.invoke('study:add-record', input),
-    exportBundle: () => ipcRenderer.invoke('data:export-bundle')
+    exportBundle: () => ipcRenderer.invoke('data:export-bundle'),
+    exportFile: () => ipcRenderer.invoke('data:export-file'),
+    importFile: () => ipcRenderer.invoke('data:import-file')
   })
 }));

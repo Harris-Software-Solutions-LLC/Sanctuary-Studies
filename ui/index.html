@@ -24,6 +24,8 @@
         </label>
         <div class="topbar-actions">
           <span class="save-state"><span class="save-dot"></span> Local</span>
+          <button class="button button-secondary" id="import-bundle">Import</button>
+          <button class="button button-secondary" id="export-bundle">Export</button>
           <button class="button button-primary" id="new-study">+ New Study</button>
         </div>
       </header>
@@ -32,14 +34,14 @@
         <aside class="sidebar" aria-label="Application navigation">
           <div class="sidebar-label">Workspace</div>
           <nav class="nav-list">
-            <button class="nav-item is-active"><span>▦</span> All Studies</button>
-            <button class="nav-item"><span>◫</span> Collections</button>
-            <button class="nav-item"><span>◇</span> Data Model</button>
-            <button class="nav-item"><span>⇄</span> Import / Export</button>
+            <button class="nav-item is-active" data-section="library"><span>▦</span> All Studies</button>
+            <button class="nav-item" data-section="collections"><span>◫</span> Collections</button>
+            <button class="nav-item" data-section="model"><span>◇</span> Data Model</button>
+            <button class="nav-item" data-section="transfer"><span>⇄</span> Import / Export</button>
             <button class="nav-item" id="open-legacy-workspace" title="Open the preserved root Study Workspace"><span>▣</span> Existing Study Workspace</button>
           </nav>
           <div class="sidebar-spacer"></div>
-          <button class="nav-item"><span>⚙</span> Settings</button>
+          <button class="nav-item" data-section="settings"><span>⚙</span> Settings</button>
           <div class="local-note"><span class="save-dot"></span> Stored on this device</div>
         </aside>
 
@@ -51,12 +53,12 @@
               <p>Open a study to work with its sources, notes, people, places, events, and tags.</p>
             </div>
             <div class="heading-actions">
-              <button class="button button-secondary">Filter</button>
-              <button class="button button-secondary">Sort: Updated</button>
+              <button class="button button-secondary" id="filter-studies">Filter: All</button>
+              <button class="button button-secondary" id="sort-studies">Sort: Updated</button>
             </div>
           </div>
 
-          <section class="library-panel" aria-labelledby="library-title">
+          <section class="library-panel" id="library-view" aria-labelledby="library-title">
             <div class="panel-toolbar">
               <div>
                 <h2 id="library-title">Study Library</h2>
@@ -76,6 +78,24 @@
               </table>
             </div>
           </section>
+
+          <section class="library-panel detail-panel" id="study-detail-view" aria-labelledby="study-detail-title" hidden>
+            <div class="panel-toolbar">
+              <div>
+                <div class="eyebrow">Study workspace</div>
+                <h2 id="study-detail-title">Study</h2>
+                <span id="study-detail-description" class="muted"></span>
+              </div>
+              <button class="button button-primary" id="add-record">+ Add record</button>
+            </div>
+            <div class="section-tabs" id="section-tabs" role="tablist"></div>
+            <div class="table-wrap" id="record-table-wrap"></div>
+          </section>
+
+          <section class="library-panel information-panel" id="information-view" hidden>
+            <div class="panel-toolbar"><div><div class="eyebrow" id="information-eyebrow">Workspace</div><h2 id="information-title">Sanctuary Studies</h2></div></div>
+            <div class="information-body" id="information-body"></div>
+          </section>
         </main>
 
         <aside class="inspector" aria-label="Selected study details">
@@ -93,6 +113,16 @@
         <div class="modal-actions"><button class="button button-secondary" value="cancel">Cancel</button><button class="button button-primary" value="default">Create Study</button></div>
       </form>
     </dialog>
+
+    <dialog id="record-dialog" class="modal">
+      <form id="record-form" method="dialog">
+        <div class="modal-heading"><div><div class="eyebrow">Study workspace</div><h2 id="record-dialog-title">Add record</h2></div><button class="close-button" value="cancel" aria-label="Close">×</button></div>
+        <div id="record-fields"></div>
+        <div class="modal-actions"><button class="button button-secondary" value="cancel">Cancel</button><button class="button button-primary" value="default">Save record</button></div>
+      </form>
+    </dialog>
+
+    <div id="app-message" class="app-message" role="status" aria-live="polite" hidden></div>
 
     <script src="./app.js"></script>
   </body>

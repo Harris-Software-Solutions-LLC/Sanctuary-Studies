@@ -9,6 +9,7 @@
     "test:shared": "node scripts/test-shared-model.cjs",
     "test:store": "node scripts/test-store-persistence.cjs",
     "test:electron": "electron scripts/test-electron-root-workspace.cjs",
+    "test:electron:library": "electron scripts/test-electron-library.cjs",
     "lint": "node scripts/validate.cjs --lint",
     "typecheck": "node scripts/validate.cjs --typecheck",
     "start:electron": "electron electron/main.cjs",

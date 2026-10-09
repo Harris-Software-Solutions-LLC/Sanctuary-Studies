@@ -17,11 +17,24 @@ try {
 
   assert.throws(() => firstStore.createStudy({ title: '' }), /study title is required/i);
   assert.throws(() => firstStore.addStudyRecord({ studyId: 'missing', section: 'notes', payload: { title: 'Invalid' } }), /selected study does not exist/i);
+  assert.throws(() => firstStore.addStudyRecord({ studyId: study.id, section: 'people', payload: { name: 'Invalid metadata', metadata_json: '{' } }), /metadata_json must contain valid JSON/i);
 
   const reopenedStore = createStore(databasePath);
   const snapshot = reopenedStore.snapshot();
   assert.equal(snapshot.studies.some((item) => item.id === study.id), true);
   assert.equal(snapshot.notes.some((item) => item.id === note.id && item.body.includes('survive reopening')), true);
+  assert.equal(reopenedStore.listStudies().some((item) => item.id === study.id), true);
+  assert.equal(reopenedStore.listStudyRecords({ studyId: study.id, section: 'notes' }).length, 1);
+  const source = reopenedStore.addStudyRecord({ studyId: study.id, section: 'sources', payload: { title: 'Local source', author: 'Author' } });
+  assert.equal(reopenedStore.listStudyRecords({ studyId: study.id, section: 'sources' }).some((item) => item.id === source.id), true);
+  const updated = reopenedStore.updateStudy({ id: study.id, title: 'Persistence Audit Updated', status: 'active' });
+  assert.equal(updated.status, 'active');
+  const exported = reopenedStore.exportBundle();
+  const importedStore = createStore(path.join(temporaryRoot, 'imported.json'));
+  importedStore.importBundle(exported);
+  assert.equal(importedStore.getStudy(study.id).title, 'Persistence Audit Updated');
+  importedStore.deleteStudy({ id: study.id });
+  assert.equal(importedStore.listStudies().some((item) => item.id === study.id), false);
 
   console.log('store persistence and invalid-input tests passed');
 } finally {
