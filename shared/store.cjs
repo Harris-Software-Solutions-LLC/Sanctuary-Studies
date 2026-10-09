@@ -16,6 +16,12 @@ function normalizeMetadata(value) {
   return metadata;
 }
 
+function normalizeJson(value, fieldName) {
+  const json = String(value || '{}');
+  try { JSON.parse(json); } catch { throw new Error(`${fieldName} must contain valid JSON.`); }
+  return json;
+}
+
 function createStore(filePath) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
 
@@ -79,6 +85,45 @@ function createStore(filePath) {
     });
   }
 
+  function listContentItems({ contentType } = {}) {
+    return read().content_items.filter((item) => !item.deleted_at && (!contentType || item.content_type === contentType)).map(clone);
+  }
+
+  function listStudyContent({ studyId, contentType } = {}) {
+    const database = read();
+    activeStudy(database, studyId);
+    const contentById = new Map(database.content_items.filter((item) => !item.deleted_at).map((item) => [item.id, item]));
+    return database.study_content_links
+      .filter((link) => link.study_id === studyId && !link.deleted_at)
+      .map((link) => ({ content: contentById.get(link.content_id), link }))
+      .filter(({ content }) => content && (!contentType || content.content_type === contentType))
+      .map(({ content, link }) => ({ ...clone(content), link: clone(link) }));
+  }
+
+  function attachContentPackage({ studyId, packageData, items = [], sourceName = '', sourcePath = '', sourceRevision = '', licenseStatus = 'review-required' }) {
+    return transact((database) => {
+      const study = activeStudy(database, studyId);
+      const timestamp = new Date().toISOString();
+      let links = 0;
+      for (const item of items) {
+        if (!item?.id || !item.content_type || !item.title) throw new Error('Content items require an id, content_type, and title.');
+        normalizeJson(item.payload_json, 'payload_json');
+        const existing = database.content_items.find((candidate) => candidate.id === item.id);
+        if (existing) Object.assign(existing, clone(item), { updated_at: timestamp, deleted_at: null });
+        else database.content_items.push({ ...clone(item), created_at: item.created_at || timestamp, updated_at: timestamp, deleted_at: null });
+        if (!database.content_provenance.some((record) => record.content_id === item.id && record.source_path === sourcePath && !record.deleted_at)) {
+          database.content_provenance.push({ id: newId(), content_id: item.id, source_name: sourceName, source_path: sourcePath, source_revision: sourceRevision, license_status: licenseStatus, imported_at: timestamp, notes: 'Imported as a local versioned content package.', deleted_at: null });
+        }
+        if (!database.study_content_links.some((link) => link.study_id === studyId && link.content_id === item.id && !link.deleted_at)) {
+          database.study_content_links.push({ id: newId(), study_id: studyId, content_id: item.id, relationship_type: 'contains', created_at: timestamp, updated_at: timestamp, deleted_at: null });
+          links += 1;
+        }
+      }
+      study.updated_at = timestamp;
+      return { contentType: packageData?.content_type || 'unknown', items: items.length, links, stepCount: packageData?.step_count || 0, questionCount: packageData?.question_count || 0 };
+    });
+  }
+
   return {
     snapshot: () => clone(read()),
     listStudies: () => read().studies.filter((study) => !study.deleted_at).map(clone),
@@ -116,6 +161,9 @@ function createStore(filePath) {
       return clone(study);
     }),
     addStudyRecord,
+    listContentItems,
+    listStudyContent,
+    attachContentPackage,
     exportBundle: () => createBundle(read(), { source: 'Sanctuary Studies desktop' }),
     importBundle: (bundle) => {
       const imported = parseBundle(bundle);

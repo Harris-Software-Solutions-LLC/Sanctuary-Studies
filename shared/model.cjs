@@ -1,8 +1,9 @@
 const crypto = require('node:crypto');
+const { CONTENT_TABLES, migrateV1ToV2 } = require('./migrations/002-content-links.cjs');
 
-const CURRENT_SCHEMA_VERSION = 1;
+const CURRENT_SCHEMA_VERSION = 2;
 const BUNDLE_FORMAT = 'sanctuary-studies-bundle';
-const TABLES = ['studies', 'sources', 'notes', 'entities', 'relationships', 'tags', 'study_tags'];
+const TABLES = ['studies', 'sources', 'notes', 'entities', 'relationships', 'tags', 'study_tags', ...CONTENT_TABLES];
 const ENTITY_TYPES = ['person', 'place', 'event'];
 
 function clone(value) {
@@ -29,7 +30,7 @@ function migrateDatabase(input) {
   for (const table of TABLES) {
     if (Array.isArray(source[table])) migrated[table] = clone(source[table]);
   }
-  return migrated;
+  return version < 2 ? migrateV1ToV2(migrated) : migrated;
 }
 
 function validateDatabase(database) {
@@ -37,6 +38,7 @@ function validateDatabase(database) {
   const studyIds = new Set(value.studies.map((study) => study.id));
   const entityIds = new Set(value.entities.map((entity) => entity.id));
   const tagIds = new Set(value.tags.map((tag) => tag.id));
+  const contentIds = new Set(value.content_items.map((item) => item.id));
   const errors = [];
 
   for (const table of TABLES) {
@@ -54,6 +56,19 @@ function validateDatabase(database) {
   }
   for (const join of value.study_tags) {
     if (!studyIds.has(join.study_id) || !tagIds.has(join.tag_id)) errors.push('study_tags references a missing record');
+  }
+  for (const item of value.content_items) {
+    if (!item.id || !item.content_type || !item.title) errors.push('content_items requires id, content_type, and title');
+    try { JSON.parse(String(item.payload_json || '{}')); } catch { errors.push(`${item.id || 'content item'} has invalid payload_json`); }
+  }
+  for (const relation of value.content_relationships) {
+    if (!contentIds.has(relation.source_content_id) || !contentIds.has(relation.target_content_id)) errors.push(`${relation.id} references a missing content item`);
+  }
+  for (const provenance of value.content_provenance) {
+    if (!contentIds.has(provenance.content_id)) errors.push(`${provenance.id} references a missing content item`);
+  }
+  for (const link of value.study_content_links) {
+    if (!studyIds.has(link.study_id) || !contentIds.has(link.content_id)) errors.push(`${link.id} references a missing study or content item`);
   }
   return { valid: errors.length === 0, errors, database: value };
 }
@@ -86,6 +101,7 @@ function newId() {
 
 module.exports = {
   BUNDLE_FORMAT,
+  CONTENT_TABLES,
   CURRENT_SCHEMA_VERSION,
   ENTITY_TYPES,
   TABLES,

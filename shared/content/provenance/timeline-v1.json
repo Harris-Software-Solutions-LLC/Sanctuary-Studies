@@ -1,0 +1,14 @@
+{
+  "content_type": "timeline",
+  "content_version": 1,
+  "source_artifact": "project-bolt-sb1-3nfg6yvm.zip",
+  "source_files": [
+    "project/src/components/TimelinePage.tsx",
+    "project/src/data/timelineQuestions.ts",
+    "project/src/types/questions.ts"
+  ],
+  "source_indexing": "The reference timeline uses source steps 0–24. Source step 0 is preserved as a prelude; source steps 1–24 are normalized to the 24 numbered user-facing steps.",
+  "license_status": "review-required",
+  "network_dependencies_removed": true,
+  "notes": "This provenance record describes a content-only import. React components, Supabase calls, authentication, payments, external images, hosted fonts, and repository configuration were not imported. The source archive remains unchanged and is not a runtime dependency."
+}

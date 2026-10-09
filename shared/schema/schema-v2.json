@@ -1,0 +1,70 @@
+{
+  "format": "sanctuary-studies-database",
+  "schema_version": 2,
+  "migration": "002-content-links",
+  "preserves": "schema-v1",
+  "tables": {
+    "content_items": {
+      "primary_key": ["id"],
+      "columns": {
+        "id": "uuid",
+        "content_type": "text",
+        "slug": "text",
+        "title": "text",
+        "summary": "text",
+        "payload_json": "json",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime|null"
+      }
+    },
+    "content_relationships": {
+      "primary_key": ["id"],
+      "columns": {
+        "id": "uuid",
+        "source_content_id": "uuid",
+        "relationship_type": "text",
+        "target_content_id": "uuid",
+        "metadata_json": "json",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime|null"
+      },
+      "foreign_keys": [
+        { "columns": ["source_content_id"], "references": "content_items.id" },
+        { "columns": ["target_content_id"], "references": "content_items.id" }
+      ]
+    },
+    "content_provenance": {
+      "primary_key": ["id"],
+      "columns": {
+        "id": "uuid",
+        "content_id": "uuid",
+        "source_name": "text",
+        "source_path": "text",
+        "source_revision": "text",
+        "license_status": "text",
+        "imported_at": "datetime",
+        "notes": "text"
+      },
+      "foreign_keys": [{ "columns": ["content_id"], "references": "content_items.id" }]
+    },
+    "study_content_links": {
+      "primary_key": ["id"],
+      "columns": {
+        "id": "uuid",
+        "study_id": "uuid",
+        "content_id": "uuid",
+        "relationship_type": "text",
+        "note": "text",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime|null"
+      },
+      "foreign_keys": [
+        { "columns": ["study_id"], "references": "studies.id" },
+        { "columns": ["content_id"], "references": "content_items.id" }
+      ]
+    }
+  }
+}

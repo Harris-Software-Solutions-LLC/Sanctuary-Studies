@@ -2,6 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const { createStore } = require('../shared/store.cjs');
+const { loadTimelinePackage, timelinePackageToItems } = require('../shared/content/timeline/index.cjs');
 
 const temporaryRoot = path.join(path.resolve(__dirname, '..'), `.audit-temp-store-${process.pid}`);
 const databasePath = path.join(temporaryRoot, 'sanctuary-studies-data.json');
@@ -27,6 +28,12 @@ try {
   assert.equal(reopenedStore.listStudyRecords({ studyId: study.id, section: 'notes' }).length, 1);
   const source = reopenedStore.addStudyRecord({ studyId: study.id, section: 'sources', payload: { title: 'Local source', author: 'Author' } });
   assert.equal(reopenedStore.listStudyRecords({ studyId: study.id, section: 'sources' }).some((item) => item.id === source.id), true);
+  const timeline = loadTimelinePackage();
+  const attachment = reopenedStore.attachContentPackage({ studyId: study.id, packageData: timeline, items: timelinePackageToItems(timeline), sourceName: 'test timeline', sourcePath: 'test/timeline', sourceRevision: 'test' });
+  assert.equal(attachment.stepCount, 24);
+  assert.equal(attachment.questionCount, 189);
+  assert.equal(reopenedStore.listStudyContent({ studyId: study.id, contentType: 'timeline_step' }).length, 24);
+  assert.equal(reopenedStore.snapshot().study_content_links.length, 214);
   const updated = reopenedStore.updateStudy({ id: study.id, title: 'Persistence Audit Updated', status: 'active' });
   assert.equal(updated.status, 'active');
   const exported = reopenedStore.exportBundle();

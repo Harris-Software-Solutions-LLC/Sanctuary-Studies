@@ -15,7 +15,9 @@ database.relationships.push({ id: 'relation-1', study_id: 'study-1', source_enti
 const validation = validateDatabase(database);
 assert.equal(validation.valid, true, validation.errors.join('; '));
 const roundTrip = parseBundle(createBundle(database));
-assert.equal(roundTrip.schema_version, 1);
+assert.equal(roundTrip.schema_version, 2);
+assert.deepEqual(roundTrip.content_items, []);
+assert.deepEqual(roundTrip.study_content_links, []);
 assert.equal(roundTrip.entities.length, 3);
 assert.equal(roundTrip.relationships[0].relationship_type, 'attended');
 console.log('shared model tests passed');

@@ -3,6 +3,7 @@ const fs = require('node:fs/promises');
 const { fileURLToPath } = require('node:url');
 const { app, BrowserWindow, dialog, ipcMain, session } = require('electron');
 const { createStore } = require('../shared/store.cjs');
+const { loadTimelinePackage, timelinePackageToItems } = require('../shared/content/timeline/index.cjs');
 
 const appRoot = path.resolve(__dirname, '..');
 const entrypoint = path.join(appRoot, 'ui', 'index.html');
@@ -73,6 +74,21 @@ app.whenReady().then(() => {
   ipcMain.handle('data:snapshot', () => store.snapshot());
   ipcMain.handle('data:list-studies', () => store.listStudies());
   ipcMain.handle('data:list-records', (_event, input) => store.listStudyRecords(input));
+  ipcMain.handle('data:list-content-items', (_event, input) => store.listContentItems(input));
+  ipcMain.handle('data:list-study-content', (_event, input) => store.listStudyContent(input));
+  ipcMain.handle('content:timeline', () => loadTimelinePackage());
+  ipcMain.handle('content:attach-timeline', (_event, input) => {
+    const packageData = loadTimelinePackage();
+    return store.attachContentPackage({
+      studyId: input?.studyId,
+      packageData,
+      items: timelinePackageToItems(packageData),
+      sourceName: 'project-bolt-sb1-3nfg6yvm.zip',
+      sourcePath: 'project/src/components/TimelinePage.tsx; project/src/data/timelineQuestions.ts',
+      sourceRevision: 'timeline-v1-normalized-24-step',
+      licenseStatus: 'review-required'
+    });
+  });
   ipcMain.handle('study:create', (_event, input) => store.createStudy(input));
   ipcMain.handle('study:update', (_event, input) => store.updateStudy(input));
   ipcMain.handle('study:delete', (_event, input) => store.deleteStudy(input));

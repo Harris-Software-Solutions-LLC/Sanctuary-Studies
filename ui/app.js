@@ -1,6 +1,7 @@
-const TABLES = ['studies', 'sources', 'notes', 'entities', 'relationships', 'tags', 'study_tags'];
+const TABLES = ['studies', 'sources', 'notes', 'entities', 'relationships', 'tags', 'study_tags', 'content_items', 'content_relationships', 'content_provenance', 'study_content_links'];
 const STUDY_SECTIONS = [
   { id: 'overview', label: 'Overview' },
+  { id: 'timeline', label: 'Timeline' },
   { id: 'sources', label: 'Sources' },
   { id: 'notes', label: 'Notes' },
   { id: 'people', label: 'People' },
@@ -9,7 +10,7 @@ const STUDY_SECTIONS = [
   { id: 'tags', label: 'Tags' }
 ];
 const desktopData = window.sanctuaryDesktop?.data || null;
-const state = { database: Object.fromEntries([['schema_version', 1], ...TABLES.map((table) => [table, []])]), selectedId: null, query: '', statusFilter: 'all', sort: 'updated', view: 'library', section: 'overview' };
+const state = { database: Object.fromEntries([['schema_version', 2], ...TABLES.map((table) => [table, []])]), selectedId: null, query: '', statusFilter: 'all', sort: 'updated', view: 'library', section: 'overview', timelineContent: null, timelineStep: 1 };
 const $ = (selector) => document.querySelector(selector);
 const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
 const active = (record) => !record.deleted_at;
@@ -72,7 +73,31 @@ function renderInspector(study) {
 
 function openStudyDialog() { $('#study-form').reset(); $('#study-dialog').showModal(); }
 
-function selectStudy(studyId) { state.selectedId = studyId; state.view = 'study'; state.section = 'overview'; render(); }
+function selectStudy(studyId) { state.selectedId = studyId; state.view = 'study'; state.section = 'overview'; state.timelineStep = 1; render(); }
+
+function renderTimeline(study) {
+  const target = $('#record-table-wrap');
+  if (!state.timelineContent) {
+    target.innerHTML = '<div class="record-empty">Loading the local 24-step timeline…</div>';
+    if (desktopData?.getTimelineContent) desktopData.getTimelineContent().then((content) => { state.timelineContent = content; renderDetail(); }).catch((error) => { target.innerHTML = `<div class="record-empty">Unable to load timeline content: ${escapeHtml(error.message || error)}</div>`; });
+    return;
+  }
+  const content = state.timelineContent;
+  const step = content.steps.find((item) => item.display_step === state.timelineStep) || content.steps[0];
+  const questions = content.questions.filter((question) => question.display_step === state.timelineStep);
+  const linkedCount = state.database.study_content_links.filter((link) => link.study_id === study.id && !link.deleted_at).length;
+  const stepButtons = content.steps.map((item) => `<button class="timeline-step-button ${item.display_step === state.timelineStep ? 'is-selected' : ''}" data-timeline-step="${item.display_step}" type="button"><span>${item.display_step}</span><strong>${escapeHtml(item.aaron)}</strong></button>`).join('');
+  target.innerHTML = `<div class="timeline-workspace"><div class="timeline-toolbar"><div><span class="eyebrow">Local content package</span><h2>${escapeHtml(content.title)}</h2><p class="muted">24 numbered steps · ${content.question_count} questions · prelude preserved separately</p></div><button class="button button-secondary" id="timeline-attach" type="button" ${linkedCount ? 'disabled' : ''}>${linkedCount ? 'Timeline attached locally' : 'Attach timeline to study'}</button></div><div class="timeline-prelude"><strong>Prelude</strong><span>${escapeHtml(content.prelude.aaron)} — ${escapeHtml(content.prelude.jesus)}</span><small>Source entry 0 is preserved for provenance and is not counted among the 24 user-facing steps.</small></div><div class="timeline-columns"><nav class="timeline-step-list" aria-label="Timeline steps">${stepButtons}</nav><section class="timeline-step-detail"><span class="eyebrow">Step ${step.display_step} of 24</span><h3>${escapeHtml(step.aaron)}</h3><p class="timeline-jesus">${escapeHtml(step.jesus)}</p><dl class="timeline-facts"><div><dt>Aaron reference</dt><dd>${escapeHtml(step.aaronRef)}</dd></div><div><dt>Jesus reference</dt><dd>${escapeHtml(step.jesusRef)}</dd></div><div><dt>Questions</dt><dd>${questions.length}</dd></div></dl><h4>Learning prompts</h4>${questions.length ? `<ol class="timeline-questions">${questions.map((question) => `<li><strong>${escapeHtml(question.question)}</strong><span>${escapeHtml(question.type)} · ${escapeHtml(question.explanation || 'No explanation supplied.')}</span></li>`).join('')}</ol>` : '<p class="muted">No questions are assigned to this step.</p>'}</section></div></div>`;
+  document.querySelectorAll('[data-timeline-step]').forEach((button) => button.addEventListener('click', () => { state.timelineStep = Number(button.dataset.timelineStep); renderDetail(); }));
+  $('#timeline-attach')?.addEventListener('click', async () => {
+    try {
+      if (!desktopData?.attachTimeline) throw new Error('Timeline attachment is available in the standalone Electron app.');
+      await desktopData.attachTimeline({ studyId: study.id });
+      await refreshFromDesktop();
+      showMessage('The 24-step timeline and its questions were attached locally.');
+    } catch (error) { showMessage(error.message || 'Unable to attach the timeline.', true); }
+  });
+}
 
 function renderDetail() {
   const study = selectedStudy();
@@ -83,15 +108,16 @@ function renderDetail() {
   $('#study-detail-description').textContent = study.description || 'No description yet.';
   $('#section-tabs').innerHTML = STUDY_SECTIONS.map((section) => `<button class="section-tab ${section.id === state.section ? 'is-active' : ''}" data-study-section="${section.id}" role="tab" aria-selected="${section.id === state.section}">${section.label}</button>`).join('');
   document.querySelectorAll('[data-study-section]').forEach((button) => button.addEventListener('click', () => { state.section = button.dataset.studySection; renderDetail(); }));
-  $('#add-record').disabled = state.section === 'overview';
+  $('#add-record').disabled = state.section === 'overview' || state.section === 'timeline';
   if (state.section === 'overview') { const counts = studyCounts(study.id); $('#record-table-wrap').innerHTML = `<div class="record-empty">This study contains ${counts.sources} sources, ${counts.notes} notes, ${counts.people} people, ${counts.places} places, ${counts.events} events, and ${counts.tags} tags. Choose a section to inspect or add records.</div>`; return; }
+  if (state.section === 'timeline') { renderTimeline(study); return; }
   const records = recordsForStudy(study.id, state.section);
   const rows = records.map((record) => `<tr><td><span class="record-title">${escapeHtml(record.title || record.name)}</span><span class="record-secondary">${escapeHtml(record.body || record.description || record.author || record.source_type || record.citation || '')}</span></td><td>${escapeHtml(formatDate(record.updated_at || record.created_at))}</td></tr>`).join('');
   $('#record-table-wrap').innerHTML = records.length ? `<table><thead><tr><th>${escapeHtml(STUDY_SECTIONS.find((item) => item.id === state.section).label)}</th><th>Updated</th></tr></thead><tbody>${rows}</tbody></table>` : '<div class="record-empty">No records in this section yet.</div>';
 }
 
 function renderInformation() {
-  const information = { collections: ['Collections', 'Collections will group studies without changing their underlying records.'], model: ['Data Model', 'Schema version 1 contains studies, sources, notes, typed entities for people, places, and events, relationships, tags, and study_tags.'], transfer: ['Import / Export', 'Use Export to create a portable .ssbundle file and Import to validate and restore one.'], settings: ['Settings', 'Sanctuary Studies is running as a local Electron application. Core study data is stored locally.'] };
+  const information = { collections: ['Collections', 'Collections will group studies without changing their underlying records.'], model: ['Data Model', 'Schema version 2 preserves the study model and adds versioned content items, content relationships, provenance, and study-content links.'], transfer: ['Import / Export', 'Use Export to create a portable .ssbundle file and Import to validate and restore one, including attached local content.'], settings: ['Settings', 'Sanctuary Studies is running as a local Electron application. Core study data and content packages are stored locally.'] };
   const content = information[state.view];
   $('#information-view').hidden = !content;
   if (content) { $('#information-eyebrow').textContent = state.view === 'model' ? 'Shared contract' : 'Workspace'; $('#information-title').textContent = content[0]; $('#information-body').innerHTML = `<p>${escapeHtml(content[1])}</p>`; }
