@@ -1,0 +1,14 @@
+{
+  "format": "sanctuary-studies-learning-games",
+  "schema_version": 1,
+  "required_package_fields": ["format", "content_type", "content_version", "games"],
+  "game_types": {
+    "multiple_choice": ["options", "correct"],
+    "fill_blank": ["answer", "accepted_answers"],
+    "true_false": ["correct"],
+    "scripture_linking": ["links", "options"],
+    "matching": ["pairs", "options"],
+    "symbolism": ["pairs", "options"]
+  },
+  "answer_policy": "Case, whitespace, and common punctuation differences are ignored for text answers; packages may add approved alternate spellings."
+}

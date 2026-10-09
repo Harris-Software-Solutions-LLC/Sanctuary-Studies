@@ -1,4 +1,4 @@
-const TABLES = ['studies', 'sources', 'notes', 'entities', 'relationships', 'tags', 'study_tags', 'content_items', 'content_relationships', 'content_provenance', 'study_content_links'];
+const TABLES = ['studies', 'sources', 'notes', 'entities', 'relationships', 'tags', 'study_tags', 'content_items', 'content_relationships', 'content_provenance', 'study_content_links', 'learning_games', 'game_sessions', 'game_attempts', 'learning_progress'];
 const STUDY_SECTIONS = [
   { id: 'overview', label: 'Overview' },
   { id: 'timeline', label: 'Timeline' },
@@ -7,6 +7,7 @@ const STUDY_SECTIONS = [
   { id: 'symbolism', label: 'Symbolism' },
   { id: 'colors', label: 'Colors' },
   { id: 'sanctuary', label: 'Sanctuary' },
+  { id: 'learning', label: 'Learning' },
   { id: 'educators', label: 'Educators' },
   { id: 'explorer', label: 'Explorer' },
   { id: 'sources', label: 'Sources' },
@@ -24,7 +25,7 @@ const WORKSPACE_MODES = [
   { id: 'evidence', label: 'Evidence Wall', eyebrow: 'Relationships and comparisons' }
 ];
 const desktopData = window.sanctuaryDesktop?.data || null;
-const state = { database: Object.fromEntries([['schema_version', 2], ...TABLES.map((table) => [table, []])]), selectedId: null, query: '', statusFilter: 'all', sort: 'updated', view: 'library', section: 'overview', workspaceMode: 'desk', timelineContent: null, timelineStep: 1, folioRecordId: null, scriptureContent: null, scriptureQuery: '', scriptureReference: null, libraryContent: null, libraryQuery: '', libraryRecordId: null, symbolismContent: null, symbolismQuery: '', symbolismRecordId: null, colorsContent: null, colorsQuery: '', colorsRecordId: null, sanctuaryContent: null, sanctuaryQuery: '', sanctuaryRecordId: null, learningContent: null, learningQuery: '', learningCategory: 'all', learningAge: 'all', learningRecordId: null, explorerContent: null, explorerQuery: '', explorerModelId: null, explorerZoneIndex: 0 };
+const state = { database: Object.fromEntries([['schema_version', 3], ...TABLES.map((table) => [table, []])]), selectedId: null, query: '', statusFilter: 'all', sort: 'updated', view: 'library', section: 'overview', workspaceMode: 'desk', timelineContent: null, timelineStep: 1, folioRecordId: null, scriptureContent: null, scriptureQuery: '', scriptureReference: null, libraryContent: null, libraryQuery: '', libraryRecordId: null, symbolismContent: null, symbolismQuery: '', symbolismRecordId: null, colorsContent: null, colorsQuery: '', colorsRecordId: null, sanctuaryContent: null, sanctuaryQuery: '', sanctuaryRecordId: null, learningContent: null, learningQuery: '', learningCategory: 'all', learningAge: 'all', learningRecordId: null, learningGamesContent: null, learningTab: 'games', learningGameQuery: '', learningGameDifficulty: 'all', learningGameAge: 'all', learningGameId: null, activeGameSession: null, explorerContent: null, explorerQuery: '', explorerModelId: null, explorerZoneIndex: 0 };
 const $ = (selector) => document.querySelector(selector);
 const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
 const active = (record) => !record.deleted_at;
@@ -133,6 +134,10 @@ function sanctuaryContentForStudy(studyId) {
 
 function learningContentForStudy(studyId) {
   return contentForStudy(studyId, (item) => item.content_type === 'educator_resource');
+}
+
+function learningGamesForStudy(studyId) {
+  return contentForStudy(studyId, (item) => item.content_type === 'learning_game');
 }
 
 function explorerContentForStudy(studyId) {
@@ -288,6 +293,128 @@ function learningDetailMarkup(resource) {
   return `<div class="learning-reading"><span class="eyebrow">${escapeHtml(resource.cat)} · ${escapeHtml(resource.age)} · ${escapeHtml(resource.duration)}</span><h3>${escapeHtml(resource.title)}</h3><p>${escapeHtml(resource.desc)}</p><section><span class="eyebrow">Objectives</span><ul>${resource.objectives.map((objective) => `<li>${escapeHtml(objective)}</li>`).join('')}</ul></section><section><span class="eyebrow">Materials</span><div class="learning-tags">${resource.materials.map((material) => `<span class="tag">${escapeHtml(material)}</span>`).join('')}</div></section><section><span class="eyebrow">Offline resource labels</span><div class="learning-downloads">${resource.downloads.map((download) => `<span>📄 ${escapeHtml(download)}</span>`).join('')}</div></section><p class="muted">${escapeHtml(resource.quarter)}</p></div>`;
 }
 
+function normalizeGameAnswer(value) {
+  return String(value ?? '').toLowerCase().replace(/[’‘]/g, "'").replace(/[.,;:!?()\[\]{}"“”]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function gameAnswerCorrect(game, item, answer) {
+  if (game.game_type === 'multiple_choice') return Number(answer) === Number(item.correct);
+  if (game.game_type === 'true_false') return Boolean(answer) === Boolean(item.correct);
+  if (game.game_type === 'fill_blank') return (item.accepted_answers || [item.answer]).some((candidate) => normalizeGameAnswer(candidate) === normalizeGameAnswer(answer));
+  if (game.game_type === 'scripture_linking') return Object.entries(item.links || {}).every(([key, value]) => normalizeGameAnswer(answer?.[key]) === normalizeGameAnswer(value));
+  if (game.game_type === 'matching' || game.game_type === 'symbolism') return (item.pairs || []).every((pair) => normalizeGameAnswer(answer?.[pair.prompt]) === normalizeGameAnswer(pair.answer));
+  return false;
+}
+
+function gameOptions(item) {
+  const options = [...(item.options || [])];
+  const seed = String(item.id || '').split('').reduce((total, character) => total + character.charCodeAt(0), 0);
+  return seed % 2 ? options.reverse() : options;
+}
+
+function gameInputMarkup(game, item) {
+  if (game.game_type === 'multiple_choice') return `<fieldset class="game-choice-list"><legend class="sr-only">Answer choices</legend>${item.options.map((option, index) => `<label class="game-choice"><input type="radio" name="game-answer" value="${index}"><span>${escapeHtml(option)}</span></label>`).join('')}</fieldset>`;
+  if (game.game_type === 'fill_blank') return `<label class="game-fill-answer">Answer<input id="game-fill-answer" type="text" autocomplete="off" placeholder="Type your answer…"></label>`;
+  if (game.game_type === 'true_false') return `<fieldset class="game-choice-list game-boolean-list"><legend class="sr-only">True or false</legend><label class="game-choice"><input type="radio" name="game-answer" value="true"><span>True</span></label><label class="game-choice"><input type="radio" name="game-answer" value="false"><span>False</span></label></fieldset>`;
+  if (game.game_type === 'scripture_linking') return `<div class="game-link-list">${Object.keys(item.links || {}).map((key) => `<label>${escapeHtml(key)}<select data-game-link-key="${escapeHtml(key)}"><option value="">Choose a connection…</option>${gameOptions(item).map((option) => `<option value="${escapeHtml(option)}">${escapeHtml(option)}</option>`).join('')}</select></label>`).join('')}</div>`;
+  return `<div class="game-match-list">${(item.pairs || []).map((pair) => `<label>${escapeHtml(pair.prompt)}<select data-game-match-prompt="${escapeHtml(pair.prompt)}"><option value="">Choose a match…</option>${gameOptions(item).map((option) => `<option value="${escapeHtml(option)}">${escapeHtml(option)}</option>`).join('')}</select></label>`).join('')}</div>`;
+}
+
+function currentGame() {
+  return state.learningGamesContent?.games.find((game) => game.game_id === state.learningGameId) || null;
+}
+
+function learningGameCards(games, studyId) {
+  const progress = new Map((state.database.learning_progress || []).filter((record) => record.study_id === studyId).map((record) => [record.game_id, record]));
+  return games.map((game) => { const record = progress.get(game.game_id); return `<article class="learning-game-card"><div class="learning-game-card-top"><span class="eyebrow">${escapeHtml(game.game_type.replace(/_/g, ' '))}</span><span class="game-difficulty">${escapeHtml(game.difficulty)}</span></div><h3>${escapeHtml(game.title)}</h3><p>${escapeHtml(game.objectives?.[0] || 'Build a stronger Scripture-connected study.')}</p><div class="learning-game-meta"><span>${escapeHtml(game.age_group)}</span><span>${escapeHtml(game.estimated_minutes)} min</span><span>${game.items.length} question${game.items.length === 1 ? '' : 's'}</span></div><div class="learning-game-card-actions"><button class="button button-primary" data-start-game="${escapeHtml(game.game_id)}" type="button">${record ? 'Practice again' : 'Start game'}</button>${record ? `<span class="game-progress-label">Best ${record.best_score}% · ${escapeHtml(record.mastery_level)}</span>` : '<span class="game-progress-label">Not attempted</span>'}</div></article>`; }).join('');
+}
+
+function renderActiveLearningGame(study) {
+  const session = state.activeGameSession;
+  const game = currentGame();
+  if (!session || !game) return '';
+  const item = game.items[session.itemIndex];
+  const feedback = session.feedback ? `<section class="game-feedback ${session.correct ? 'is-correct' : 'is-review'}"><strong>${session.correct ? 'Correct' : 'Review this one'}</strong><p>${escapeHtml(item.explanation || '')}</p><div class="game-references"><span class="eyebrow">References</span>${(item.references || []).map((reference) => `<button type="button" class="reference-link" data-scripture-reference="${escapeHtml(reference)}">${escapeHtml(reference)}</button>`).join('')}</div><button class="button button-primary" id="next-game-item" type="button">${session.itemIndex + 1 === game.items.length ? 'Finish activity' : 'Next question'}</button></section>` : `<form id="learning-game-form" class="game-question-form"><p class="game-prompt">${escapeHtml(item.prompt || item.statement || '')}</p>${gameInputMarkup(game, item)}<div class="game-question-actions"><button class="text-button" id="game-hint" type="button">Hint</button><span class="game-question-score">Score ${session.score}</span><button class="button button-primary" type="submit">Submit answer</button></div></form>`;
+  return `<section class="learning-game-run"><div class="learning-game-run-heading"><div><span class="eyebrow">${escapeHtml(game.game_type.replace(/_/g, ' '))}</span><h3>${escapeHtml(game.title)}</h3></div><span class="game-question-count">Question ${session.itemIndex + 1} of ${game.items.length} · ${session.score} points</span></div>${feedback}</section>`;
+}
+
+function gameAnswerFromDom(game, item) {
+  if (game.game_type === 'multiple_choice') return document.querySelector('input[name="game-answer"]:checked')?.value ?? '';
+  if (game.game_type === 'fill_blank') return $('#game-fill-answer')?.value || '';
+  if (game.game_type === 'true_false') return document.querySelector('input[name="game-answer"]:checked')?.value === 'true';
+  if (game.game_type === 'scripture_linking') return Object.fromEntries(Object.keys(item.links || {}).map((key) => [key, document.querySelector(`[data-game-link-key="${CSS.escape(key)}"]`)?.value || '']));
+  return Object.fromEntries((item.pairs || []).map((pair) => [pair.prompt, document.querySelector(`[data-game-match-prompt="${CSS.escape(pair.prompt)}"]`)?.value || '']));
+}
+
+function wireActiveLearningGame(study) {
+  const session = state.activeGameSession;
+  const game = currentGame();
+  if (!session || !game) return;
+  const item = game.items[session.itemIndex];
+  $('#learning-game-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const answer = gameAnswerFromDom(game, item);
+    const empty = typeof answer === 'object' ? Object.values(answer).some((value) => !value) : answer === '';
+    if (empty) { showMessage('Choose or enter an answer before submitting.', true); return; }
+    const correct = gameAnswerCorrect(game, item, answer);
+    const points = correct ? Number(game.scoring?.points_per_correct || 10) : 0;
+    try {
+      if (desktopData?.recordLearningAttempt) await desktopData.recordLearningAttempt({ sessionId: session.id, itemId: item.id, submittedAnswer: answer, correct, points, hintsUsed: session.hintsUsed || 0 });
+      session.score += points;
+      session.correct = correct;
+      session.feedback = true;
+      session.answers += 1;
+      renderLearningGamesWorkspace(study);
+    } catch (error) { showMessage(error.message || 'Unable to save this learning attempt.', true); }
+  });
+  $('#game-hint')?.addEventListener('click', () => { session.hintsUsed = (session.hintsUsed || 0) + 1; showMessage(item.hint || `Look closely at the references: ${(item.references || []).join(' · ') || 'review the related study content'}.`); });
+  $('#next-game-item')?.addEventListener('click', async () => {
+    if (session.itemIndex + 1 < game.items.length) { session.itemIndex += 1; session.feedback = false; renderLearningGamesWorkspace(study); return; }
+    const percentage = Math.round((session.score / (game.items.length * Number(game.scoring?.points_per_correct || 10))) * 100);
+    try {
+      if (desktopData?.completeLearningSession) await desktopData.completeLearningSession({ sessionId: session.id, score: session.score, percentage });
+      state.activeGameSession = null;
+      state.learningTab = 'progress';
+      await refreshFromDesktop();
+      showMessage(`Activity complete: ${percentage}%`);
+    } catch (error) { showMessage(error.message || 'Unable to complete this learning session.', true); }
+  });
+  document.querySelectorAll('[data-scripture-reference]').forEach((button) => button.addEventListener('click', () => { state.section = 'scripture'; state.scriptureQuery = button.dataset.scriptureReference; state.scriptureReference = `reference:${button.dataset.scriptureReference}`; renderDetail(); }));
+}
+
+function renderLearningGamesWorkspace(study) {
+  if (!state.learningGamesContent) {
+    $('#record-table-wrap').innerHTML = '<div class="record-empty">Loading the local Interactive Learning package…</div>';
+    if (desktopData?.getLearningGamesContent) desktopData.getLearningGamesContent().then((content) => { state.learningGamesContent = content; renderDetail(); }).catch((error) => { $('#record-table-wrap').innerHTML = `<div class="record-empty">Unable to load Interactive Learning: ${escapeHtml(error.message || error)}</div>`; });
+    return;
+  }
+  const packageData = state.learningGamesContent;
+  const attached = learningGamesForStudy(study.id);
+  const normalized = normalizeLibraryText(state.learningGameQuery);
+  const games = packageData.games.filter((game) => (state.learningGameDifficulty === 'all' || game.difficulty === state.learningGameDifficulty) && (state.learningGameAge === 'all' || game.age_group === state.learningGameAge)).filter((game) => !normalized || normalizeLibraryText(`${game.title} ${game.game_type} ${game.difficulty} ${game.age_group} ${(game.objectives || []).join(' ')}`).includes(normalized));
+  const selected = games.find((game) => game.game_id === state.learningGameId) || games[0];
+  state.learningGameId = selected?.game_id || null;
+  const difficulties = [...new Set(packageData.games.map((game) => game.difficulty))].sort();
+  const ages = [...new Set(packageData.games.map((game) => game.age_group))].sort();
+  const progress = (state.database.learning_progress || []).filter((record) => record.study_id === study.id);
+  const tabs = [['resources', 'Resources'], ['games', 'Interactive Games'], ['progress', 'Progress'], ['create', 'Create Activity']].map(([id, label]) => `<button class="learning-tab ${state.learningTab === id ? 'is-active' : ''}" data-learning-tab="${id}" type="button">${label}</button>`).join('');
+  let body = '';
+  if (state.activeGameSession) body = renderActiveLearningGame(study);
+  else if (state.learningTab === 'resources') body = `<section class="learning-resource-launch"><span class="eyebrow">Existing educator resources</span><h3>Start with a lesson, then practice it.</h3><p>The preserved educator package remains available unchanged. Interactive activities add private, Scripture-linked practice around it.</p><button class="button button-primary" data-open-section="educators" type="button">Open Educator Resources</button></section>`;
+  else if (state.learningTab === 'progress') body = `<section class="learning-progress-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Private progress</span><h3>Practice history for ${escapeHtml(study.title)}</h3></div><span class="mode-count">${progress.length}<span>completed</span></span></div>${progress.length ? `<div class="learning-progress-list">${progress.map((record) => { const game = packageData.games.find((candidate) => candidate.game_id === record.game_id); return `<article><div><strong>${escapeHtml(game?.title || record.game_id)}</strong><span>${escapeHtml(record.mastery_level)} · ${escapeHtml(formatDate(record.completed_at))}</span></div><b>${record.best_score}%</b></article>`; }).join('')}</div>` : '<p class="muted">No completed activities yet. Choose an activity and begin with one question.</p>'}</section>`;
+  else if (state.learningTab === 'create') body = `<section class="learning-authoring-panel"><span class="eyebrow">Create Activity</span><h3>Build a private study exercise</h3><p>The authoring contract is ready for the next additive phase: choose a game type, select shared Scripture/content records, write explanations, preview, and export without modifying the built-in catalog.</p><div class="authoring-checklist"><span>✓ Shared content references</span><span>✓ Age and difficulty metadata</span><span>✓ Offline export boundary</span><span>Next: local authoring form</span></div><button class="button button-secondary" type="button" disabled>Authoring form — next phase</button></section>`;
+  else body = `${state.activeGameSession ? '' : `<div class="learning-game-grid">${learningGameCards(games, study.id) || '<div class="record-empty">No activities match these filters.</div>'}</div>`}`;
+  $('#record-table-wrap').innerHTML = `<div class="learning-games-workspace"><div class="mode-introduction"><div><span class="eyebrow">Learning Resources</span><h2>Learn the Sanctuary through Scripture</h2><p>${packageData.counts.games} offline activities · six game engines · private progress. Every answer can lead back to a passage, source, or shared study record.</p></div><button class="button button-secondary" id="learning-games-attach" type="button" ${attached.length ? 'disabled' : ''}>${attached.length ? 'Activities attached locally' : 'Attach activities to study'}</button></div><nav class="learning-tabs" aria-label="Learning sections">${tabs}</nav>${!state.activeGameSession && (state.learningTab === 'games' || state.learningTab === 'resources') ? `<div class="learning-games-toolbar"><label class="table-search" aria-label="Search learning activities"><span aria-hidden="true">⌕</span><input id="learning-game-search" type="search" value="${escapeHtml(state.learningGameQuery)}" placeholder="Search activities…"></label><select id="learning-game-difficulty" aria-label="Filter activity difficulty"><option value="all">All difficulty</option>${difficulties.map((difficulty) => `<option value="${escapeHtml(difficulty)}" ${difficulty === state.learningGameDifficulty ? 'selected' : ''}>${escapeHtml(difficulty)}</option>`).join('')}</select><select id="learning-game-age" aria-label="Filter activity age group"><option value="all">All ages</option>${ages.map((age) => `<option value="${escapeHtml(age)}" ${age === state.learningGameAge ? 'selected' : ''}>${escapeHtml(age)}</option>`).join('')}</select><span class="muted">${attached.length ? `${attached.length} activity records attached` : 'Package available offline; attach to include activities in exports.'}</span></div>` : ''}<div class="learning-games-body">${body}</div></div>`;
+  document.querySelectorAll('[data-learning-tab]').forEach((button) => button.addEventListener('click', () => { state.learningTab = button.dataset.learningTab; state.activeGameSession = null; renderLearningGamesWorkspace(study); }));
+  $('#learning-game-search')?.addEventListener('input', (event) => { state.learningGameQuery = event.target.value; renderLearningGamesWorkspace(study); });
+  $('#learning-game-difficulty')?.addEventListener('change', (event) => { state.learningGameDifficulty = event.target.value; state.learningGameId = null; renderLearningGamesWorkspace(study); });
+  $('#learning-game-age')?.addEventListener('change', (event) => { state.learningGameAge = event.target.value; state.learningGameId = null; renderLearningGamesWorkspace(study); });
+  $('#learning-games-attach')?.addEventListener('click', async () => { try { if (!desktopData?.attachLearningGames) throw new Error('Interactive Learning attachment is available in the standalone Electron app.'); await desktopData.attachLearningGames({ studyId: study.id }); await refreshFromDesktop(); showMessage('Interactive Learning activities were attached locally.'); } catch (error) { showMessage(error.message || 'Unable to attach Interactive Learning.', true); } });
+  document.querySelectorAll('[data-start-game]').forEach((button) => button.addEventListener('click', async () => { try { if (!attached.length) throw new Error('Attach the activities to this study before starting one.'); if (!desktopData?.startLearningSession) throw new Error('Learning sessions are available in the standalone Electron app.'); const session = await desktopData.startLearningSession({ studyId: study.id, gameId: button.dataset.startGame }); state.learningGameId = button.dataset.startGame; state.activeGameSession = { id: session.id, itemIndex: 0, score: 0, answers: 0, feedback: false, hintsUsed: 0 }; renderLearningGamesWorkspace(study); } catch (error) { showMessage(error.message || 'Unable to start this activity.', true); } }));
+  document.querySelectorAll('[data-open-section="educators"]').forEach((button) => button.addEventListener('click', () => { state.section = 'educators'; renderDetail(); }));
+  wireActiveLearningGame(study);
+}
+
 function renderLearningWorkspace(study) {
   if (!state.learningContent) {
     $('#record-table-wrap').innerHTML = '<div class="record-empty">Loading the local Educator Resources package…</div>';
@@ -368,7 +495,7 @@ function renderInspector(study) {
 
 function openStudyDialog() { $('#study-form').reset(); $('#study-dialog').showModal(); }
 
-function selectStudy(studyId) { state.selectedId = studyId; state.view = 'study'; state.section = 'overview'; state.workspaceMode = storedWorkspaceMode(studyId); state.timelineStep = 1; state.folioRecordId = null; state.scriptureQuery = ''; state.scriptureReference = null; state.libraryQuery = ''; state.libraryRecordId = null; state.symbolismQuery = ''; state.symbolismRecordId = null; state.colorsQuery = ''; state.colorsRecordId = null; state.sanctuaryQuery = ''; state.sanctuaryRecordId = null; state.learningQuery = ''; state.learningCategory = 'all'; state.learningAge = 'all'; state.learningRecordId = null; state.explorerQuery = ''; state.explorerModelId = null; state.explorerZoneIndex = 0; render(); }
+function selectStudy(studyId) { state.selectedId = studyId; state.view = 'study'; state.section = 'overview'; state.workspaceMode = storedWorkspaceMode(studyId); state.timelineStep = 1; state.folioRecordId = null; state.scriptureQuery = ''; state.scriptureReference = null; state.libraryQuery = ''; state.libraryRecordId = null; state.symbolismQuery = ''; state.symbolismRecordId = null; state.colorsQuery = ''; state.colorsRecordId = null; state.sanctuaryQuery = ''; state.sanctuaryRecordId = null; state.learningQuery = ''; state.learningCategory = 'all'; state.learningAge = 'all'; state.learningRecordId = null; state.learningTab = 'games'; state.learningGameQuery = ''; state.learningGameDifficulty = 'all'; state.learningGameAge = 'all'; state.learningGameId = null; state.activeGameSession = null; state.explorerQuery = ''; state.explorerModelId = null; state.explorerZoneIndex = 0; render(); }
 
 async function archiveSelectedStudy() {
   const study = selectedStudy();
@@ -563,7 +690,9 @@ function sanctuarySummaryMarkup(studyId) {
 
 function learningSummaryMarkup(studyId) {
   const records = learningContentForStudy(studyId);
-  return `<section class="mode-panel learning-summary-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Learning</span><h3>Educator resources</h3></div><button class="text-button" data-open-section="educators" type="button">Open Educators →</button></div><div class="learning-summary-list">${records.length ? records.slice(0, 5).map((record) => `<button class="learning-link" data-learning-record-key="${escapeHtml(record.id)}" type="button">${escapeHtml(record.title)}</button>`).join('') : '<span class="muted">No educator resources attached yet.</span>'}</div></section>`;
+  const games = learningGamesForStudy(studyId);
+  const progress = (state.database.learning_progress || []).filter((record) => record.study_id === studyId);
+  return `<section class="mode-panel learning-summary-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Learning</span><h3>Educator resources and practice</h3></div><button class="text-button" data-open-section="learning" type="button">Open Learning →</button></div><div class="learning-summary-list"><button class="learning-link" data-open-section="learning" type="button">${games.length || '30'} interactive activities</button><span class="muted">${progress.length} completed · ${records.length} educator resources attached</span>${records.slice(0, 4).map((record) => `<button class="learning-link" data-learning-record-key="${escapeHtml(record.id)}" type="button">${escapeHtml(record.title)}</button>`).join('')}</div></section>`;
 }
 
 function explorerSummaryMarkup(studyId) {
@@ -654,13 +783,14 @@ function renderEvidence(study) {
   const colorNodes = colorsContentForStudy(study.id).map((record) => ({ ...record, nodeType: 'sacred color', nodeClass: 'color' }));
   const sanctuaryNodes = sanctuaryContentForStudy(study.id).filter((record) => ['sanctuary_model', 'sanctuary_comparison', 'sanctuary_portal_stage'].includes(record.content_type)).map((record) => ({ ...record, nodeType: record.content_type.replace('sanctuary_', 'sanctuary '), nodeClass: 'sanctuary' }));
   const learningNodes = learningContentForStudy(study.id).map((record) => ({ ...record, nodeType: 'educator resource', nodeClass: 'learning' }));
+  const gameNodes = learningGamesForStudy(study.id).map((record) => ({ ...record, nodeType: 'interactive activity', nodeClass: 'learning' }));
   const explorerNodes = explorerContentForStudy(study.id).filter((record) => ['explorer_model', 'specialized_tool'].includes(record.content_type)).map((record) => ({ ...record, nodeType: record.content_type === 'specialized_tool' ? 'specialized tool' : 'explorer model', nodeClass: 'explorer' }));
-  const nodes = [...sources.map((record) => ({ ...record, nodeType: 'source', nodeClass: 'source' })), ...notes.map((record) => ({ ...record, nodeType: 'note', nodeClass: 'note' })), ...entities.map((record) => ({ ...record, nodeType: record.entity_type, nodeClass: 'entity' })), ...tags.map((record) => ({ ...record, nodeType: 'tag', nodeClass: 'tag' })), ...scriptureNodes, ...libraryNodes, ...symbolismNodes, ...colorNodes, ...sanctuaryNodes, ...learningNodes, ...explorerNodes];
+  const nodes = [...sources.map((record) => ({ ...record, nodeType: 'source', nodeClass: 'source' })), ...notes.map((record) => ({ ...record, nodeType: 'note', nodeClass: 'note' })), ...entities.map((record) => ({ ...record, nodeType: record.entity_type, nodeClass: 'entity' })), ...tags.map((record) => ({ ...record, nodeType: 'tag', nodeClass: 'tag' })), ...scriptureNodes, ...libraryNodes, ...symbolismNodes, ...colorNodes, ...sanctuaryNodes, ...learningNodes, ...gameNodes, ...explorerNodes];
   const nodeMarkup = nodes.length ? nodes.map((node) => `<article class="evidence-node ${node.nodeClass}"><span>${escapeHtml(node.nodeType)}</span><strong>${escapeHtml(node.title || node.name)}</strong><small>${escapeHtml(node.description || node.body || node.author || 'Local study record')}</small></article>`).join('') : '<div class="record-empty">Add sources, notes, or entities to build the evidence wall.</div>';
   const entityIds = new Set(entities.map((entity) => entity.id));
   const relationships = state.database.relationships.filter((relation) => relation.study_id === study.id && entityIds.has(relation.source_entity_id) && entityIds.has(relation.target_entity_id) && !relation.deleted_at);
-  const contentIds = new Set([...scriptureNodes, ...libraryNodes, ...symbolismNodes, ...colorNodes, ...sanctuaryNodes, ...learningNodes, ...explorerNodes].map((item) => item.id));
-  const contentById = new Map([...scriptureNodes, ...libraryNodes, ...symbolismNodes, ...colorNodes, ...sanctuaryNodes, ...learningNodes, ...explorerNodes].map((item) => [item.id, item]));
+  const contentIds = new Set([...scriptureNodes, ...libraryNodes, ...symbolismNodes, ...colorNodes, ...sanctuaryNodes, ...learningNodes, ...gameNodes, ...explorerNodes].map((item) => item.id));
+  const contentById = new Map([...scriptureNodes, ...libraryNodes, ...symbolismNodes, ...colorNodes, ...sanctuaryNodes, ...learningNodes, ...gameNodes, ...explorerNodes].map((item) => [item.id, item]));
   const contentRelationships = state.database.content_relationships.filter((relation) => contentIds.has(relation.source_content_id) && contentIds.has(relation.target_content_id) && !relation.deleted_at);
   const relationshipMarkup = [...relationships.map((relation) => { const source = entities.find((entity) => entity.id === relation.source_entity_id); const target = entities.find((entity) => entity.id === relation.target_entity_id); return `<div class="relationship-line"><strong>${escapeHtml(source?.name || 'Unknown')}</strong><span>${escapeHtml(relation.relationship_type)}</span><strong>${escapeHtml(target?.name || 'Unknown')}</strong></div>`; }), ...contentRelationships.map((relation) => `<div class="relationship-line"><strong>${escapeHtml(contentById.get(relation.source_content_id)?.title || 'Unknown')}</strong><span>${escapeHtml(relation.relationship_type)}</span><strong>${escapeHtml(contentById.get(relation.target_content_id)?.title || 'Unknown')}</strong></div>`)].join('') || '<p class="muted">No explicit entity, Scripture, Library, Symbolism, or Colors relationships have been recorded yet.</p>';
   $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-evidence"><div class="mode-introduction"><div><span class="eyebrow">Evidence Wall</span><h2>Relationships and comparisons</h2><p>View research objects together: Scripture, sources, Symbolism, Sanctuary models, Educator resources, Explorer models, and specialized tools.</p></div><div class="mode-count">${nodes.length}<span>objects</span></div></div><div class="evidence-wall">${nodeMarkup}</div><section class="mode-panel relationship-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Connections</span><h3>Recorded relationships</h3></div></div>${relationshipMarkup}</section></div>`;
@@ -719,7 +849,7 @@ function renderDetail() {
   $('#study-detail-description').textContent = study.description || 'No description yet.';
   $('#section-tabs').innerHTML = STUDY_SECTIONS.map((section) => `<button class="section-tab ${section.id === state.section ? 'is-active' : ''}" data-study-section="${section.id}" role="tab" aria-selected="${section.id === state.section}">${section.label}</button>`).join('');
   document.querySelectorAll('[data-study-section]').forEach((button) => button.addEventListener('click', () => { state.section = button.dataset.studySection; renderDetail(); }));
-  $('#add-record').disabled = state.section === 'overview' || state.section === 'timeline' || state.section === 'scripture' || state.section === 'library' || state.section === 'symbolism' || state.section === 'colors' || state.section === 'sanctuary' || state.section === 'educators' || state.section === 'explorer';
+  $('#add-record').disabled = state.section === 'overview' || state.section === 'timeline' || state.section === 'scripture' || state.section === 'library' || state.section === 'symbolism' || state.section === 'colors' || state.section === 'sanctuary' || state.section === 'learning' || state.section === 'educators' || state.section === 'explorer';
   $('#archive-study').textContent = study.status === 'archived' ? 'Restore study' : 'Archive study';
   $('#archive-study').setAttribute('aria-label', study.status === 'archived' ? 'Restore archived study' : 'Archive study');
   if (state.section === 'overview') { renderWorkspaceMode(study); document.querySelectorAll('[data-open-section]').forEach((button) => button.addEventListener('click', () => { state.section = button.dataset.openSection; renderDetail(); })); return; }
@@ -729,6 +859,7 @@ function renderDetail() {
   if (state.section === 'symbolism') { renderSymbolismWorkspace(study); return; }
   if (state.section === 'colors') { renderColorsWorkspace(study); return; }
   if (state.section === 'sanctuary') { renderSanctuaryWorkspace(study); return; }
+  if (state.section === 'learning') { renderLearningGamesWorkspace(study); return; }
   if (state.section === 'educators') { renderLearningWorkspace(study); return; }
   if (state.section === 'explorer') { renderExplorerWorkspace(study); return; }
   const records = recordsForStudy(study.id, state.section);
@@ -823,6 +954,7 @@ async function importBundle() {
 }
 
 document.querySelectorAll('[data-section]').forEach((item) => item.addEventListener('click', () => { state.view = item.dataset.section; render(); }));
+document.addEventListener('click', (event) => { const trigger = event.target.closest('[data-open-section="learning"]'); if (trigger && selectedStudy()) { state.section = 'learning'; state.learningTab = 'games'; renderDetail(); } });
 $('#workspace-mode').addEventListener('change', (event) => setWorkspaceMode(event.target.value));
 $('#global-search').addEventListener('input', (event) => { state.query = event.target.value; $('#table-search').value = state.query; render(); });
 $('#table-search').addEventListener('input', (event) => { state.query = event.target.value; $('#global-search').value = state.query; render(); });

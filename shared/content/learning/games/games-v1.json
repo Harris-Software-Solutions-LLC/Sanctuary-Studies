@@ -1,0 +1,193 @@
+{
+  "format": "sanctuary-studies-learning-games",
+  "content_type": "learning_games",
+  "content_version": 1,
+  "title": "Sanctuary Studies Interactive Learning Activities",
+  "source_revision": "learning-games-v1-curated",
+  "imported_at": "2026-10-09T00:00:00.000Z",
+  "license_status": "review-required",
+  "runtime": "offline-local",
+  "counts": { "games": 30, "multiple_choice": 5, "fill_blank": 5, "true_false": 5, "scripture_linking": 5, "matching": 5, "symbolism": 5 },
+  "games": [
+    {
+      "game_id": "game.multiple-choice.intercession-v1", "game_type": "multiple_choice", "title": "The Ministry of Intercession", "age_group": "mixed", "difficulty": "beginner", "estimated_minutes": 5,
+      "objectives": ["Identify the furnishing associated with intercession", "Connect the answer with Scripture"], "source_content": ["symbolism.furnishings", "scripture.reference.revelation-8-3-4"],
+      "items": [{ "id": "mc-intercession", "prompt": "Which sanctuary object represented Christ's intercession?", "options": ["Brazen altar", "Altar of incense", "Laver", "Table of shewbread"], "correct": 1, "explanation": "The altar of incense points to prayer and intercession before God.", "references": ["Exodus 30:1-10", "Revelation 8:3-4"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.multiple-choice.pattern-v1", "game_type": "multiple_choice", "title": "A Pattern of Heavenly Things", "age_group": "youth", "difficulty": "beginner", "estimated_minutes": 5,
+      "objectives": ["Recognize the pattern language of Hebrews"], "source_content": ["scripture.reference.hebrews-8-5", "sanctuary.model.wilderness-tabernacle"],
+      "items": [{ "id": "mc-pattern", "prompt": "Hebrews 8:5 says the earthly priests served a copy and shadow of what?", "options": ["Earthly kings", "Heavenly things", "Roman customs", "Wisdom literature"], "correct": 1, "explanation": "The earthly sanctuary was a figure and shadow of heavenly realities.", "references": ["Hebrews 8:5"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.multiple-choice.cleansing-v1", "game_type": "multiple_choice", "title": "The Day of Atonement", "age_group": "adult", "difficulty": "intermediate", "estimated_minutes": 6,
+      "objectives": ["Connect the cleansing service with its biblical description"], "source_content": ["timeline.step.24", "scripture.reference.leviticus-16"],
+      "items": [{ "id": "mc-cleansing", "prompt": "Which chapter gives the central description of Israel's Day of Atonement service?", "options": ["Leviticus 1", "Leviticus 8", "Leviticus 16", "Leviticus 23"], "correct": 2, "explanation": "Leviticus 16 describes the annual service of cleansing and atonement.", "references": ["Leviticus 16:29-34"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.multiple-choice.scripture-reading-v1", "game_type": "multiple_choice", "title": "Read the Furniture List", "age_group": "children", "difficulty": "beginner", "estimated_minutes": 5,
+      "objectives": ["Locate sanctuary furniture in Scripture"], "source_content": ["scripture.reference.hebrews-9-2-5", "symbolism.furnishings"],
+      "items": [{ "id": "mc-furniture-list", "prompt": "Which item is named in Hebrews 9:2 as being in the first tabernacle?", "options": ["The candlestick", "The brazen serpent", "Goliath's sword", "The throne of David"], "correct": 0, "explanation": "Hebrews 9:2 names the candlestick, table, and shewbread in the first apartment.", "references": ["Hebrews 9:2"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.multiple-choice.timeline-v1", "game_type": "multiple_choice", "title": "Daniel's Sanctuary Question", "age_group": "adult", "difficulty": "advanced", "estimated_minutes": 7,
+      "objectives": ["Connect Daniel 8:14 with the study timeline"], "source_content": ["timeline.step.24", "scripture.reference.daniel-8-14"],
+      "items": [{ "id": "mc-2300", "prompt": "What phrase begins Daniel 8:14?", "options": ["Unto two thousand and three hundred days", "After three days", "Seventy weeks are determined", "In the beginning"], "correct": 0, "explanation": "Daniel 8:14 begins with the 2,300 evening-mornings prophecy before describing the cleansing of the sanctuary.", "references": ["Daniel 8:14"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.fill-blank.sanctuary-v1", "game_type": "fill_blank", "title": "The Sanctuary Sentence", "age_group": "children", "difficulty": "beginner", "estimated_minutes": 4,
+      "objectives": ["Recall the central sanctuary promise"], "source_content": ["scripture.reference.exodus-25-8"],
+      "items": [{ "id": "blank-sanctuary", "prompt": "Complete the verse: Let them make me a ______; that I may dwell among them.", "answer": "sanctuary", "accepted_answers": ["sanctuary"], "explanation": "The sanctuary was a place where God promised to dwell among His people.", "references": ["Exodus 25:8"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.fill-blank.blood-v1", "game_type": "fill_blank", "title": "The Cost of Forgiveness", "age_group": "youth", "difficulty": "intermediate", "estimated_minutes": 4,
+      "objectives": ["Recall Hebrews' teaching about atonement"], "source_content": ["scripture.reference.hebrews-9-22"],
+      "items": [{ "id": "blank-blood", "prompt": "Complete the phrase: Without shedding of ______ is no remission.", "answer": "blood", "accepted_answers": ["blood"], "explanation": "Hebrews connects remission with the shedding of blood, pointing to the seriousness of sin and the saving work of Christ.", "references": ["Hebrews 9:22"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.fill-blank.light-v1", "game_type": "fill_blank", "title": "Light in the Holy Place", "age_group": "children", "difficulty": "beginner", "estimated_minutes": 4,
+      "objectives": ["Name the seven-branched lampstand"], "source_content": ["symbolism.furnishings", "scripture.reference.exodus-25-31"],
+      "items": [{ "id": "blank-menorah", "prompt": "The seven-branched lampstand is commonly called the ______.", "answer": "menorah", "accepted_answers": ["menorah", "candlestick", "lampstand"], "explanation": "Menorah is the familiar name for the lampstand; Scripture also calls it the candlestick.", "references": ["Exodus 25:31-40"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.fill-blank.timeline-v1", "game_type": "fill_blank", "title": "A Year of Study", "age_group": "adult", "difficulty": "advanced", "estimated_minutes": 5,
+      "objectives": ["Recall the historicist day-year study milestone"], "source_content": ["timeline.step.24", "scripture.reference.daniel-8-14"],
+      "items": [{ "id": "blank-1844", "prompt": "In this study's timeline, the 2,300-year calculation reaches the year ______.", "answer": "1844", "accepted_answers": ["1844"], "explanation": "The timeline records 1844 as its historic milestone for the sanctuary-investigative judgment study. Review the cited sources and form your own conclusion.", "references": ["Daniel 8:14", "Hebrews 9:23"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.fill-blank.priest-v1", "game_type": "fill_blank", "title": "The High Priest", "age_group": "mixed", "difficulty": "intermediate", "estimated_minutes": 4,
+      "objectives": ["Identify the priestly role in the Most Holy Place"], "source_content": ["scripture.reference.leviticus-16-32", "sanctuary.model.wilderness-tabernacle"],
+      "items": [{ "id": "blank-priest", "prompt": "On the Day of Atonement, the ______ priest made atonement in the Most Holy Place.", "answer": "high", "accepted_answers": ["high", "high priest"], "explanation": "Leviticus 16 assigns this ministry to the high priest.", "references": ["Leviticus 16:32"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.true-false.pattern-v1", "game_type": "true_false", "title": "Pattern and Shadow", "age_group": "children", "difficulty": "beginner", "estimated_minutes": 4,
+      "objectives": ["Recognize Hebrews 8:5's sanctuary language"], "source_content": ["scripture.reference.hebrews-8-5"],
+      "items": [{ "id": "tf-pattern", "statement": "The earthly sanctuary was presented as a pattern of heavenly realities.", "correct": true, "explanation": "Hebrews 8:5 describes the earthly service as a copy and shadow of heavenly things.", "references": ["Hebrews 8:5"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.true-false.outer-court-v1", "game_type": "true_false", "title": "Where Is the Incense?", "age_group": "youth", "difficulty": "beginner", "estimated_minutes": 4,
+      "objectives": ["Distinguish the holy place furnishings"], "source_content": ["symbolism.furnishings", "scripture.reference.exodus-30-1"],
+      "items": [{ "id": "tf-incense-court", "statement": "The altar of incense stood in the outer court beside the brazen altar.", "correct": false, "explanation": "The altar of incense stood before the veil in the tabernacle, in the holy place.", "references": ["Exodus 30:1-6", "Hebrews 9:2"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.true-false.once-year-v1", "game_type": "true_false", "title": "Once Every Year", "age_group": "adult", "difficulty": "intermediate", "estimated_minutes": 4,
+      "objectives": ["Read the annual ministry description in Hebrews"], "source_content": ["scripture.reference.hebrews-9-7"],
+      "items": [{ "id": "tf-once-year", "statement": "The high priest entered the second apartment once every year.", "correct": true, "explanation": "Hebrews 9:7 explicitly describes the yearly entrance with blood for himself and the errors of the people.", "references": ["Hebrews 9:7"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.true-false.timeline-v1", "game_type": "true_false", "title": "The Twenty-Four Steps", "age_group": "mixed", "difficulty": "beginner", "estimated_minutes": 4,
+      "objectives": ["Navigate the complete Sanctuary Studies timeline"], "source_content": ["timeline.step.1", "timeline.step.24"],
+      "items": [{ "id": "tf-timeline", "statement": "The Sanctuary Studies learning timeline contains 24 steps.", "correct": true, "explanation": "The current integrated timeline preserves 24 steps and its related questions.", "references": ["Sanctuary Studies 24-step timeline"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.true-false.heavenly-v1", "game_type": "true_false", "title": "Heavenly Ministry", "age_group": "adult", "difficulty": "advanced", "estimated_minutes": 5,
+      "objectives": ["Compare earthly figures with New Testament interpretation"], "source_content": ["scripture.reference.hebrews-9-24"],
+      "items": [{ "id": "tf-heavenly", "statement": "Hebrews 9:24 says Christ entered holy places made with hands on earth.", "correct": false, "explanation": "The verse contrasts earthly holy places made with hands with heaven itself.", "references": ["Hebrews 9:24"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.scripture-linking.objects-v1", "game_type": "scripture_linking", "title": "Link Scripture to Sanctuary Objects", "age_group": "youth", "difficulty": "intermediate", "estimated_minutes": 7,
+      "objectives": ["Connect passages with sanctuary furnishings"], "source_content": ["symbolism.furnishings", "scripture.reference.exodus-30-1", "scripture.reference.hebrews-9-2"],
+      "items": [{ "id": "link-objects", "prompt": "Choose the object that best matches each passage.", "links": { "Exodus 30:1-6": "Altar of incense", "Hebrews 9:2": "Candlestick and table" }, "options": ["Altar of incense", "Candlestick and table", "Brazen serpent"] , "explanation": "Read each passage and use the wording of the text to make the connection.", "references": ["Exodus 30:1-6", "Hebrews 9:2"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.scripture-linking.doctrine-v1", "game_type": "scripture_linking", "title": "Link Passage to Theme", "age_group": "adult", "difficulty": "intermediate", "estimated_minutes": 7,
+      "objectives": ["Link Bible passages to study themes"], "source_content": ["scripture.reference.hebrews-8-5", "scripture.reference.hebrews-9-22"],
+      "items": [{ "id": "link-doctrine", "prompt": "Match each passage with the study theme it supports.", "links": { "Hebrews 8:5": "Pattern and shadow", "Hebrews 9:22": "Blood and remission" }, "options": ["Pattern and shadow", "Blood and remission", "Royal genealogy"], "explanation": "The purpose is to practice evidence-based links, not memorize isolated labels.", "references": ["Hebrews 8:5", "Hebrews 9:22"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.scripture-linking.timeline-v1", "game_type": "scripture_linking", "title": "Link Passage to Timeline", "age_group": "mixed", "difficulty": "beginner", "estimated_minutes": 6,
+      "objectives": ["Attach evidence to a timeline step"], "source_content": ["timeline.step.24", "scripture.reference.daniel-8-14"],
+      "items": [{ "id": "link-timeline", "prompt": "Connect each passage with the timeline topic it illuminates.", "links": { "Daniel 8:14": "Sanctuary cleansing", "Exodus 25:8": "God dwelling among His people" }, "options": ["Sanctuary cleansing", "God dwelling among His people", "Temple taxation"], "explanation": "A good timeline entry keeps the passage and the historical/theological claim visible together.", "references": ["Daniel 8:14", "Exodus 25:8"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.scripture-linking.person-v1", "game_type": "scripture_linking", "title": "Link Person to Passage", "age_group": "youth", "difficulty": "beginner", "estimated_minutes": 6,
+      "objectives": ["Connect people with their documented biblical roles"], "source_content": ["scripture.reference.leviticus-16-32", "sanctuary.model.wilderness-tabernacle"],
+      "items": [{ "id": "link-person", "prompt": "Match the passage with the person or role it describes.", "links": { "Leviticus 16:32": "High priest", "Hebrews 9:7": "High priest entering yearly" }, "options": ["High priest", "High priest entering yearly", "King of Tyre"], "explanation": "The links keep the role anchored to the source text.", "references": ["Leviticus 16:32", "Hebrews 9:7"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.scripture-linking.source-v1", "game_type": "scripture_linking", "title": "Link Passage to Source", "age_group": "adult", "difficulty": "advanced", "estimated_minutes": 8,
+      "objectives": ["Practice source-to-claim linking"], "source_content": ["library.book.the-sanctuary", "scripture.reference.hebrews-9-23"],
+      "items": [{ "id": "link-source", "prompt": "Connect the passage with the best research object.", "links": { "Hebrews 9:23": "Sanctuary cleansing study", "Hebrews 9:24": "Heavenly sanctuary study" }, "options": ["Sanctuary cleansing study", "Heavenly sanctuary study", "Unrelated chronology"], "explanation": "This activity models the Evidence Wall: passage, source, and claim should remain traceable.", "references": ["Hebrews 9:23-24"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.matching.furnishings-v1", "game_type": "matching", "title": "Sanctuary Furnishings and Their Meaning", "age_group": "youth", "difficulty": "beginner", "estimated_minutes": 10,
+      "objectives": ["Identify sanctuary furnishings", "Connect each furnishing to a meaning"], "source_content": ["symbolism.furnishings", "colors.sacred"],
+      "items": [{ "id": "match-furnishings", "prompt": "Match each furnishing with its study meaning.", "pairs": [{ "prompt": "Brazen altar", "answer": "Sacrifice and atonement" }, { "prompt": "Laver", "answer": "Cleansing and preparation" }, { "prompt": "Altar of incense", "answer": "Prayer and intercession" }], "options": ["Sacrifice and atonement", "Cleansing and preparation", "Prayer and intercession"], "explanation": "These are study connections; open the linked Scripture in the Symbolism workspace to examine the evidence.", "references": ["Exodus 27:1-8", "Exodus 30:18-21", "Exodus 30:1-10"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.matching.colors-v1", "game_type": "matching", "title": "Sacred Colors", "age_group": "children", "difficulty": "beginner", "estimated_minutes": 8,
+      "objectives": ["Recognize sacred colors", "Compare symbolic meanings"], "source_content": ["colors.sacred"],
+      "items": [{ "id": "match-colors", "prompt": "Match each color with the meaning used in this study package.", "pairs": [{ "prompt": "Blue", "answer": "Law and heavenly authority" }, { "prompt": "Purple", "answer": "Royalty and kingship" }, { "prompt": "Scarlet", "answer": "Sacrifice and blood" }], "options": ["Law and heavenly authority", "Royalty and kingship", "Sacrifice and blood"], "explanation": "Color symbolism is a starting point for investigation; always review the cited passages and provenance.", "references": ["Exodus 25:4", "Exodus 28:6", "Leviticus 17:11"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.matching.offering-v1", "game_type": "matching", "title": "Offerings and Purposes", "age_group": "youth", "difficulty": "intermediate", "estimated_minutes": 9,
+      "objectives": ["Distinguish the purposes of offerings"], "source_content": ["symbolism.offerings", "scripture.reference.leviticus-1"],
+      "items": [{ "id": "match-offerings", "prompt": "Match each offering with its study purpose.", "pairs": [{ "prompt": "Burnt offering", "answer": "Consecration and surrender" }, { "prompt": "Sin offering", "answer": "Atonement for sin" }, { "prompt": "Peace offering", "answer": "Fellowship and thanksgiving" }], "options": ["Consecration and surrender", "Atonement for sin", "Fellowship and thanksgiving"], "explanation": "The offerings have distinct instructions and contexts. Read their source passages before drawing broader conclusions.", "references": ["Leviticus 1:3-4", "Leviticus 4:20", "Leviticus 7:11-15"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.matching.models-v1", "game_type": "matching", "title": "Models and Historical Periods", "age_group": "adult", "difficulty": "intermediate", "estimated_minutes": 8,
+      "objectives": ["Distinguish sanctuary models by period"], "source_content": ["sanctuary.models", "timeline.steps"],
+      "items": [{ "id": "match-models", "prompt": "Match each model with its period or setting.", "pairs": [{ "prompt": "Wilderness tabernacle", "answer": "Israel's portable desert sanctuary" }, { "prompt": "Solomon's Temple", "answer": "First permanent Jerusalem temple" }, { "prompt": "Heavenly sanctuary", "answer": "The heavenly reality interpreted through Scripture" }], "options": ["Israel's portable desert sanctuary", "First permanent Jerusalem temple", "The heavenly reality interpreted through Scripture"], "explanation": "The Atlas keeps these models side by side for comparison without collapsing their historical differences.", "references": ["Exodus 25:8-9", "1 Kings 6:1", "Hebrews 8:1-5"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.matching.roles-v1", "game_type": "matching", "title": "Priestly Roles", "age_group": "mixed", "difficulty": "beginner", "estimated_minutes": 8,
+      "objectives": ["Recognize roles in sanctuary service"], "source_content": ["sanctuary.models", "scripture.reference.leviticus-16-32"],
+      "items": [{ "id": "match-roles", "prompt": "Match each role with the described duty.", "pairs": [{ "prompt": "High priest", "answer": "Annual ministry in the Most Holy Place" }, { "prompt": "Priests", "answer": "Daily ministry in the first tabernacle" }, { "prompt": "Levites", "answer": "Care and service connected with the sanctuary" }], "options": ["Annual ministry in the Most Holy Place", "Daily ministry in the first tabernacle", "Care and service connected with the sanctuary"], "explanation": "Hebrews 9 and the Torah passages provide the source trail for these role distinctions.", "references": ["Hebrews 9:6-7", "Numbers 3:5-9"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.symbolism.furnishings-v1", "game_type": "symbolism", "title": "Furnishing, Type, and Antitype", "age_group": "adult", "difficulty": "intermediate", "estimated_minutes": 10,
+      "objectives": ["Explore type and antitype language", "Keep symbolic claims linked to Scripture"], "source_content": ["symbolism.furnishings", "scripture.reference.hebrews-9-24"],
+      "items": [{ "id": "symbol-furnishings", "prompt": "Match the furnishing with the interpretive connection.", "pairs": [{ "prompt": "Brazen altar", "answer": "Sacrifice and the cross" }, { "prompt": "Menorah", "answer": "Light and witness" }, { "prompt": "Ark", "answer": "Law, mercy, and God's throne" }], "options": ["Sacrifice and the cross", "Light and witness", "Law, mercy, and God's throne"], "explanation": "Symbolic interpretation should be tested against the cited passages and clearly labeled as interpretation.", "references": ["Exodus 25:31-40", "Exodus 25:10-22", "Hebrews 9:24"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.symbolism.colors-v1", "game_type": "symbolism", "title": "Colors in the Sanctuary", "age_group": "children", "difficulty": "beginner", "estimated_minutes": 8,
+      "objectives": ["Review the sacred color package", "Connect color and Scripture"], "source_content": ["colors.sacred"],
+      "items": [{ "id": "symbol-colors", "prompt": "Match each color with its package description.", "pairs": [{ "prompt": "White", "answer": "Purity and righteousness" }, { "prompt": "Gold", "answer": "Divinity and glory" }, { "prompt": "Green", "answer": "Life and growth" }], "options": ["Purity and righteousness", "Divinity and glory", "Life and growth"], "explanation": "Use the color package as a study aid, then inspect its Scripture references in the Colors workspace.", "references": ["Isaiah 1:18", "Exodus 25:11", "Psalm 52:8"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.symbolism.zone-v1", "game_type": "symbolism", "title": "Name the Sanctuary Zone", "age_group": "youth", "difficulty": "intermediate", "estimated_minutes": 8,
+      "objectives": ["Identify sanctuary zones from descriptions"], "source_content": ["sanctuary.models", "symbolism.furnishings"],
+      "items": [{ "id": "symbol-zones", "prompt": "Match the zone with its description.", "pairs": [{ "prompt": "Outer court", "answer": "Sacrifice and washing" }, { "prompt": "Holy place", "answer": "Daily priestly ministry" }, { "prompt": "Most Holy Place", "answer": "Ark and annual high-priest ministry" }], "options": ["Sacrifice and washing", "Daily priestly ministry", "Ark and annual high-priest ministry"], "explanation": "The zone is a spatial clue, not a substitute for reading the underlying passages.", "references": ["Exodus 27:9-19", "Hebrews 9:2-7"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.symbolism.hebrew-v1", "game_type": "symbolism", "title": "Terms of the Study", "age_group": "adult", "difficulty": "advanced", "estimated_minutes": 9,
+      "objectives": ["Relate key terms to their study meanings"], "source_content": ["symbolism.furnishings", "colors.sacred"],
+      "items": [{ "id": "symbol-terms", "prompt": "Match each term with the package meaning.", "pairs": [{ "prompt": "Qodesh", "answer": "Holy place or sacred" }, { "prompt": "Kapporet", "answer": "Mercy seat or covering" }, { "prompt": "Mishkan", "answer": "Dwelling place or tabernacle" }], "options": ["Holy place or sacred", "Mercy seat or covering", "Dwelling place or tabernacle"], "explanation": "Terms are memory aids; consult provenance and context before making a translation-dependent claim.", "references": ["Exodus 25:8", "Exodus 25:17", "Hebrews 9:2"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    },
+    {
+      "game_id": "game.symbolism.offerings-v1", "game_type": "symbolism", "title": "Offering and Meaning", "age_group": "mixed", "difficulty": "intermediate", "estimated_minutes": 8,
+      "objectives": ["Compare offering symbolism with source passages"], "source_content": ["symbolism.offerings", "scripture.reference.leviticus-1"],
+      "items": [{ "id": "symbol-offerings", "prompt": "Match each offering with its package description.", "pairs": [{ "prompt": "Grain offering", "answer": "Dedication of life's provision" }, { "prompt": "Sin offering", "answer": "Atonement and cleansing" }, { "prompt": "Peace offering", "answer": "Fellowship and gratitude" }], "options": ["Dedication of life's provision", "Atonement and cleansing", "Fellowship and gratitude"], "explanation": "Review the relevant Leviticus passages to distinguish text, typology, and later interpretation.", "references": ["Leviticus 2:1-3", "Leviticus 4:20", "Leviticus 7:11-15"] }],
+      "scoring": { "points_per_correct": 10, "allow_retry": true, "show_explanation_after_answer": true }
+    }
+  ]
+}

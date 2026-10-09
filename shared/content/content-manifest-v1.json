@@ -10,6 +10,7 @@
     { "id": "symbolism", "path": "symbolism/symbolism-v1.json", "source_files": ["app-pages2.js"], "status": "integrated" },
     { "id": "colors", "path": "colors/colors-v1.json", "source_files": ["app-data.js", "app-pages2.js"], "status": "integrated" },
     { "id": "learning", "path": "learning/learning-v1.json", "source_files": ["app-data.js", "app-pages3.js"], "status": "integrated" },
+    { "id": "learning-games", "path": "learning/games/games-v1.json", "source_files": ["Sanctuary Studies interactive learning proposal", "learning/learning-v1.json", "symbolism/symbolism-v1.json", "colors/colors-v1.json", "sanctuary/sanctuary-v1.json", "timeline/timeline-v1.json", "scripture/scripture-v1.json"], "status": "integrated" },
     { "id": "explorer", "path": "explorer/explorer-v1.json", "source_files": ["app-pages3.js", "app-data.js"], "status": "integrated" }
   ],
   "exclusions": [".git", ".github", "Supabase", "payment routes", "authentication routes", "hosted fonts", "external media URLs"],

@@ -1,9 +1,10 @@
 const crypto = require('node:crypto');
 const { CONTENT_TABLES, migrateV1ToV2 } = require('./migrations/002-content-links.cjs');
+const { LEARNING_TABLES, migrateV2ToV3 } = require('./migrations/003-learning-activity.cjs');
 
-const CURRENT_SCHEMA_VERSION = 2;
+const CURRENT_SCHEMA_VERSION = 3;
 const BUNDLE_FORMAT = 'sanctuary-studies-bundle';
-const TABLES = ['studies', 'sources', 'notes', 'entities', 'relationships', 'tags', 'study_tags', ...CONTENT_TABLES];
+const TABLES = ['studies', 'sources', 'notes', 'entities', 'relationships', 'tags', 'study_tags', ...CONTENT_TABLES, ...LEARNING_TABLES];
 const ENTITY_TYPES = ['person', 'place', 'event'];
 
 function clone(value) {
@@ -30,7 +31,8 @@ function migrateDatabase(input) {
   for (const table of TABLES) {
     if (Array.isArray(source[table])) migrated[table] = clone(source[table]);
   }
-  return version < 2 ? migrateV1ToV2(migrated) : migrated;
+  const v2 = version < 2 ? migrateV1ToV2(migrated) : migrated;
+  return version < 3 ? migrateV2ToV3(v2) : v2;
 }
 
 function validateDatabase(database) {
@@ -69,6 +71,17 @@ function validateDatabase(database) {
   }
   for (const link of value.study_content_links) {
     if (!studyIds.has(link.study_id) || !contentIds.has(link.content_id)) errors.push(`${link.id} references a missing study or content item`);
+  }
+  const gameIds = new Set(value.learning_games.map((game) => game.id));
+  const sessionIds = new Set(value.game_sessions.map((session) => session.id));
+  for (const session of value.game_sessions) {
+    if (!studyIds.has(session.study_id) || !gameIds.has(session.game_id)) errors.push(`${session.id} references a missing study or learning game`);
+  }
+  for (const attempt of value.game_attempts) {
+    if (!sessionIds.has(attempt.session_id)) errors.push(`${attempt.id} references a missing game session`);
+  }
+  for (const progress of value.learning_progress) {
+    if (!studyIds.has(progress.study_id) || !gameIds.has(progress.game_id)) errors.push(`${progress.id} references a missing study or learning game`);
   }
   return { valid: errors.length === 0, errors, database: value };
 }

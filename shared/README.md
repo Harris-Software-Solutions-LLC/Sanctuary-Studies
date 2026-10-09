@@ -2,7 +2,7 @@
 
 This folder is the platform-neutral contract for the desktop and mobile applications.
 
-- `schema/schema-v1.json` defines the tables and relationships.
+- `schema/schema-v1.json` defines the original tables and relationships; `schema/schema-v2.json` adds versioned content links; `schema/schema-v3.json` adds additive learning activity sessions and progress.
 - `model.cjs` handles versioning, validation, and `.ssbundle` envelopes.
 - `store.cjs` provides a local file-backed store for the Electron prototype.
 - `import-export/format.md` defines offline transfer between devices.

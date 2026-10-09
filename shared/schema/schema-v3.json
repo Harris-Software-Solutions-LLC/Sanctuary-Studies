@@ -1,0 +1,28 @@
+{
+  "format": "sanctuary-studies-database",
+  "schema_version": 3,
+  "migration": "003-learning-activity",
+  "preserves": "schema-v2",
+  "tables": {
+    "learning_games": {
+      "primary_key": ["id"],
+      "columns": { "id": "text", "game_id": "text", "title": "text", "game_type": "text", "difficulty": "text", "created_at": "datetime", "updated_at": "datetime" }
+    },
+    "game_sessions": {
+      "primary_key": ["id"],
+      "columns": { "id": "uuid", "study_id": "uuid", "game_id": "text", "started_at": "datetime", "completed_at": "datetime|null", "score": "integer", "percentage": "number", "attempt_count": "integer", "status": "text" },
+      "foreign_keys": [{ "columns": ["study_id"], "references": "studies.id" }, { "columns": ["game_id"], "references": "learning_games.id" }]
+    },
+    "game_attempts": {
+      "primary_key": ["id"],
+      "columns": { "id": "uuid", "session_id": "uuid", "item_id": "text", "submitted_answer": "json", "correct": "boolean", "points": "integer", "hints_used": "integer", "answered_at": "datetime" },
+      "foreign_keys": [{ "columns": ["session_id"], "references": "game_sessions.id" }]
+    },
+    "learning_progress": {
+      "primary_key": ["id"],
+      "columns": { "id": "uuid", "study_id": "uuid", "game_id": "text", "best_score": "integer", "attempts": "integer", "completed_at": "datetime|null", "mastery_level": "text" },
+      "foreign_keys": [{ "columns": ["study_id"], "references": "studies.id" }, { "columns": ["game_id"], "references": "learning_games.id" }]
+    }
+  },
+  "compatibility": "All schema-v1 and schema-v2 records are preserved; this migration only adds learning activity tables."
+}

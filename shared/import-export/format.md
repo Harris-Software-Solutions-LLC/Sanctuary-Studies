@@ -6,18 +6,26 @@
 {
   "format": "sanctuary-studies-bundle",
   "format_version": 1,
-  "schema_version": 1,
+  "schema_version": 3,
   "exported_at": "2026-10-06T00:00:00.000Z",
   "source": "Sanctuary Studies desktop",
   "data": {
-    "schema_version": 1,
+    "schema_version": 3,
     "studies": [],
     "sources": [],
     "notes": [],
     "entities": [],
     "relationships": [],
     "tags": [],
-    "study_tags": []
+    "study_tags": [],
+    "content_items": [],
+    "content_relationships": [],
+    "content_provenance": [],
+    "study_content_links": [],
+    "learning_games": [],
+    "game_sessions": [],
+    "game_attempts": [],
+    "learning_progress": []
   }
 }
 ```

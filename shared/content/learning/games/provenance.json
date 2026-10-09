@@ -1,0 +1,8 @@
+{
+  "package": "learning-games-v1",
+  "source_files": ["Sanctuary Studies interactive learning proposal", "shared/content/learning/learning-v1.json", "shared/content/symbolism/symbolism-v1.json", "shared/content/colors/colors-v1.json", "shared/content/sanctuary/sanctuary-v1.json", "shared/content/timeline/timeline-v1.json", "shared/content/scripture/scripture-v1.json"],
+  "source_revision": "learning-games-v1-curated",
+  "license_status": "review-required",
+  "network_dependencies_removed": true,
+  "notes": "Activities are authored as local study aids. Scripture references and explanations remain reviewable, and symbolic claims are labeled as package interpretations rather than replacing source study."
+}

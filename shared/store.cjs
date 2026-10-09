@@ -140,6 +140,65 @@ function createStore(filePath) {
     });
   }
 
+  function attachLearningGamePackage({ studyId, packageData, items = [], gameRecords = [], sourceName = '', sourcePath = '', sourceRevision = '', licenseStatus = 'review-required' }) {
+    const attachment = attachContentPackage({ studyId, packageData, items, sourceName, sourcePath, sourceRevision, licenseStatus });
+    transact((database) => {
+      activeStudy(database, studyId);
+      const timestamp = new Date().toISOString();
+      for (const game of gameRecords) {
+        const existing = database.learning_games.find((candidate) => candidate.id === game.id);
+        if (existing) Object.assign(existing, clone(game), { updated_at: timestamp });
+        else database.learning_games.push({ ...clone(game), created_at: game.created_at || timestamp, updated_at: timestamp });
+      }
+    });
+    return attachment;
+  }
+
+  function startGameSession({ studyId, gameId }) {
+    return transact((database) => {
+      activeStudy(database, studyId);
+      if (!database.learning_games.some((game) => game.id === gameId)) throw new Error('The selected learning game is not attached to this local catalog.');
+      const timestamp = new Date().toISOString();
+      const session = { id: newId(), study_id: studyId, game_id: gameId, started_at: timestamp, completed_at: null, score: 0, percentage: 0, attempt_count: 0, status: 'in-progress' };
+      database.game_sessions.push(session);
+      return clone(session);
+    });
+  }
+
+  function recordGameAttempt({ sessionId, itemId, submittedAnswer, correct, points = 0, hintsUsed = 0 }) {
+    return transact((database) => {
+      const session = database.game_sessions.find((candidate) => candidate.id === sessionId && candidate.status === 'in-progress');
+      if (!session) throw new Error('The selected learning session is no longer active.');
+      const timestamp = new Date().toISOString();
+      const attempt = { id: newId(), session_id: sessionId, item_id: String(itemId || ''), submitted_answer: JSON.stringify(submittedAnswer ?? ''), correct: Boolean(correct), points: Number(points) || 0, hints_used: Number(hintsUsed) || 0, answered_at: timestamp };
+      database.game_attempts.push(attempt);
+      session.score += attempt.points;
+      session.attempt_count += 1;
+      return clone(attempt);
+    });
+  }
+
+  function completeGameSession({ sessionId, score, percentage, status = 'completed' }) {
+    return transact((database) => {
+      const session = database.game_sessions.find((candidate) => candidate.id === sessionId);
+      if (!session) throw new Error('The selected learning session does not exist.');
+      const timestamp = new Date().toISOString();
+      session.score = Number(score) || 0;
+      session.percentage = Math.max(0, Math.min(100, Number(percentage) || 0));
+      session.completed_at = timestamp;
+      session.status = status;
+      const existing = database.learning_progress.find((progress) => progress.study_id === session.study_id && progress.game_id === session.game_id);
+      const masteryLevel = session.percentage >= 90 ? 'mastered' : session.percentage >= 70 ? 'practicing' : 'started';
+      if (existing) {
+        existing.best_score = Math.max(Number(existing.best_score) || 0, session.score);
+        existing.attempts = (Number(existing.attempts) || 0) + 1;
+        existing.completed_at = timestamp;
+        existing.mastery_level = existing.best_score >= 90 ? 'mastered' : masteryLevel;
+      } else database.learning_progress.push({ id: newId(), study_id: session.study_id, game_id: session.game_id, best_score: session.score, attempts: 1, completed_at: timestamp, mastery_level: masteryLevel });
+      return clone(session);
+    });
+  }
+
   return {
     snapshot: () => clone(read()),
     listStudies: () => read().studies.filter((study) => !study.deleted_at).map(clone),
@@ -180,6 +239,15 @@ function createStore(filePath) {
     listContentItems,
     listStudyContent,
     attachContentPackage,
+    attachLearningGamePackage,
+    listLearningProgress: ({ studyId } = {}) => {
+      const database = read();
+      activeStudy(database, studyId);
+      return database.learning_progress.filter((progress) => progress.study_id === studyId).map(clone);
+    },
+    startGameSession,
+    recordGameAttempt,
+    completeGameSession,
     exportBundle: () => createBundle(read(), { source: 'Sanctuary Studies desktop' }),
     importBundle: (bundle) => {
       const imported = parseBundle(bundle);

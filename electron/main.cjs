@@ -12,6 +12,7 @@ const { loadColorsPackage, colorsPackageToItems, colorsPackageToRelationships } 
 const { loadSanctuaryPackage, sanctuaryPackageToItems, sanctuaryPackageToRelationships } = require('../shared/content/sanctuary/index.cjs');
 const { loadLearningPackage, learningPackageToItems, learningPackageToRelationships } = require('../shared/content/learning/index.cjs');
 const { loadExplorerPackage, explorerPackageToItems, explorerPackageToRelationships } = require('../shared/content/explorer/index.cjs');
+const { loadLearningGamesPackage, learningGamesPackageToItems, learningGamesPackageToRecords, learningGamesPackageToRelationships } = require('../shared/content/learning/games/game-index.cjs');
 
 const appRoot = path.resolve(__dirname, '..');
 const entrypoint = path.join(appRoot, 'ui', 'index.html');
@@ -216,6 +217,21 @@ app.whenReady().then(() => {
       licenseStatus: packageData.license_status
     });
   });
+  ipcMain.handle('content:learning-games', () => loadLearningGamesPackage());
+  ipcMain.handle('content:attach-learning-games', (_event, input) => {
+    const packageData = loadLearningGamesPackage();
+    return store.attachLearningGamePackage({
+      studyId: input?.studyId,
+      packageData,
+      items: learningGamesPackageToItems(packageData),
+      gameRecords: learningGamesPackageToRecords(packageData),
+      relationships: learningGamesPackageToRelationships(packageData),
+      sourceName: 'Sanctuary Studies curated interactive learning activities',
+      sourcePath: 'shared/content/learning/games/games-v1.json',
+      sourceRevision: packageData.source_revision,
+      licenseStatus: packageData.license_status
+    });
+  });
   ipcMain.handle('content:explorer', () => loadExplorerPackage());
   ipcMain.handle('content:attach-explorer', (_event, input) => {
     const packageData = loadExplorerPackage();
@@ -234,6 +250,10 @@ app.whenReady().then(() => {
   ipcMain.handle('study:update', (_event, input) => store.updateStudy(input));
   ipcMain.handle('study:delete', (_event, input) => store.deleteStudy(input));
   ipcMain.handle('study:add-record', (_event, input) => store.addStudyRecord(input));
+  ipcMain.handle('learning:list-progress', (_event, input) => store.listLearningProgress(input));
+  ipcMain.handle('learning:start-session', (_event, input) => store.startGameSession(input));
+  ipcMain.handle('learning:record-attempt', (_event, input) => store.recordGameAttempt(input));
+  ipcMain.handle('learning:complete-session', (_event, input) => store.completeGameSession(input));
   ipcMain.handle('data:export-bundle', () => store.exportBundle());
   ipcMain.handle('data:export-file', async () => {
     const result = await dialog.showSaveDialog({
