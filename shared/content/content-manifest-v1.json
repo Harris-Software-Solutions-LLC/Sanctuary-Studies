@@ -5,7 +5,7 @@
   "packages": [
     { "id": "scripture", "path": "scripture/scripture-v1.json", "source_files": ["app-data.js", "app-pages1.js"], "status": "integrated" },
     { "id": "timeline", "path": "timeline/timeline-v1.json", "source_files": ["app-data.js", "project/src/components/TimelinePage.tsx", "project/src/data/timelineQuestions.ts"], "status": "integrated" },
-    { "id": "library", "path": "library/", "source_files": ["app-data.js", "app-core.js", "app-books.js"], "status": "inventory-ready" },
+    { "id": "library", "path": "library/library-v1.json", "source_files": ["app-data.js", "app-core.js", "app-books.js"], "status": "integrated" },
     { "id": "sanctuary", "path": "sanctuary/", "source_files": ["app-pages2.js", "app-pages3.js", "public/data/models/"], "status": "inventory-ready" },
     { "id": "symbolism", "path": "symbolism/", "source_files": ["app-pages2.js"], "status": "inventory-ready" },
     { "id": "colors", "path": "colors/", "source_files": ["app-data.js", "app-pages2.js"], "status": "inventory-ready" },

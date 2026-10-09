@@ -108,9 +108,16 @@ function createStore(filePath) {
       for (const item of items) {
         if (!item?.id || !item.content_type || !item.title) throw new Error('Content items require an id, content_type, and title.');
         normalizeJson(item.payload_json, 'payload_json');
+        const incoming = clone(item);
         const existing = database.content_items.find((candidate) => candidate.id === item.id);
-        if (existing) Object.assign(existing, clone(item), { updated_at: timestamp, deleted_at: null });
-        else database.content_items.push({ ...clone(item), created_at: item.created_at || timestamp, updated_at: timestamp, deleted_at: null });
+        if (existing) {
+          const previous = clone(existing);
+          Object.assign(existing, incoming, { updated_at: timestamp, deleted_at: null });
+          // A later package may carry a deliberately small reference stub for
+          // an item already imported with a richer payload. Preserve the richer
+          // local record while still recording the new package provenance.
+          if (String(previous.payload_json || '').length > String(incoming.payload_json || '').length) Object.assign(existing, { title: previous.title, summary: previous.summary, payload_json: previous.payload_json });
+        } else database.content_items.push({ ...incoming, created_at: item.created_at || timestamp, updated_at: timestamp, deleted_at: null });
         if (!database.content_provenance.some((record) => record.content_id === item.id && record.source_path === sourcePath && !record.deleted_at)) {
           database.content_provenance.push({ id: newId(), content_id: item.id, source_name: sourceName, source_path: sourcePath, source_revision: sourceRevision, license_status: licenseStatus, imported_at: timestamp, notes: 'Imported as a local versioned content package.', deleted_at: null });
         }

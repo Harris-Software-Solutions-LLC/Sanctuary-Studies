@@ -239,3 +239,46 @@ tbody tr:hover, tbody tr.is-selected { background: #f1f4ee; }
 .evidence-node.scripture { border-top-color: var(--brass); background: #fbf6e9; }
 .evidence-node.scripture span { color: #76551f; }
 @media (max-width: 1180px) { .scripture-layout { grid-template-columns: 1fr; } .scripture-results { max-height: 260px; } .desk-summary { grid-template-columns: repeat(3, 1fr); } }
+
+.library-workspace { padding: 22px; }
+.library-toolbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.library-toolbar h2 { margin-top: 5px; font: 400 21px Georgia, serif; }
+.library-toolbar .table-search { width: min(430px, 100%); }
+.library-layout { display: grid; grid-template-columns: minmax(235px, .72fr) minmax(0, 1.45fr); gap: 14px; margin-top: 14px; }
+.library-results { display: grid; align-content: start; gap: 6px; max-height: 620px; overflow: auto; padding-right: 3px; }
+.library-result { display: grid; gap: 4px; padding: 11px 12px; border: 1px solid var(--line); color: var(--ink); background: var(--surface); text-align: left; }
+.library-result:hover, .library-result.is-selected { border-color: #c3d1be; background: #f0f4ed; }
+.library-result span { color: var(--brass); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.library-result strong { font: 700 12px Georgia, serif; }
+.library-result small { color: var(--ink-muted); font-size: 10px; line-height: 1.4; }
+.library-detail-panel { min-height: 390px; padding: 22px; border: 1px solid var(--line); background: var(--surface); }
+.library-reading h3 { margin: 6px 0 4px; font: 400 24px/1.2 Georgia, serif; }
+.library-author { color: var(--brass); font-size: 11px; font-weight: 750; }
+.library-reference-label { margin-top: 14px; color: var(--ink-muted); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.library-description, .library-reading > p:not(.library-author):not(.library-reference-label) { margin-top: 12px; color: var(--ink-muted); font-size: 12px; line-height: 1.65; }
+.library-excerpt { margin: 17px 0; padding: 15px 17px; border-left: 3px solid var(--brass); color: #4b473e; background: #f7f3ec; font: 15px/1.7 Georgia, serif; }
+.library-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 17px 0; }
+.library-facts div { padding: 9px; border: 1px solid var(--line); background: #f8f5ed; }
+.library-facts dt { color: var(--ink-muted); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.library-facts dd { margin: 5px 0 0; font-size: 11px; }
+.library-chapter-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; margin-top: 10px; }
+.library-chapter-link { padding: 8px 9px; border: 1px solid var(--line); color: var(--ink); background: #fbfaf6; text-align: left; }
+.library-chapter-link:hover { border-color: var(--brass); background: #fbf6e9; }
+.library-chapter-link strong, .library-chapter-link small { display: block; }
+.library-chapter-link strong { font: 700 11px Georgia, serif; }
+.library-chapter-link small { margin-top: 3px; color: var(--ink-muted); font-size: 9px; }
+.library-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+.library-tags span { padding: 4px 7px; border: 1px solid #d5dfd1; color: var(--sage-strong); background: var(--sage); font-size: 9px; }
+.library-summary-panel, .library-connection-panel { margin-top: 14px; }
+.library-summary-list { display: grid; gap: 7px; padding: 0 16px 16px; }
+.library-summary-list a, .library-link { color: var(--sage-strong); font-size: 11px; font-weight: 700; text-decoration: none; }
+.library-summary-list a:hover, .library-link:hover { color: var(--brass); text-decoration: underline; }
+.archive-local-path { display: block; margin-top: 6px; overflow: hidden; color: var(--ink-muted); font: 9px/1.35 Consolas, monospace; text-overflow: ellipsis; white-space: nowrap; }
+.evidence-node.library { border-top-color: #77756d; background: #f8f5ed; }
+.evidence-node.library span { color: var(--sage-strong); }
+
+@media (max-width: 900px) {
+  .library-toolbar { align-items: stretch; flex-direction: column; }
+  .library-layout { grid-template-columns: 1fr; }
+  .library-results { max-height: 260px; }
+}

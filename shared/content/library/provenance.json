@@ -1,0 +1,21 @@
+{
+  "package_id": "library",
+  "package_version": 1,
+  "source_files": [
+    "app-data.js",
+    "app-core.js",
+    "app-books.js"
+  ],
+  "source_revision": "648a7683a3b11b712744a977ef1ecfd83e42922e",
+  "import_method": "scripts/import-legacy-library.cjs",
+  "license_status": "review-required",
+  "offline_policy": "No network requests or hosted content are required.",
+  "excluded_infrastructure": [
+    "legacy page markup",
+    "public marketing navigation",
+    "authentication",
+    "community/forum behavior",
+    "external media and hosted fonts"
+  ],
+  "notes": "Five legacy books and their 112 local chapter/excerpt records are normalized into shared content items. The preserved root Library and book-viewer routes remain available as compatibility surfaces."
+}

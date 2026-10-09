@@ -3,6 +3,7 @@ const STUDY_SECTIONS = [
   { id: 'overview', label: 'Overview' },
   { id: 'timeline', label: 'Timeline' },
   { id: 'scripture', label: 'Scripture' },
+  { id: 'library', label: 'Library' },
   { id: 'sources', label: 'Sources' },
   { id: 'notes', label: 'Notes' },
   { id: 'people', label: 'People' },
@@ -18,7 +19,7 @@ const WORKSPACE_MODES = [
   { id: 'evidence', label: 'Evidence Wall', eyebrow: 'Relationships and comparisons' }
 ];
 const desktopData = window.sanctuaryDesktop?.data || null;
-const state = { database: Object.fromEntries([['schema_version', 2], ...TABLES.map((table) => [table, []])]), selectedId: null, query: '', statusFilter: 'all', sort: 'updated', view: 'library', section: 'overview', workspaceMode: 'desk', timelineContent: null, timelineStep: 1, folioRecordId: null, scriptureContent: null, scriptureQuery: '', scriptureReference: null };
+const state = { database: Object.fromEntries([['schema_version', 2], ...TABLES.map((table) => [table, []])]), selectedId: null, query: '', statusFilter: 'all', sort: 'updated', view: 'library', section: 'overview', workspaceMode: 'desk', timelineContent: null, timelineStep: 1, folioRecordId: null, scriptureContent: null, scriptureQuery: '', scriptureReference: null, libraryContent: null, libraryQuery: '', libraryRecordId: null };
 const $ = (selector) => document.querySelector(selector);
 const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
 const active = (record) => !record.deleted_at;
@@ -109,6 +110,68 @@ function scriptureSearchRecords(query = '') {
   return (normalized ? records.filter((record) => `${record.kind} ${record.title} ${record.meta} ${record.body}`.toLowerCase().includes(normalized)) : records.filter((record) => record.kind === 'Passage')).slice(0, 80);
 }
 
+function libraryContentForStudy(studyId) {
+  return contentForStudy(studyId, (item) => item.content_type.startsWith('library_'));
+}
+
+function libraryReferencesForText(text) {
+  if (!state.libraryContent || !text) return [];
+  const haystack = normalizeLibraryText(text);
+  return state.libraryContent.books.filter((book) => haystack.includes(normalizeLibraryText(book.title))).map((book) => book.title);
+}
+
+function normalizeLibraryText(value) {
+  return String(value || '').toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+function libraryBookForSource(source) {
+  if (!state.libraryContent || !source) return null;
+  const sourceTitle = normalizeLibraryText(source.title);
+  const sourceAuthor = normalizeLibraryText(source.author);
+  return state.libraryContent.books.find((book) => {
+    const bookTitle = normalizeLibraryText(book.title);
+    const bookAuthor = normalizeLibraryText(book.author);
+    return (sourceTitle && (bookTitle.includes(sourceTitle) || sourceTitle.includes(bookTitle))) || (sourceAuthor && bookAuthor && (bookAuthor.includes(sourceAuthor) || sourceAuthor.includes(bookAuthor)));
+  }) || null;
+}
+
+function studyLibraryReferences(studyId) {
+  const attached = libraryContentForStudy(studyId).filter((item) => item.content_type === 'library_book').map((item) => item.title);
+  const records = [...recordsForStudy(studyId, 'sources'), ...recordsForStudy(studyId, 'notes')];
+  const detected = records.flatMap((record) => libraryReferencesForText([record.title, record.body, record.notes, record.citation].filter(Boolean).join(' ')));
+  return [...new Set([...attached, ...detected])].sort((left, right) => left.localeCompare(right));
+}
+
+function librarySearchRecords(query = '') {
+  if (!state.libraryContent) return [];
+  const packageData = state.libraryContent;
+  const records = [
+    ...packageData.books.map((book) => ({ key: book.content_id, kind: 'Book', title: book.title, meta: `${book.author} · ${book.publication_year} · ${book.chapter_count} chapters`, body: `${book.title} ${book.author} ${book.description} ${(book.tags || []).join(' ')}` })),
+    ...packageData.chapters.map((chapter) => ({ key: chapter.content_id, kind: 'Chapter', title: `${chapter.book_id} · Chapter ${chapter.number}: ${chapter.title}`, meta: chapter.scripture_references.join(', ') || 'No indexed Scripture references', body: `${chapter.title} ${chapter.book_id} ${chapter.scripture_references.join(' ')}` })),
+    ...packageData.excerpts.map((excerpt) => ({ key: excerpt.content_id, kind: 'Excerpt', title: excerpt.title, meta: `${excerpt.book_id} · Chapter ${excerpt.chapter_number}`, body: `${excerpt.title} ${excerpt.book_id} ${excerpt.excerpt} ${excerpt.scripture_references.join(' ')}` }))
+  ];
+  const normalized = String(query).trim().toLowerCase();
+  return (normalized ? records.filter((record) => `${record.kind} ${record.title} ${record.meta} ${record.body}`.toLowerCase().includes(normalized)) : records.filter((record) => record.kind === 'Book')).slice(0, 80);
+}
+
+function libraryRecordByKey(key) {
+  if (!state.libraryContent || !key) return null;
+  return state.libraryContent.books.find((record) => record.content_id === key) || state.libraryContent.chapters.find((record) => record.content_id === key) || state.libraryContent.excerpts.find((record) => record.content_id === key);
+}
+
+function libraryDetailMarkup(record) {
+  if (!record) return '<div class="record-empty">Select a library record to inspect it locally.</div>';
+  if (record.content_id?.startsWith('library.book.')) {
+    const chapters = state.libraryContent.chapters.filter((chapter) => chapter.book_id === record.id);
+    return `<div class="library-reading"><span class="eyebrow">Digital Library book</span><h3>${escapeHtml(record.title)}</h3><p class="library-author">${escapeHtml(record.author)} · ${escapeHtml(record.publication_year)}</p><p>${escapeHtml(record.description)}</p><div class="library-tags">${(record.tags || []).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div><dl class="library-facts"><div><dt>Chapters</dt><dd>${record.chapter_count}</dd></div><div><dt>Scripture index</dt><dd>${escapeHtml(record.scripture_count)}</dd></div><div><dt>Legacy surface</dt><dd>${escapeHtml(record.legacy_page)}</dd></div></dl><section><span class="eyebrow">Chapters</span><div class="library-chapter-list">${chapters.map((chapter) => `<button class="library-chapter-link" data-library-record-key="${escapeHtml(chapter.content_id)}" type="button"><strong>Chapter ${chapter.number}</strong><span>${escapeHtml(chapter.title)}</span></button>`).join('')}</div></section></div>`;
+  }
+  if (record.content_id?.startsWith('library.chapter.')) {
+    const excerpt = state.libraryContent.excerpts.find((item) => item.content_id === record.excerpt_id);
+    return `<div class="library-reading"><span class="eyebrow">Library chapter</span><h3>${escapeHtml(record.title)}</h3><p class="library-reference-label">${escapeHtml(record.scripture_references.join(' · ') || 'No indexed Scripture references')}</p>${excerpt ? `<div class="library-excerpt"><p>${escapeHtml(excerpt.excerpt)}</p></div><div class="scripture-reference-list">${record.scripture_references.map((reference) => `<button class="reference-link" data-scripture-reference="${escapeHtml(reference)}" type="button">${escapeHtml(reference)}</button>`).join('')}</div>` : ''}</div>`;
+  }
+  return `<div class="library-reading"><span class="eyebrow">Library excerpt</span><h3>${escapeHtml(record.title)}</h3><p class="library-reference-label">${escapeHtml(record.book_id)} · Chapter ${record.chapter_number}</p><div class="library-excerpt"><p>${escapeHtml(record.excerpt)}</p></div><div class="scripture-reference-list">${record.scripture_references.map((reference) => `<button class="reference-link" data-scripture-reference="${escapeHtml(reference)}" type="button">${escapeHtml(reference)}</button>`).join('')}</div></div>`;
+}
+
 function visibleStudies() {
   const query = state.query.trim().toLowerCase();
   return state.database.studies.filter(active).filter((study) => state.statusFilter === 'all' || String(study.status).toLowerCase() === state.statusFilter).filter((study) => `${study.title} ${study.description} ${study.status}`.toLowerCase().includes(query)).sort((left, right) => state.sort === 'title' ? left.title.localeCompare(right.title) : String(right.updated_at || '').localeCompare(String(left.updated_at || '')));
@@ -145,7 +208,7 @@ function renderInspector(study) {
 
 function openStudyDialog() { $('#study-form').reset(); $('#study-dialog').showModal(); }
 
-function selectStudy(studyId) { state.selectedId = studyId; state.view = 'study'; state.section = 'overview'; state.workspaceMode = storedWorkspaceMode(studyId); state.timelineStep = 1; state.folioRecordId = null; state.scriptureQuery = ''; state.scriptureReference = null; render(); }
+function selectStudy(studyId) { state.selectedId = studyId; state.view = 'study'; state.section = 'overview'; state.workspaceMode = storedWorkspaceMode(studyId); state.timelineStep = 1; state.folioRecordId = null; state.scriptureQuery = ''; state.scriptureReference = null; state.libraryQuery = ''; state.libraryRecordId = null; render(); }
 
 function studyActivity(studyId) {
   const recordLabels = { sources: 'source', notes: 'note', people: 'person', places: 'place', events: 'event', tags: 'tag' };
@@ -208,6 +271,31 @@ function renderScriptureWorkspace(study) {
   });
 }
 
+function renderLibraryWorkspace(study) {
+  if (!state.libraryContent) {
+    $('#record-table-wrap').innerHTML = '<div class="record-empty">Loading the local Digital Library package…</div>';
+    if (desktopData?.getLibraryContent) desktopData.getLibraryContent().then((content) => { state.libraryContent = content; renderDetail(); }).catch((error) => { $('#record-table-wrap').innerHTML = `<div class="record-empty">Unable to load Digital Library content: ${escapeHtml(error.message || error)}</div>`; });
+    return;
+  }
+  const packageData = state.libraryContent;
+  const results = librarySearchRecords(state.libraryQuery);
+  const selected = libraryRecordByKey(state.libraryRecordId) || libraryRecordByKey(results[0]?.key);
+  state.libraryRecordId = selected?.content_id || null;
+  const attached = libraryContentForStudy(study.id);
+  const resultMarkup = results.length ? results.map((record) => `<button class="library-result ${record.key === state.libraryRecordId ? 'is-selected' : ''}" data-library-record-key="${escapeHtml(record.key)}" type="button"><span>${escapeHtml(record.kind)}</span><strong>${escapeHtml(record.title)}</strong><small>${escapeHtml(record.meta)}</small></button>`).join('') : '<div class="record-empty">No library records match this search.</div>';
+  $('#record-table-wrap').innerHTML = `<div class="library-workspace"><div class="mode-introduction"><div><span class="eyebrow">Codex Cabinet</span><h2>Digital Library</h2><p>${packageData.book_count} books · ${packageData.chapter_count} chapters · ${packageData.excerpt_count} preserved excerpts. Read locally and connect sources to Scripture.</p></div><button class="button button-secondary" id="library-attach" type="button" ${attached.length ? 'disabled' : ''}>${attached.length ? 'Library attached locally' : 'Attach Library to study'}</button></div><div class="library-toolbar"><label class="table-search" aria-label="Search Digital Library"><span aria-hidden="true">⌕</span><input id="library-search" type="search" value="${escapeHtml(state.libraryQuery)}" placeholder="Search books, chapters, excerpts…"></label><span id="library-attachment-state" class="muted">${attached.length ? `${attached.length} local library records attached` : 'Package available offline; attach it to include library records in exports.'}</span></div><div class="library-layout"><nav class="library-results" aria-label="Digital Library results">${resultMarkup}</nav><article class="library-detail-panel">${libraryDetailMarkup(selected)}</article></div></div>`;
+  $('#library-search').addEventListener('input', (event) => { state.libraryQuery = event.target.value; state.libraryRecordId = null; renderDetail(); });
+  document.querySelectorAll('[data-library-record-key]').forEach((button) => button.addEventListener('click', () => { state.libraryRecordId = button.dataset.libraryRecordKey; renderDetail(); }));
+  document.querySelectorAll('[data-scripture-reference]').forEach((button) => button.addEventListener('click', () => { state.section = 'scripture'; state.scriptureQuery = button.dataset.scriptureReference; state.scriptureReference = `reference:${button.dataset.scriptureReference}`; renderDetail(); }));
+  $('#library-attach')?.addEventListener('click', async () => {
+    try {
+      if (!desktopData?.attachLibrary) throw new Error('Digital Library attachment is available in the standalone Electron app.');
+      await desktopData.attachLibrary({ studyId: study.id });
+      await refreshFromDesktop(); state.view = 'study'; state.section = 'library'; renderDetail(); showMessage('Digital Library books and excerpts were attached locally.');
+    } catch (error) { showMessage(error.message || 'Unable to attach Digital Library.', true); }
+  });
+}
+
 function scriptureAtlasMarkup(step) {
   const references = scriptureReferencesForText(`${step.aaronRef} ${step.jesusRef}`);
   return `<section class="mode-panel scripture-connection-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Scripture connections</span><h3>References in this step</h3></div><button class="text-button" data-open-section="scripture" type="button">Open Scripture →</button></div><div class="scripture-reference-list">${references.length ? references.map((reference) => `<button class="reference-link" data-scripture-reference="${escapeHtml(reference)}" type="button">${escapeHtml(reference)}</button>`).join('') : '<span class="muted">Load or attach the Scripture package to index these references.</span>'}</div></section>`;
@@ -218,6 +306,18 @@ function scriptureArchiveMarkup(studyId) {
   return `<section class="mode-panel scripture-archive-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Scripture index</span><h3>References in this study</h3></div><button class="text-button" data-open-section="scripture" type="button">Open Scripture →</button></div><div class="scripture-reference-list">${references.length ? references.map((reference) => `<button class="reference-link" data-scripture-reference="${escapeHtml(reference)}" type="button">${escapeHtml(reference)}</button>`).join('') : '<span class="muted">No Scripture references attached or detected yet.</span>'}</div></section>`;
 }
 
+function librarySummaryMarkup(studyId) {
+  const books = studyLibraryReferences(studyId);
+  return `<section class="mode-panel library-summary-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Digital Library</span><h3>Sources in this study</h3></div><button class="text-button" data-open-section="library" type="button">Open Library →</button></div><div class="library-summary-list">${books.length ? books.map((book) => `<button class="library-link" data-library-book-title="${escapeHtml(book)}" type="button">${escapeHtml(book)}</button>`).join('') : '<span class="muted">No library books attached or detected yet.</span>'}</div></section>`;
+}
+
+function libraryAtlasMarkup(step) {
+  if (!state.libraryContent) return '';
+  const stepText = `${step.aaronRef} ${step.jesusRef}`.toLowerCase();
+  const chapters = state.libraryContent.chapters.filter((chapter) => chapter.scripture_references.some((reference) => stepText.includes(reference.toLowerCase()))).slice(0, 6);
+  return `<section class="mode-panel library-connection-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Library connections</span><h3>Sources for this step</h3></div><button class="text-button" data-open-section="library" type="button">Open Library →</button></div><div class="library-summary-list">${chapters.length ? chapters.map((chapter) => `<button class="library-link" data-library-record-key="${escapeHtml(chapter.content_id)}" type="button">${escapeHtml(chapter.title)}</button>`).join('') : '<span class="muted">No local library chapter matches this step yet.</span>'}</div></section>`;
+}
+
 function renderDesk(study) {
   const activity = studyActivity(study.id).slice(0, 6);
   const counts = studyCounts(study.id);
@@ -225,17 +325,21 @@ function renderDesk(study) {
   const relationships = state.database.relationships.filter((relation) => relation.study_id === study.id && !relation.deleted_at).length + state.database.content_relationships.filter((relation) => studyContentIds.has(relation.source_content_id) && studyContentIds.has(relation.target_content_id) && !relation.deleted_at).length;
   const scriptureCount = studyScriptureReferences(study.id).length;
   const activityMarkup = activity.length ? activity.map((record) => `<article class="activity-entry"><span class="activity-rule"></span><div><strong>${escapeHtml(record.recordTitle)}</strong><span>${escapeHtml(record.recordType)} · ${escapeHtml(formatDate(record.updated_at || record.created_at))}</span></div></article>`).join('') : '<p class="muted">No research records yet. Add a source, note, or entity to begin.</p>';
-  $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-desk"><div class="mode-introduction"><div><span class="eyebrow">Scholar’s Desk</span><h2>Research overview</h2><p>One calm working surface for the study’s current evidence, notes, Scripture, and activity.</p></div><div class="desk-actions"><button class="text-button" data-open-section="sources" type="button">+ Source</button><button class="text-button" data-open-section="notes" type="button">+ Note</button><button class="text-button" data-open-section="scripture" type="button">Scripture →</button><div class="desk-stamp">LOCAL<br><span>PRIVATE STUDY</span></div></div></div><div class="desk-summary"><div><strong>${counts.sources}</strong><span>Sources</span></div><div><strong>${counts.notes}</strong><span>Notes</span></div><div><strong>${counts.people + counts.places + counts.events}</strong><span>People · places · events</span></div><div><strong>${scriptureCount}</strong><span>Scripture links</span></div><div><strong>${relationships}</strong><span>Relationships</span></div></div><div class="desk-columns"><section class="mode-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Current activity</span><h3>Recent research</h3></div><button class="text-button" data-mode="codex" type="button">Open archive →</button></div><div class="activity-list">${activityMarkup}</div></section><section class="mode-panel desk-context-panel"><span class="eyebrow">Study context</span><h3>${escapeHtml(study.title)}</h3><p>${escapeHtml(study.description || 'No description has been added to this study.')}</p><dl class="context-list"><div><dt>Status</dt><dd>${escapeHtml(study.status)}</dd></div><div><dt>Created</dt><dd>${escapeHtml(formatDate(study.created_at))}</dd></div><div><dt>Last updated</dt><dd>${escapeHtml(formatDate(study.updated_at))}</dd></div></dl></section></div>${scriptureArchiveMarkup(study.id)}</div>`;
+  $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-desk"><div class="mode-introduction"><div><span class="eyebrow">Scholar’s Desk</span><h2>Research overview</h2><p>One calm working surface for the study’s current evidence, notes, Scripture, library sources, and activity.</p></div><div class="desk-actions"><button class="text-button" data-open-section="sources" type="button">+ Source</button><button class="text-button" data-open-section="notes" type="button">+ Note</button><button class="text-button" data-open-section="scripture" type="button">Scripture →</button><button class="text-button" data-open-section="library" type="button">Library →</button><div class="desk-stamp">LOCAL<br><span>PRIVATE STUDY</span></div></div></div><div class="desk-summary"><div><strong>${counts.sources}</strong><span>Sources</span></div><div><strong>${counts.notes}</strong><span>Notes</span></div><div><strong>${counts.people + counts.places + counts.events}</strong><span>People · places · events</span></div><div><strong>${scriptureCount}</strong><span>Scripture links</span></div><div><strong>${relationships}</strong><span>Relationships</span></div></div><div class="desk-columns"><section class="mode-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Current activity</span><h3>Recent research</h3></div><button class="text-button" data-mode="codex" type="button">Open archive →</button></div><div class="activity-list">${activityMarkup}</div></section><section class="mode-panel desk-context-panel"><span class="eyebrow">Study context</span><h3>${escapeHtml(study.title)}</h3><p>${escapeHtml(study.description || 'No description has been added to this study.')}</p><dl class="context-list"><div><dt>Status</dt><dd>${escapeHtml(study.status)}</dd></div><div><dt>Created</dt><dd>${escapeHtml(formatDate(study.created_at))}</dd></div><div><dt>Last updated</dt><dd>${escapeHtml(formatDate(study.updated_at))}</dd></div></dl></section></div>${librarySummaryMarkup(study.id)}${scriptureArchiveMarkup(study.id)}</div>`;
   document.querySelectorAll('[data-mode]').forEach((button) => button.addEventListener('click', () => setWorkspaceMode(button.dataset.mode)));
   document.querySelectorAll('[data-scripture-reference]').forEach((button) => button.addEventListener('click', () => { state.section = 'scripture'; state.scriptureQuery = button.dataset.scriptureReference; state.scriptureReference = `reference:${button.dataset.scriptureReference}`; renderDetail(); }));
+  document.querySelectorAll('[data-library-book-title]').forEach((button) => button.addEventListener('click', () => { state.section = 'library'; state.libraryQuery = button.dataset.libraryBookTitle; state.libraryRecordId = null; renderDetail(); }));
+  document.querySelectorAll('[data-library-record-key]').forEach((button) => button.addEventListener('click', () => { state.section = 'library'; state.libraryRecordId = button.dataset.libraryRecordKey; renderDetail(); }));
 }
 
 function renderCodex(study) {
   const sources = recordsForStudy(study.id, 'sources');
   const notes = recordsForStudy(study.id, 'notes');
-  const sourceCards = sources.length ? sources.map((source) => `<article class="archive-card"><div class="archive-card-rule"></div><div class="archive-card-body"><span class="eyebrow">${escapeHtml(source.source_type || 'Reference')}</span><h3>${escapeHtml(source.title)}</h3><p class="archive-author">${escapeHtml(source.author || 'Author not recorded')}</p><p>${escapeHtml(source.notes || source.citation || 'No excerpt or citation has been added yet.')}</p><div class="archive-meta"><span>${source.citation ? 'Citation recorded' : 'Citation pending'}</span><span>${notes.length} study notes</span></div></div></article>`).join('') : '<div class="record-empty">No sources are in this study yet. Use Add record to build the archive.</div>';
-  $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-codex"><div class="mode-introduction"><div><span class="eyebrow">Codex Cabinet</span><h2>Sources and archive</h2><p>Annotated records with citations, excerpts, provenance, attached study context, and Scripture references.</p></div><div class="mode-count">${sources.length}<span>sources</span></div></div><div class="archive-grid">${sourceCards}</div>${sources.length ? '' : '<button class="button button-secondary" data-open-section="sources" type="button">Add the first source</button>'}${scriptureArchiveMarkup(study.id)}</div>`;
+  const sourceCards = sources.length ? sources.map((source) => { const match = libraryBookForSource(source); return `<article class="archive-card"><div class="archive-card-rule"></div><div class="archive-card-body"><span class="eyebrow">${escapeHtml(source.source_type || 'Reference')}</span><h3>${escapeHtml(source.title)}</h3><p class="archive-author">${escapeHtml(source.author || 'Author not recorded')}</p><p>${escapeHtml(source.notes || source.citation || 'No excerpt or citation has been added yet.')}</p>${source.local_path ? `<p class="archive-local-path">Local file: ${escapeHtml(source.local_path)}</p>` : ''}<div class="archive-meta"><span>${source.citation ? 'Citation recorded' : 'Citation pending'}</span><span>${notes.length} study notes</span>${match ? `<button class="library-link" data-library-record-key="${escapeHtml(match.content_id)}" type="button">Open in Library →</button>` : ''}</div></div></article>`; }).join('') : '<div class="record-empty">No sources are in this study yet. Use Add record to build the archive.</div>';
+  $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-codex"><div class="mode-introduction"><div><span class="eyebrow">Codex Cabinet</span><h2>Sources and archive</h2><p>Annotated records with citations, excerpts, provenance, attached study context, Scripture references, and local library links.</p></div><div class="mode-count">${sources.length}<span>sources</span></div></div><div class="archive-grid">${sourceCards}</div>${sources.length ? '' : '<button class="button button-secondary" data-open-section="sources" type="button">Add the first source</button>'}${librarySummaryMarkup(study.id)}${scriptureArchiveMarkup(study.id)}</div>`;
   document.querySelectorAll('[data-scripture-reference]').forEach((button) => button.addEventListener('click', () => { state.section = 'scripture'; state.scriptureQuery = button.dataset.scriptureReference; state.scriptureReference = `reference:${button.dataset.scriptureReference}`; renderDetail(); }));
+  document.querySelectorAll('[data-library-book-title]').forEach((button) => button.addEventListener('click', () => { state.section = 'library'; state.libraryQuery = button.dataset.libraryBookTitle; state.libraryRecordId = null; renderDetail(); }));
+  document.querySelectorAll('[data-library-record-key]').forEach((button) => button.addEventListener('click', () => { state.section = 'library'; state.libraryRecordId = button.dataset.libraryRecordKey; renderDetail(); }));
 }
 
 function renderFolio(study) {
@@ -244,9 +348,10 @@ function renderFolio(study) {
   const selectedNote = notes.find((note) => note.id === state.folioRecordId);
   const noteList = notes.length ? notes.map((note) => `<button class="folio-note ${note.id === state.folioRecordId ? 'is-selected' : ''}" data-folio-note="${escapeHtml(note.id)}" type="button"><strong>${escapeHtml(note.title)}</strong><span>${escapeHtml(formatDate(note.updated_at || note.created_at))}</span></button>`).join('') : '<p class="muted">No notes yet.</p>';
   const sources = recordsForStudy(study.id, 'sources');
-  $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-folio"><div class="mode-introduction"><div><span class="eyebrow">Research Folio</span><h2>Focused reading and writing</h2><p>Read notes as working pages while keeping source references and related Scripture records alongside them.</p></div></div><div class="folio-layout"><aside class="folio-index"><span class="eyebrow">Notes index</span>${noteList}${notes.length ? '' : '<button class="text-button" data-open-section="notes" type="button">+ Add note</button>'}</aside><article class="folio-page">${selectedNote ? `<span class="eyebrow">Working note</span><h3>${escapeHtml(selectedNote.title)}</h3><div class="folio-rule"></div><p class="folio-body">${escapeHtml(selectedNote.body).replace(/\n/g, '<br>')}</p><p class="folio-date">Modified ${escapeHtml(formatDate(selectedNote.updated_at || selectedNote.created_at))}</p>` : '<div class="record-empty">Select a note to begin reading, or add a note to this study.</div>'}</article><aside class="folio-references"><span class="eyebrow">Sources</span>${sources.length ? sources.map((source) => `<div class="reference-entry"><strong>${escapeHtml(source.title)}</strong><span>${escapeHtml(source.author || source.source_type || 'Reference')}</span></div>`).join('') : '<p class="muted">No related sources yet.</p>'}<span class="eyebrow folio-scripture-label">Scripture</span><div class="scripture-reference-list">${scriptureReferenceSummary(study.id)}</div></aside></div></div>`;
+  $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-folio"><div class="mode-introduction"><div><span class="eyebrow">Research Folio</span><h2>Focused reading and writing</h2><p>Read notes as working pages while keeping source references, Scripture, and related library records alongside them.</p></div></div><div class="folio-layout"><aside class="folio-index"><span class="eyebrow">Notes index</span>${noteList}${notes.length ? '' : '<button class="text-button" data-open-section="notes" type="button">+ Add note</button>'}</aside><article class="folio-page">${selectedNote ? `<span class="eyebrow">Working note</span><h3>${escapeHtml(selectedNote.title)}</h3><div class="folio-rule"></div><p class="folio-body">${escapeHtml(selectedNote.body).replace(/\n/g, '<br>')}</p><p class="folio-date">Modified ${escapeHtml(formatDate(selectedNote.updated_at || selectedNote.created_at))}</p>` : '<div class="record-empty">Select a note to begin reading, or add a note to this study.</div>'}</article><aside class="folio-references"><span class="eyebrow">Sources</span>${sources.length ? sources.map((source) => `<div class="reference-entry"><strong>${escapeHtml(source.title)}</strong><span>${escapeHtml(source.author || source.source_type || 'Reference')}</span></div>`).join('') : '<p class="muted">No related sources yet.</p>'}<span class="eyebrow folio-scripture-label">Scripture</span><div class="scripture-reference-list">${scriptureReferenceSummary(study.id)}</div><span class="eyebrow folio-scripture-label">Library</span><div class="library-summary-list">${studyLibraryReferences(study.id).length ? studyLibraryReferences(study.id).map((book) => `<button class="library-link" data-library-book-title="${escapeHtml(book)}" type="button">${escapeHtml(book)}</button>`).join('') : '<span class="muted">No library books attached or detected.</span>'}</div></aside></div></div>`;
   document.querySelectorAll('[data-folio-note]').forEach((button) => button.addEventListener('click', () => { state.folioRecordId = button.dataset.folioNote; renderDetail(); }));
   document.querySelectorAll('[data-scripture-reference]').forEach((button) => button.addEventListener('click', () => { state.section = 'scripture'; state.scriptureQuery = button.dataset.scriptureReference; state.scriptureReference = `reference:${button.dataset.scriptureReference}`; renderDetail(); }));
+  document.querySelectorAll('[data-library-book-title]').forEach((button) => button.addEventListener('click', () => { state.section = 'library'; state.libraryQuery = button.dataset.libraryBookTitle; state.libraryRecordId = null; renderDetail(); }));
 }
 
 function renderEvidence(study) {
@@ -255,14 +360,15 @@ function renderEvidence(study) {
   const entities = ['people', 'places', 'events'].flatMap((section) => recordsForStudy(study.id, section));
   const tags = recordsForStudy(study.id, 'tags');
   const scriptureNodes = scriptureContentForStudy(study.id).filter((record) => ['scripture_passage', 'scripture_reference', 'scripture_note'].includes(record.content_type)).slice(0, 60).map((record) => ({ ...record, nodeType: record.content_type.replace('scripture_', 'scripture '), nodeClass: 'scripture' }));
-  const nodes = [...sources.map((record) => ({ ...record, nodeType: 'source', nodeClass: 'source' })), ...notes.map((record) => ({ ...record, nodeType: 'note', nodeClass: 'note' })), ...entities.map((record) => ({ ...record, nodeType: record.entity_type, nodeClass: 'entity' })), ...tags.map((record) => ({ ...record, nodeType: 'tag', nodeClass: 'tag' })), ...scriptureNodes];
+  const libraryNodes = libraryContentForStudy(study.id).filter((record) => ['library_book', 'library_chapter', 'library_excerpt'].includes(record.content_type)).slice(0, 80).map((record) => ({ ...record, nodeType: record.content_type.replace('library_', 'library '), nodeClass: 'library' }));
+  const nodes = [...sources.map((record) => ({ ...record, nodeType: 'source', nodeClass: 'source' })), ...notes.map((record) => ({ ...record, nodeType: 'note', nodeClass: 'note' })), ...entities.map((record) => ({ ...record, nodeType: record.entity_type, nodeClass: 'entity' })), ...tags.map((record) => ({ ...record, nodeType: 'tag', nodeClass: 'tag' })), ...scriptureNodes, ...libraryNodes];
   const nodeMarkup = nodes.length ? nodes.map((node) => `<article class="evidence-node ${node.nodeClass}"><span>${escapeHtml(node.nodeType)}</span><strong>${escapeHtml(node.title || node.name)}</strong><small>${escapeHtml(node.description || node.body || node.author || 'Local study record')}</small></article>`).join('') : '<div class="record-empty">Add sources, notes, or entities to build the evidence wall.</div>';
   const entityIds = new Set(entities.map((entity) => entity.id));
   const relationships = state.database.relationships.filter((relation) => relation.study_id === study.id && entityIds.has(relation.source_entity_id) && entityIds.has(relation.target_entity_id) && !relation.deleted_at);
-  const contentIds = new Set(scriptureNodes.map((item) => item.id));
-  const contentById = new Map(scriptureNodes.map((item) => [item.id, item]));
+  const contentIds = new Set([...scriptureNodes, ...libraryNodes].map((item) => item.id));
+  const contentById = new Map([...scriptureNodes, ...libraryNodes].map((item) => [item.id, item]));
   const contentRelationships = state.database.content_relationships.filter((relation) => contentIds.has(relation.source_content_id) && contentIds.has(relation.target_content_id) && !relation.deleted_at);
-  const relationshipMarkup = [...relationships.map((relation) => { const source = entities.find((entity) => entity.id === relation.source_entity_id); const target = entities.find((entity) => entity.id === relation.target_entity_id); return `<div class="relationship-line"><strong>${escapeHtml(source?.name || 'Unknown')}</strong><span>${escapeHtml(relation.relationship_type)}</span><strong>${escapeHtml(target?.name || 'Unknown')}</strong></div>`; }), ...contentRelationships.map((relation) => `<div class="relationship-line"><strong>${escapeHtml(contentById.get(relation.source_content_id)?.title || 'Unknown')}</strong><span>${escapeHtml(relation.relationship_type)}</span><strong>${escapeHtml(contentById.get(relation.target_content_id)?.title || 'Unknown')}</strong></div>`)].join('') || '<p class="muted">No explicit entity or Scripture relationships have been recorded yet.</p>';
+  const relationshipMarkup = [...relationships.map((relation) => { const source = entities.find((entity) => entity.id === relation.source_entity_id); const target = entities.find((entity) => entity.id === relation.target_entity_id); return `<div class="relationship-line"><strong>${escapeHtml(source?.name || 'Unknown')}</strong><span>${escapeHtml(relation.relationship_type)}</span><strong>${escapeHtml(target?.name || 'Unknown')}</strong></div>`; }), ...contentRelationships.map((relation) => `<div class="relationship-line"><strong>${escapeHtml(contentById.get(relation.source_content_id)?.title || 'Unknown')}</strong><span>${escapeHtml(relation.relationship_type)}</span><strong>${escapeHtml(contentById.get(relation.target_content_id)?.title || 'Unknown')}</strong></div>`)].join('') || '<p class="muted">No explicit entity, Scripture, or Library relationships have been recorded yet.</p>';
   $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-evidence"><div class="mode-introduction"><div><span class="eyebrow">Evidence Wall</span><h2>Relationships and comparisons</h2><p>View research objects together before formal relationship editing is added.</p></div><div class="mode-count">${nodes.length}<span>objects</span></div></div><div class="evidence-wall">${nodeMarkup}</div><section class="mode-panel relationship-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Connections</span><h3>Recorded relationships</h3></div></div>${relationshipMarkup}</section></div>`;
 }
 
@@ -294,10 +400,12 @@ function renderTimeline(study) {
   const questions = content.questions.filter((question) => question.display_step === state.timelineStep);
   const linkedCount = contentForStudy(study.id, (item) => item.content_type.startsWith('timeline_')).length;
   const stepButtons = content.steps.map((item) => `<button class="timeline-step-button ${item.display_step === state.timelineStep ? 'is-selected' : ''}" data-timeline-step="${item.display_step}" type="button"><span>${item.display_step}</span><strong>${escapeHtml(item.aaron)}</strong></button>`).join('');
-  target.innerHTML = `<div class="timeline-workspace"><div class="timeline-toolbar"><div><span class="eyebrow">Local content package</span><h2>${escapeHtml(content.title)}</h2><p class="muted">24 numbered steps · ${content.question_count} questions · prelude preserved separately</p></div><button class="button button-secondary" id="timeline-attach" type="button" ${linkedCount ? 'disabled' : ''}>${linkedCount ? 'Timeline attached locally' : 'Attach timeline to study'}</button></div><div class="timeline-prelude"><strong>Prelude</strong><span>${escapeHtml(content.prelude.aaron)} — ${escapeHtml(content.prelude.jesus)}</span><small>Source entry 0 is preserved for provenance and is not counted among the 24 user-facing steps.</small></div><div class="timeline-columns"><nav class="timeline-step-list" aria-label="Timeline steps">${stepButtons}</nav><section class="timeline-step-detail"><span class="eyebrow">Step ${step.display_step} of 24</span><h3>${escapeHtml(step.aaron)}</h3><p class="timeline-jesus">${escapeHtml(step.jesus)}</p><dl class="timeline-facts"><div><dt>Aaron reference</dt><dd>${escapeHtml(step.aaronRef)}</dd></div><div><dt>Jesus reference</dt><dd>${escapeHtml(step.jesusRef)}</dd></div><div><dt>Questions</dt><dd>${questions.length}</dd></div></dl><h4>Learning prompts</h4>${questions.length ? `<ol class="timeline-questions">${questions.map((question) => `<li><strong>${escapeHtml(question.question)}</strong><span>${escapeHtml(question.type)} · ${escapeHtml(question.explanation || 'No explanation supplied.')}</span></li>`).join('')}</ol>` : '<p class="muted">No questions are assigned to this step.</p>'}</section></div>${scriptureAtlasMarkup(step)}</div>`;
+  target.innerHTML = `<div class="timeline-workspace"><div class="timeline-toolbar"><div><span class="eyebrow">Local content package</span><h2>${escapeHtml(content.title)}</h2><p class="muted">24 numbered steps · ${content.question_count} questions · prelude preserved separately</p></div><button class="button button-secondary" id="timeline-attach" type="button" ${linkedCount ? 'disabled' : ''}>${linkedCount ? 'Timeline attached locally' : 'Attach timeline to study'}</button></div><div class="timeline-prelude"><strong>Prelude</strong><span>${escapeHtml(content.prelude.aaron)} — ${escapeHtml(content.prelude.jesus)}</span><small>Source entry 0 is preserved for provenance and is not counted among the 24 user-facing steps.</small></div><div class="timeline-columns"><nav class="timeline-step-list" aria-label="Timeline steps">${stepButtons}</nav><section class="timeline-step-detail"><span class="eyebrow">Step ${step.display_step} of 24</span><h3>${escapeHtml(step.aaron)}</h3><p class="timeline-jesus">${escapeHtml(step.jesus)}</p><dl class="timeline-facts"><div><dt>Aaron reference</dt><dd>${escapeHtml(step.aaronRef)}</dd></div><div><dt>Jesus reference</dt><dd>${escapeHtml(step.jesusRef)}</dd></div><div><dt>Questions</dt><dd>${questions.length}</dd></div></dl><h4>Learning prompts</h4>${questions.length ? `<ol class="timeline-questions">${questions.map((question) => `<li><strong>${escapeHtml(question.question)}</strong><span>${escapeHtml(question.type)} · ${escapeHtml(question.explanation || 'No explanation supplied.')}</span></li>`).join('')}</ol>` : '<p class="muted">No questions are assigned to this step.</p>'}</section></div>${scriptureAtlasMarkup(step)}${libraryAtlasMarkup(step)}</div>`;
   document.querySelectorAll('[data-timeline-step]').forEach((button) => button.addEventListener('click', () => { state.timelineStep = Number(button.dataset.timelineStep); renderDetail(); }));
   document.querySelectorAll('[data-open-section="scripture"]').forEach((button) => button.addEventListener('click', () => { state.section = 'scripture'; renderDetail(); }));
   document.querySelectorAll('[data-scripture-reference]').forEach((button) => button.addEventListener('click', () => { state.section = 'scripture'; state.scriptureQuery = button.dataset.scriptureReference; state.scriptureReference = `reference:${button.dataset.scriptureReference}`; renderDetail(); }));
+  document.querySelectorAll('[data-open-section="library"]').forEach((button) => button.addEventListener('click', () => { state.section = 'library'; renderDetail(); }));
+  document.querySelectorAll('[data-library-record-key]').forEach((button) => button.addEventListener('click', () => { state.section = 'library'; state.libraryRecordId = button.dataset.libraryRecordKey; renderDetail(); }));
   $('#timeline-attach')?.addEventListener('click', async () => {
     try {
       if (!desktopData?.attachTimeline) throw new Error('Timeline attachment is available in the standalone Electron app.');
@@ -317,13 +425,16 @@ function renderDetail() {
   $('#study-detail-description').textContent = study.description || 'No description yet.';
   $('#section-tabs').innerHTML = STUDY_SECTIONS.map((section) => `<button class="section-tab ${section.id === state.section ? 'is-active' : ''}" data-study-section="${section.id}" role="tab" aria-selected="${section.id === state.section}">${section.label}</button>`).join('');
   document.querySelectorAll('[data-study-section]').forEach((button) => button.addEventListener('click', () => { state.section = button.dataset.studySection; renderDetail(); }));
-  $('#add-record').disabled = state.section === 'overview' || state.section === 'timeline' || state.section === 'scripture';
+  $('#add-record').disabled = state.section === 'overview' || state.section === 'timeline' || state.section === 'scripture' || state.section === 'library';
   if (state.section === 'overview') { renderWorkspaceMode(study); document.querySelectorAll('[data-open-section]').forEach((button) => button.addEventListener('click', () => { state.section = button.dataset.openSection; renderDetail(); })); return; }
   if (state.section === 'timeline') { renderTimeline(study); return; }
   if (state.section === 'scripture') { renderScriptureWorkspace(study); return; }
+  if (state.section === 'library') { renderLibraryWorkspace(study); return; }
   const records = recordsForStudy(study.id, state.section);
-  const rows = records.map((record) => `<tr><td><span class="record-title">${escapeHtml(record.title || record.name)}</span><span class="record-secondary">${escapeHtml(record.body || record.description || record.author || record.source_type || record.citation || '')}</span></td><td>${escapeHtml(formatDate(record.updated_at || record.created_at))}</td></tr>`).join('');
-  $('#record-table-wrap').innerHTML = records.length ? `<table><thead><tr><th>${escapeHtml(STUDY_SECTIONS.find((item) => item.id === state.section).label)}</th><th>Updated</th></tr></thead><tbody>${rows}</tbody></table>` : '<div class="record-empty">No records in this section yet.</div>';
+  const rows = records.map((record) => { const libraryMatch = state.section === 'sources' ? libraryBookForSource(record) : null; const secondary = [record.body, record.description, record.author, record.source_type, record.citation, record.local_path ? `Local file: ${record.local_path}` : ''].filter(Boolean).join(' · '); return `<tr><td><span class="record-title">${escapeHtml(record.title || record.name)}</span><span class="record-secondary">${escapeHtml(secondary)}</span></td><td>${escapeHtml(formatDate(record.updated_at || record.created_at))}</td>${state.section === 'sources' ? `<td>${libraryMatch ? `<button class="library-link" data-library-source-key="${escapeHtml(libraryMatch.content_id)}" type="button">Open in Library →</button>` : '<span class="muted">—</span>'}</td>` : ''}</tr>`; }).join('');
+  const sourceHeading = state.section === 'sources' ? '<th>Library</th>' : '';
+  $('#record-table-wrap').innerHTML = records.length ? `<table><thead><tr><th>${escapeHtml(STUDY_SECTIONS.find((item) => item.id === state.section).label)}</th><th>Updated</th>${sourceHeading}</tr></thead><tbody>${rows}</tbody></table>` : '<div class="record-empty">No records in this section yet.</div>';
+  document.querySelectorAll('[data-library-source-key]').forEach((button) => button.addEventListener('click', () => { state.section = 'library'; state.libraryRecordId = button.dataset.librarySourceKey; renderDetail(); }));
 }
 
 function renderInformation() {
@@ -358,6 +469,7 @@ async function refreshFromDesktop() {
   if (!desktopData?.snapshot) { render(); return; }
   state.database = await desktopData.snapshot();
   if (!state.scriptureContent && desktopData.getScriptureContent) state.scriptureContent = await desktopData.getScriptureContent();
+  if (!state.libraryContent && desktopData.getLibraryContent) state.libraryContent = await desktopData.getLibraryContent();
   if (!selectedStudy()) state.selectedId = state.database.studies.find(active)?.id || null;
   if (state.selectedId) state.workspaceMode = storedWorkspaceMode(state.selectedId);
   render();

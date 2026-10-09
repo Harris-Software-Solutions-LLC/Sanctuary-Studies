@@ -5,6 +5,7 @@ const { app, BrowserWindow, dialog, ipcMain, session } = require('electron');
 const { createStore } = require('../shared/store.cjs');
 const { loadTimelinePackage, timelinePackageToItems } = require('../shared/content/timeline/index.cjs');
 const { loadScripturePackage, scripturePackageToItems, scripturePackageToRelationships } = require('../shared/content/scripture/index.cjs');
+const { loadLibraryPackage, libraryPackageToItems, libraryPackageToRelationships } = require('../shared/content/library/index.cjs');
 
 const appRoot = path.resolve(__dirname, '..');
 const entrypoint = path.join(appRoot, 'ui', 'index.html');
@@ -100,6 +101,20 @@ app.whenReady().then(() => {
       relationships: scripturePackageToRelationships(packageData),
       sourceName: 'Sanctuary Studies legacy Scripture data',
       sourcePath: 'app-data.js; app-pages1.js',
+      sourceRevision: packageData.source_revision,
+      licenseStatus: packageData.license_status
+    });
+  });
+  ipcMain.handle('content:library', () => loadLibraryPackage());
+  ipcMain.handle('content:attach-library', (_event, input) => {
+    const packageData = loadLibraryPackage();
+    return store.attachContentPackage({
+      studyId: input?.studyId,
+      packageData,
+      items: libraryPackageToItems(packageData),
+      relationships: libraryPackageToRelationships(packageData),
+      sourceName: 'Sanctuary Studies legacy Digital Library',
+      sourcePath: 'app-data.js; app-core.js; app-books.js',
       sourceRevision: packageData.source_revision,
       licenseStatus: packageData.license_status
     });

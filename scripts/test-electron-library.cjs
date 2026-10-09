@@ -5,6 +5,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const { createStore } = require('../shared/store.cjs');
 const { loadTimelinePackage, timelinePackageToItems } = require('../shared/content/timeline/index.cjs');
 const { loadScripturePackage } = require('../shared/content/scripture/index.cjs');
+const { loadLibraryPackage } = require('../shared/content/library/index.cjs');
 
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-library-${process.pid}`);
@@ -18,6 +19,7 @@ function registerHandlers(store) {
   ipcMain.handle('data:export-bundle', () => store.exportBundle());
   ipcMain.handle('content:timeline', () => loadTimelinePackage());
   ipcMain.handle('content:scripture', () => loadScripturePackage());
+  ipcMain.handle('content:library', () => loadLibraryPackage());
   ipcMain.handle('content:attach-timeline', (_event, input) => {
     const packageData = loadTimelinePackage();
     return store.attachContentPackage({ studyId: input?.studyId, packageData, items: timelinePackageToItems(packageData), sourceName: 'test timeline', sourcePath: 'test/timeline', sourceRevision: 'test' });
