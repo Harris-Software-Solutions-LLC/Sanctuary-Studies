@@ -103,7 +103,7 @@ if (Test-Path -LiteralPath $eFinal) { Fail "Timestamp collision detected for E: 
 if (Test-Path -LiteralPath $dFinal) { Fail "Timestamp collision detected for D: output $dFinal. No existing output was changed." }
 
 $sourceStats = Get-DirectoryStats $repoRoot
-$estimatedBytes = [UInt64]([Math]::Max(1GB, $sourceStats.Bytes * 3))
+$estimatedBytes = [UInt64]([Math]::Max([UInt64]1GB, [UInt64]($sourceStats.Bytes * 3)))
 Write-Host "Repository: $repoRoot"
 Write-Host "Label: $Label -> $slug"
 Write-Host "Expected disk impact: approximately $([Math]::Round($estimatedBytes / 1GB, 2)) GB on E: during staging, plus one final package on each drive and the external Electron cache."
