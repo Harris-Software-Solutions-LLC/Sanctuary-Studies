@@ -2,6 +2,7 @@
 node_modules/
 .npm/
 .cache/
+tooling/
 
 # Platform output
 dist/
@@ -12,6 +13,7 @@ win-unpacked/
 win-unpacked-*/
 mobile/android/
 mobile/ios/
+mobile/.dart_tool/
 
 # Local reports and secrets
 coverage/

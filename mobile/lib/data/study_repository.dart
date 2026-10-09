@@ -51,7 +51,7 @@ class StudyRepository {
     await temporary.rename(_databaseFile.path);
   }
 
-  List<Study> get studies => ((List<dynamic>)_database['studies']!)
+  List<Study> get studies => (_database['studies'] as List<dynamic>)
       .map((row) => Study.fromJson(Map<String, dynamic>.from(row as Map)))
       .where((study) => study.deletedAt == null)
       .toList(growable: false);
