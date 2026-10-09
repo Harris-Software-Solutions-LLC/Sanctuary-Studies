@@ -44,3 +44,4 @@ Integrate the supplied Sanctuary Studies feature-inventory Markdown and save it 
   - MIME type: `text/markdown`
   - Size: `6184` bytes
   - Parent folder ID: `1UgfVM9yuDSC4vlThP9s539u4F_fRIHa`
+- This append-only task record is archived in the same Drive folder as `20261008-225946-integrate-feature-inventory.md`.
