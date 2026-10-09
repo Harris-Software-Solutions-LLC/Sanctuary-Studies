@@ -79,7 +79,7 @@ p { color: var(--text-secondary); }
 }
 .logo { display: flex; align-items: center; gap: .7rem; cursor: pointer; }
 .logo-icon { width: 34px; height: 34px; background: var(--gold); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink:0; }
-.logo-icon svg { width: 18px; height: 18px; }
+.logo-icon img { width: 30px; height: 30px; object-fit: contain; }
 .logo-text { font-family: 'Cinzel', serif; font-size: .95rem; font-weight: 700; color: white; line-height:1.1; }
 .logo-sub { font-size: .65rem; color: var(--gold-light); }
 @media(max-width:480px) { .logo-sub { display:none; } }

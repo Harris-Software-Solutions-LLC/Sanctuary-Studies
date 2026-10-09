@@ -5,6 +5,7 @@ files:
   - electron/**
   - shared/**
   - ui/**
+  - assets/**
   - '*.html'
   - '*.css'
   - '*.js'

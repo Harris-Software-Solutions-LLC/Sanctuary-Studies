@@ -2,7 +2,7 @@ const path = require('node:path');
 const fsSync = require('node:fs');
 const fs = require('node:fs/promises');
 const { fileURLToPath } = require('node:url');
-const { app, BrowserWindow, dialog, ipcMain, session } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage, session, Tray } = require('electron');
 const { createStore } = require('../shared/store.cjs');
 const { loadTimelinePackage, timelinePackageToItems } = require('../shared/content/timeline/index.cjs');
 const { loadScripturePackage, scripturePackageToItems, scripturePackageToRelationships } = require('../shared/content/scripture/index.cjs');
@@ -17,9 +17,12 @@ const { loadLearningGamesPackage, learningGamesPackageToItems, learningGamesPack
 const appRoot = path.resolve(__dirname, '..');
 const entrypoint = path.join(appRoot, 'ui', 'index.html');
 const legacyEntrypoint = path.join(appRoot, 'index.html');
+const appIcon = path.join(appRoot, 'assets', 'icons', 'sanctuary-studies.ico');
+const trayIcon = path.join(appRoot, 'assets', 'icons', 'sanctuary-studies-icon-32.png');
 let store;
 let storagePath;
 let storagePreferencePath;
+let tray;
 
 function defaultStoragePath() {
   return path.join(app.getPath('userData'), 'sanctuary-studies-data.json');
@@ -62,6 +65,7 @@ function createWindow() {
     minHeight: 640,
     backgroundColor: '#f5f0e8',
     title: 'Sanctuary Studies',
+    icon: appIcon,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
@@ -84,6 +88,7 @@ function createLegacyWindow(initialRoute = '') {
     minHeight: 640,
     backgroundColor: '#f5f0e8',
     title: 'Sanctuary Studies — Existing Study Workspace',
+    icon: appIcon,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
@@ -103,6 +108,19 @@ const LEGACY_ROUTES = new Set(['explorer', 'heavenly', 'compare', 'symbolism', '
 function createLegacyRouteWindow(route) {
   if (!LEGACY_ROUTES.has(route)) throw new Error('The requested legacy route is not available offline.');
   return createLegacyWindow(route);
+}
+
+function createTray() {
+  if (process.platform !== 'win32' || tray) return;
+  tray = new Tray(nativeImage.createFromPath(trayIcon));
+  tray.setToolTip('Sanctuary Studies');
+  tray.setContextMenu(Menu.buildFromTemplate([
+    { label: 'Show Sanctuary Studies', click: () => { const window = BrowserWindow.getAllWindows()[0]; if (window) { window.show(); window.focus(); } else createWindow(); } },
+    { label: 'Open Existing Study Workspace', click: () => createLegacyWindow() },
+    { type: 'separator' },
+    { label: 'Exit', click: () => app.quit() }
+  ]));
+  tray.on('click', () => { const window = BrowserWindow.getAllWindows()[0]; if (window) { window.show(); window.focus(); } else createWindow(); });
 }
 
 app.whenReady().then(() => {
@@ -296,6 +314,7 @@ app.whenReady().then(() => {
 
   session.defaultSession.setPermissionRequestHandler((_webContents, _permission, callback) => callback(false));
   createWindow();
+  createTray();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });

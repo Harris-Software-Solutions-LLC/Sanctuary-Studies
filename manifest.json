@@ -9,14 +9,14 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%231C2A39'/><text y='140' font-size='120' font-family='serif' fill='%238C6B3C' text-anchor='middle' x='96'>🏛</text></svg>",
-      "sizes": "192x192",
-      "type": "image/svg+xml"
+      "src": "assets/icons/sanctuary-studies-icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
     },
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%231C2A39'/><text y='380' font-size='320' font-family='serif' fill='%238C6B3C' text-anchor='middle' x='256'>🏛</text></svg>",
-      "sizes": "512x512",
-      "type": "image/svg+xml"
+      "src": "assets/icons/sanctuary-studies-icon-source.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
     }
   ],
   "categories": ["education", "religion", "books"],
