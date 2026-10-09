@@ -1,0 +1,16 @@
+{
+  "format": "sanctuary-studies-content-manifest",
+  "content_version": 1,
+  "runtime": "offline-local",
+  "packages": [
+    { "id": "scripture", "path": "scripture/", "source_files": ["app-data.js", "app-pages1.js"], "status": "inventory-ready" },
+    { "id": "timeline", "path": "timeline/timeline-v1.json", "source_files": ["app-data.js", "project/src/components/TimelinePage.tsx", "project/src/data/timelineQuestions.ts"], "status": "integrated" },
+    { "id": "library", "path": "library/", "source_files": ["app-data.js", "app-core.js", "app-books.js"], "status": "inventory-ready" },
+    { "id": "sanctuary", "path": "sanctuary/", "source_files": ["app-pages2.js", "app-pages3.js", "public/data/models/"], "status": "inventory-ready" },
+    { "id": "symbolism", "path": "symbolism/", "source_files": ["app-pages2.js"], "status": "inventory-ready" },
+    { "id": "colors", "path": "colors/", "source_files": ["app-data.js", "app-pages2.js"], "status": "inventory-ready" },
+    { "id": "learning", "path": "learning/", "source_files": ["app-data.js", "app-pages1.js", "app-pages3.js"], "status": "inventory-ready" }
+  ],
+  "exclusions": [".git", ".github", "Supabase", "payment routes", "authentication routes", "hosted fonts", "external media URLs"],
+  "provenance_policy": "Every imported package must identify source files, source revision, license status, and whether network dependencies were removed."
+}

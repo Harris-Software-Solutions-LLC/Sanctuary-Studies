@@ -23,6 +23,16 @@
           <kbd>Ctrl K</kbd>
         </label>
         <div class="topbar-actions">
+          <span id="current-study-context" class="study-context" hidden></span>
+          <label class="view-switcher" aria-label="Study workspace view">View
+            <select id="workspace-mode">
+              <option value="desk">Scholar’s Desk</option>
+              <option value="codex">Codex Cabinet</option>
+              <option value="atlas">Sanctuary Atlas</option>
+              <option value="folio">Research Folio</option>
+              <option value="evidence">Evidence Wall</option>
+            </select>
+          </label>
           <span class="save-state"><span class="save-dot"></span> Local</span>
           <button class="button button-secondary" id="import-bundle">Import</button>
           <button class="button button-secondary" id="export-bundle">Export</button>

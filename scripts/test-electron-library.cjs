@@ -8,7 +8,7 @@ const { loadTimelinePackage, timelinePackageToItems } = require('../shared/conte
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-library-${process.pid}`);
 const databasePath = path.join(temporaryRoot, 'data.json');
-const report = { localOnly: true, created: false, persisted: false, recordPersisted: false, timelineLoaded: false, timelineAttached: false, timelineSteps: 0, noExternalDependency: true };
+const report = { localOnly: true, created: false, persisted: false, recordPersisted: false, workspaceModes: false, modePreference: false, timelineLoaded: false, timelineAttached: false, timelineSteps: 0, noExternalDependency: true };
 
 function registerHandlers(store) {
   ipcMain.handle('data:snapshot', () => store.snapshot());
@@ -38,22 +38,35 @@ async function run() {
     await window.sanctuaryDesktop.data.addStudyRecord({ studyId: study.id, section: 'notes', payload: { title: 'Electron note', body: 'Saved locally.' } });
     const timeline = await window.sanctuaryDesktop.data.getTimelineContent();
     const attachment = await window.sanctuaryDesktop.data.attachTimeline({ studyId: study.id });
-    return { studyId: study.id, timeline, attachment };
+    await window.refreshFromDesktop();
+    const row = document.querySelector('[data-study-id="' + study.id + '"]');
+    row?.click();
+    const select = document.querySelector('#workspace-mode');
+    const modeText = {};
+    for (const mode of ['desk', 'codex', 'atlas', 'folio', 'evidence']) {
+      select.value = mode;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      await new Promise((resolve) => setTimeout(resolve, mode === 'atlas' ? 150 : 20));
+      modeText[mode] = document.querySelector('#record-table-wrap')?.textContent || '';
+    }
+    return { studyId: study.id, timeline, attachment, modeText };
   })()`);
   await new Promise((resolve) => { window.webContents.once('did-finish-load', resolve); window.reload(); });
-  const result = await window.webContents.executeJavaScript(`({ tableText: document.querySelector('#study-table')?.textContent || '', detailText: document.querySelector('#study-detail-view')?.textContent || '' })`);
+  const result = await window.webContents.executeJavaScript(`({ tableText: document.querySelector('#study-table')?.textContent || '', detailText: document.querySelector('#study-detail-view')?.textContent || '', modeValue: document.querySelector('#workspace-mode')?.value || '' })`);
   report.tableText = result.tableText;
   report.detailText = result.detailText;
   report.created = result.tableText.includes('Electron library test');
   report.persisted = store.listStudies().some((study) => study.id === createdResult.studyId);
   report.recordPersisted = store.listStudyRecords({ studyId: createdResult.studyId, section: 'notes' }).some((note) => note.title === 'Electron note');
+  report.workspaceModes = createdResult.modeText.desk.includes('Scholar’s Desk') && createdResult.modeText.codex.includes('Codex Cabinet') && createdResult.modeText.atlas.includes('24 numbered steps') && createdResult.modeText.folio.includes('Research Folio') && createdResult.modeText.evidence.includes('Evidence Wall');
+  report.modePreference = result.modeValue === 'evidence';
   report.timelineLoaded = createdResult.timeline.step_count === 24 && createdResult.timeline.question_count === 189;
   report.timelineAttached = createdResult.attachment.links === 214;
   report.timelineSteps = store.listStudyContent({ studyId: createdResult.studyId, contentType: 'timeline_step' }).length;
   report.noExternalDependency = externalRequests.length === 0;
   window.close();
   await app.quit();
-  report.ok = report.created && report.persisted && report.recordPersisted && report.timelineLoaded && report.timelineAttached && report.timelineSteps === 24 && report.noExternalDependency;
+  report.ok = report.created && report.persisted && report.recordPersisted && report.workspaceModes && report.modePreference && report.timelineLoaded && report.timelineAttached && report.timelineSteps === 24 && report.noExternalDependency;
   console.log(JSON.stringify({ ...report, externalRequests }, null, 2));
   return report.ok;
 }

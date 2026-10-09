@@ -9,12 +9,34 @@ const STUDY_SECTIONS = [
   { id: 'events', label: 'Events' },
   { id: 'tags', label: 'Tags' }
 ];
+const WORKSPACE_MODES = [
+  { id: 'desk', label: 'Scholar’s Desk', eyebrow: 'Study overview' },
+  { id: 'codex', label: 'Codex Cabinet', eyebrow: 'Sources and archive' },
+  { id: 'atlas', label: 'Sanctuary Atlas', eyebrow: 'Timeline and connections' },
+  { id: 'folio', label: 'Research Folio', eyebrow: 'Focused reading and writing' },
+  { id: 'evidence', label: 'Evidence Wall', eyebrow: 'Relationships and comparisons' }
+];
 const desktopData = window.sanctuaryDesktop?.data || null;
-const state = { database: Object.fromEntries([['schema_version', 2], ...TABLES.map((table) => [table, []])]), selectedId: null, query: '', statusFilter: 'all', sort: 'updated', view: 'library', section: 'overview', timelineContent: null, timelineStep: 1 };
+const state = { database: Object.fromEntries([['schema_version', 2], ...TABLES.map((table) => [table, []])]), selectedId: null, query: '', statusFilter: 'all', sort: 'updated', view: 'library', section: 'overview', workspaceMode: 'desk', timelineContent: null, timelineStep: 1, folioRecordId: null };
 const $ = (selector) => document.querySelector(selector);
 const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
 const active = (record) => !record.deleted_at;
 const selectedStudy = () => state.database.studies.find((study) => study.id === state.selectedId && active(study));
+
+function storedWorkspaceMode(studyId) {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem('sanctuary-study-workspace-views') || '{}');
+    return WORKSPACE_MODES.some((mode) => mode.id === saved[studyId]) ? saved[studyId] : 'desk';
+  } catch { return 'desk'; }
+}
+
+function rememberWorkspaceMode(studyId, mode) {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem('sanctuary-study-workspace-views') || '{}');
+    saved[studyId] = mode;
+    window.localStorage.setItem('sanctuary-study-workspace-views', JSON.stringify(saved));
+  } catch { /* Local preference storage is optional and must not affect study data. */ }
+}
 
 function showMessage(message, isError = false) {
   const element = $('#app-message');
@@ -49,6 +71,11 @@ function visibleStudies() {
 
 function render() {
   const visible = visibleStudies();
+  const study = selectedStudy();
+  const modeSelect = $('#workspace-mode');
+  const context = $('#current-study-context');
+  if (modeSelect) { modeSelect.value = state.workspaceMode; modeSelect.disabled = !study || state.view !== 'study'; }
+  if (context) { context.hidden = !study || state.view !== 'study'; context.textContent = study ? study.title : ''; }
   $('#study-count').textContent = `${visible.length} ${visible.length === 1 ? 'study' : 'studies'}`;
   $('#filter-studies').textContent = `Filter: ${state.statusFilter === 'all' ? 'All' : state.statusFilter[0].toUpperCase() + state.statusFilter.slice(1)}`;
   $('#sort-studies').textContent = `Sort: ${state.sort === 'title' ? 'Title' : 'Updated'}`;
@@ -73,7 +100,68 @@ function renderInspector(study) {
 
 function openStudyDialog() { $('#study-form').reset(); $('#study-dialog').showModal(); }
 
-function selectStudy(studyId) { state.selectedId = studyId; state.view = 'study'; state.section = 'overview'; state.timelineStep = 1; render(); }
+function selectStudy(studyId) { state.selectedId = studyId; state.view = 'study'; state.section = 'overview'; state.workspaceMode = storedWorkspaceMode(studyId); state.timelineStep = 1; state.folioRecordId = null; render(); }
+
+function studyActivity(studyId) {
+  const recordLabels = { sources: 'source', notes: 'note', people: 'person', places: 'place', events: 'event', tags: 'tag' };
+  const records = ['sources', 'notes', 'people', 'places', 'events', 'tags'].flatMap((section) => recordsForStudy(studyId, section).map((record) => ({ ...record, recordType: recordLabels[section] || section, recordTitle: record.title || record.name })));
+  return records.sort((left, right) => String(right.updated_at || right.created_at || '').localeCompare(String(left.updated_at || left.created_at || '')));
+}
+
+function renderDesk(study) {
+  const activity = studyActivity(study.id).slice(0, 6);
+  const counts = studyCounts(study.id);
+  const relationships = state.database.relationships.filter((relation) => relation.study_id === study.id && !relation.deleted_at).length + state.database.content_relationships.filter((relation) => !relation.deleted_at).length;
+  const activityMarkup = activity.length ? activity.map((record) => `<article class="activity-entry"><span class="activity-rule"></span><div><strong>${escapeHtml(record.recordTitle)}</strong><span>${escapeHtml(record.recordType)} · ${escapeHtml(formatDate(record.updated_at || record.created_at))}</span></div></article>`).join('') : '<p class="muted">No research records yet. Add a source, note, or entity to begin.</p>';
+  $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-desk"><div class="mode-introduction"><div><span class="eyebrow">Scholar’s Desk</span><h2>Research overview</h2><p>One calm working surface for the study’s current evidence, notes, and activity.</p></div><div class="desk-actions"><button class="text-button" data-open-section="sources" type="button">+ Source</button><button class="text-button" data-open-section="notes" type="button">+ Note</button><div class="desk-stamp">LOCAL<br><span>PRIVATE STUDY</span></div></div></div><div class="desk-summary"><div><strong>${counts.sources}</strong><span>Sources</span></div><div><strong>${counts.notes}</strong><span>Notes</span></div><div><strong>${counts.people + counts.places + counts.events}</strong><span>People · places · events</span></div><div><strong>${relationships}</strong><span>Relationships</span></div></div><div class="desk-columns"><section class="mode-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Current activity</span><h3>Recent research</h3></div><button class="text-button" data-mode="codex" type="button">Open archive →</button></div><div class="activity-list">${activityMarkup}</div></section><section class="mode-panel desk-context-panel"><span class="eyebrow">Study context</span><h3>${escapeHtml(study.title)}</h3><p>${escapeHtml(study.description || 'No description has been added to this study.')}</p><dl class="context-list"><div><dt>Status</dt><dd>${escapeHtml(study.status)}</dd></div><div><dt>Created</dt><dd>${escapeHtml(formatDate(study.created_at))}</dd></div><div><dt>Last updated</dt><dd>${escapeHtml(formatDate(study.updated_at))}</dd></div></dl></section></div></div>`;
+  document.querySelectorAll('[data-mode]').forEach((button) => button.addEventListener('click', () => setWorkspaceMode(button.dataset.mode)));
+}
+
+function renderCodex(study) {
+  const sources = recordsForStudy(study.id, 'sources');
+  const notes = recordsForStudy(study.id, 'notes');
+  const sourceCards = sources.length ? sources.map((source) => `<article class="archive-card"><div class="archive-card-rule"></div><div class="archive-card-body"><span class="eyebrow">${escapeHtml(source.source_type || 'Reference')}</span><h3>${escapeHtml(source.title)}</h3><p class="archive-author">${escapeHtml(source.author || 'Author not recorded')}</p><p>${escapeHtml(source.notes || source.citation || 'No excerpt or citation has been added yet.')}</p><div class="archive-meta"><span>${source.citation ? 'Citation recorded' : 'Citation pending'}</span><span>${notes.length} study notes</span></div></div></article>`).join('') : '<div class="record-empty">No sources are in this study yet. Use Add record to build the archive.</div>';
+  $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-codex"><div class="mode-introduction"><div><span class="eyebrow">Codex Cabinet</span><h2>Sources and archive</h2><p>Annotated records with citations, excerpts, provenance, and attached study context.</p></div><div class="mode-count">${sources.length}<span>sources</span></div></div><div class="archive-grid">${sourceCards}</div>${sources.length ? '' : '<button class="button button-secondary" data-open-section="sources" type="button">Add the first source</button>'}</div>`;
+}
+
+function renderFolio(study) {
+  const notes = recordsForStudy(study.id, 'notes');
+  if (!state.folioRecordId || !notes.some((note) => note.id === state.folioRecordId)) state.folioRecordId = notes[0]?.id || null;
+  const selectedNote = notes.find((note) => note.id === state.folioRecordId);
+  const noteList = notes.length ? notes.map((note) => `<button class="folio-note ${note.id === state.folioRecordId ? 'is-selected' : ''}" data-folio-note="${escapeHtml(note.id)}" type="button"><strong>${escapeHtml(note.title)}</strong><span>${escapeHtml(formatDate(note.updated_at || note.created_at))}</span></button>`).join('') : '<p class="muted">No notes yet.</p>';
+  const sources = recordsForStudy(study.id, 'sources');
+  $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-folio"><div class="mode-introduction"><div><span class="eyebrow">Research Folio</span><h2>Focused reading and writing</h2><p>Read notes as working pages while keeping source references and related records in view.</p></div></div><div class="folio-layout"><aside class="folio-index"><span class="eyebrow">Notes index</span>${noteList}${notes.length ? '' : '<button class="text-button" data-open-section="notes" type="button">+ Add note</button>'}</aside><article class="folio-page">${selectedNote ? `<span class="eyebrow">Working note</span><h3>${escapeHtml(selectedNote.title)}</h3><div class="folio-rule"></div><p class="folio-body">${escapeHtml(selectedNote.body).replace(/\n/g, '<br>')}</p><p class="folio-date">Modified ${escapeHtml(formatDate(selectedNote.updated_at || selectedNote.created_at))}</p>` : '<div class="record-empty">Select a note to begin reading, or add a note to this study.</div>'}</article><aside class="folio-references"><span class="eyebrow">References</span>${sources.length ? sources.map((source) => `<div class="reference-entry"><strong>${escapeHtml(source.title)}</strong><span>${escapeHtml(source.author || source.source_type || 'Reference')}</span></div>`).join('') : '<p class="muted">No related sources yet.</p>'}</aside></div></div>`;
+  document.querySelectorAll('[data-folio-note]').forEach((button) => button.addEventListener('click', () => { state.folioRecordId = button.dataset.folioNote; renderDetail(); }));
+}
+
+function renderEvidence(study) {
+  const sources = recordsForStudy(study.id, 'sources');
+  const notes = recordsForStudy(study.id, 'notes');
+  const entities = ['people', 'places', 'events'].flatMap((section) => recordsForStudy(study.id, section));
+  const tags = recordsForStudy(study.id, 'tags');
+  const nodes = [...sources.map((record) => ({ ...record, nodeType: 'source', nodeClass: 'source' })), ...notes.map((record) => ({ ...record, nodeType: 'note', nodeClass: 'note' })), ...entities.map((record) => ({ ...record, nodeType: record.entity_type, nodeClass: 'entity' })), ...tags.map((record) => ({ ...record, nodeType: 'tag', nodeClass: 'tag' }))];
+  const nodeMarkup = nodes.length ? nodes.map((node) => `<article class="evidence-node ${node.nodeClass}"><span>${escapeHtml(node.nodeType)}</span><strong>${escapeHtml(node.title || node.name)}</strong><small>${escapeHtml(node.description || node.body || node.author || 'Local study record')}</small></article>`).join('') : '<div class="record-empty">Add sources, notes, or entities to build the evidence wall.</div>';
+  const entityIds = new Set(entities.map((entity) => entity.id));
+  const relationships = state.database.relationships.filter((relation) => relation.study_id === study.id && entityIds.has(relation.source_entity_id) && entityIds.has(relation.target_entity_id) && !relation.deleted_at);
+  const relationshipMarkup = relationships.length ? relationships.map((relation) => { const source = entities.find((entity) => entity.id === relation.source_entity_id); const target = entities.find((entity) => entity.id === relation.target_entity_id); return `<div class="relationship-line"><strong>${escapeHtml(source?.name || 'Unknown')}</strong><span>${escapeHtml(relation.relationship_type)}</span><strong>${escapeHtml(target?.name || 'Unknown')}</strong></div>`; }).join('') : '<p class="muted">No explicit entity relationships have been recorded yet.</p>';
+  $('#record-table-wrap').innerHTML = `<div class="workspace-mode workspace-evidence"><div class="mode-introduction"><div><span class="eyebrow">Evidence Wall</span><h2>Relationships and comparisons</h2><p>View research objects together before formal relationship editing is added.</p></div><div class="mode-count">${nodes.length}<span>objects</span></div></div><div class="evidence-wall">${nodeMarkup}</div><section class="mode-panel relationship-panel"><div class="mode-panel-heading"><div><span class="eyebrow">Connections</span><h3>Recorded relationships</h3></div></div>${relationshipMarkup}</section></div>`;
+}
+
+function renderWorkspaceMode(study) {
+  if (state.workspaceMode === 'codex') return renderCodex(study);
+  if (state.workspaceMode === 'atlas') return renderTimeline(study);
+  if (state.workspaceMode === 'folio') return renderFolio(study);
+  if (state.workspaceMode === 'evidence') return renderEvidence(study);
+  return renderDesk(study);
+}
+
+function setWorkspaceMode(mode) {
+  if (!WORKSPACE_MODES.some((item) => item.id === mode) || !selectedStudy()) return;
+  state.workspaceMode = mode;
+  state.section = 'overview';
+  rememberWorkspaceMode(state.selectedId, mode);
+  render();
+}
 
 function renderTimeline(study) {
   const target = $('#record-table-wrap');
@@ -109,7 +197,7 @@ function renderDetail() {
   $('#section-tabs').innerHTML = STUDY_SECTIONS.map((section) => `<button class="section-tab ${section.id === state.section ? 'is-active' : ''}" data-study-section="${section.id}" role="tab" aria-selected="${section.id === state.section}">${section.label}</button>`).join('');
   document.querySelectorAll('[data-study-section]').forEach((button) => button.addEventListener('click', () => { state.section = button.dataset.studySection; renderDetail(); }));
   $('#add-record').disabled = state.section === 'overview' || state.section === 'timeline';
-  if (state.section === 'overview') { const counts = studyCounts(study.id); $('#record-table-wrap').innerHTML = `<div class="record-empty">This study contains ${counts.sources} sources, ${counts.notes} notes, ${counts.people} people, ${counts.places} places, ${counts.events} events, and ${counts.tags} tags. Choose a section to inspect or add records.</div>`; return; }
+  if (state.section === 'overview') { renderWorkspaceMode(study); document.querySelectorAll('[data-open-section]').forEach((button) => button.addEventListener('click', () => { state.section = button.dataset.openSection; renderDetail(); })); return; }
   if (state.section === 'timeline') { renderTimeline(study); return; }
   const records = recordsForStudy(study.id, state.section);
   const rows = records.map((record) => `<tr><td><span class="record-title">${escapeHtml(record.title || record.name)}</span><span class="record-secondary">${escapeHtml(record.body || record.description || record.author || record.source_type || record.citation || '')}</span></td><td>${escapeHtml(formatDate(record.updated_at || record.created_at))}</td></tr>`).join('');
@@ -148,6 +236,7 @@ async function refreshFromDesktop() {
   if (!desktopData?.snapshot) { render(); return; }
   state.database = await desktopData.snapshot();
   if (!selectedStudy()) state.selectedId = state.database.studies.find(active)?.id || null;
+  if (state.selectedId) state.workspaceMode = storedWorkspaceMode(state.selectedId);
   render();
 }
 
@@ -180,6 +269,7 @@ async function importBundle() {
 }
 
 document.querySelectorAll('[data-section]').forEach((item) => item.addEventListener('click', () => { state.view = item.dataset.section; render(); }));
+$('#workspace-mode').addEventListener('change', (event) => setWorkspaceMode(event.target.value));
 $('#global-search').addEventListener('input', (event) => { state.query = event.target.value; $('#table-search').value = state.query; render(); });
 $('#table-search').addEventListener('input', (event) => { state.query = event.target.value; $('#global-search').value = state.query; render(); });
 $('#filter-studies').addEventListener('click', () => { state.statusFilter = ({ all: 'draft', draft: 'active', active: 'paused', paused: 'all' })[state.statusFilter]; render(); });
