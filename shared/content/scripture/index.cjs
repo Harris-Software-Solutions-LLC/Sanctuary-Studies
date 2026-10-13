@@ -58,14 +58,33 @@ function item({ id, contentType, title, summary = '', payload, timestamp }) {
   };
 }
 
-function scripturePackageToItems(packageData, timestamp = new Date().toISOString()) {
+function scriptureSelectionIds(packageData, selection) {
+  if (!selection?.book) return null;
+  const bookName = normalizeBookName(selection.book);
+  const chapterNumber = selection.chapter === undefined || selection.chapter === null || selection.chapter === '' ? null : Number.parseInt(selection.chapter, 10);
+  const verseNumber = selection.verse === undefined || selection.verse === null || selection.verse === '' ? null : Number.parseInt(selection.verse, 10);
+  const book = packageData.books.find((entry) => normalizeBookName(entry.name) === bookName);
+  if (!book) throw new Error(`Unknown Scripture book: ${selection.book}`);
+  if (chapterNumber !== null && (!Number.isInteger(chapterNumber) || chapterNumber < 1 || chapterNumber > book.chapter_count)) throw new Error(`Invalid chapter for ${book.name}: ${selection.chapter}`);
+  if (verseNumber !== null && (!Number.isInteger(verseNumber) || verseNumber < 1)) throw new Error(`Invalid verse for ${book.name} ${chapterNumber}: ${selection.verse}`);
+  const ids = new Set([book.id]);
+  const chapters = packageData.chapters.filter((entry) => normalizeBookName(entry.book) === bookName && (chapterNumber === null || entry.chapter === chapterNumber));
+  if (chapters.length === 0) throw new Error(`Scripture text is unavailable for ${book.name}${chapterNumber === null ? '' : ` ${chapterNumber}`}.`);
+  chapters.forEach((entry) => ids.add(entry.id));
+  packageData.verses.filter((entry) => normalizeBookName(entry.book) === bookName && (chapterNumber === null || entry.chapter === chapterNumber) && (verseNumber === null || entry.verse === verseNumber)).forEach((entry) => ids.add(entry.id));
+  return ids;
+}
+
+function scripturePackageToItems(packageData, timestamp = new Date().toISOString(), selection = null) {
   const books = packageData.books.map((book) => item({ id: book.id, contentType: 'scripture_book', title: book.name, summary: `${book.chapter_count} chapters`, payload: book, timestamp }));
   const chapters = packageData.chapters.map((chapter) => item({ id: chapter.id, contentType: 'scripture_chapter', title: chapter.reference, summary: `${chapter.verse_count} KJV verses`, payload: chapter, timestamp }));
   const verses = packageData.verses.map((verse) => item({ id: verse.id, contentType: 'scripture_verse', title: verse.reference, summary: verse.text, payload: verse, timestamp }));
   const passages = packageData.passages.map((passage) => item({ id: passage.content_id, contentType: 'scripture_passage', title: passage.title || passage.element, summary: `${passage.ref} · ${passage.zone}`, payload: passage, timestamp }));
   const references = packageData.reference_index.map((reference) => item({ id: referenceId(reference), contentType: 'scripture_reference', title: reference, summary: 'Local Scripture reference', payload: { reference }, timestamp }));
   const notes = packageData.study_notes.map((note) => item({ id: note.content_id, contentType: 'scripture_note', title: `Study note: ${note.reference}`, summary: note.body, payload: note, timestamp }));
-  return [...books, ...chapters, ...verses, ...passages, ...references, ...notes];
+  const allItems = [...books, ...chapters, ...verses, ...passages, ...references, ...notes];
+  const selectedIds = scriptureSelectionIds(packageData, selection);
+  return selectedIds ? allItems.filter((entry) => selectedIds.has(entry.id)) : allItems;
 }
 
 function relationship(sourceId, targetId, type, payload, timestamp) {
@@ -81,7 +100,7 @@ function relationship(sourceId, targetId, type, payload, timestamp) {
   };
 }
 
-function scripturePackageToRelationships(packageData, timestamp = new Date().toISOString()) {
+function scripturePackageToRelationships(packageData, timestamp = new Date().toISOString(), selection = null) {
   const relationships = [];
   const seen = new Set();
   const add = (sourceId, targetId, type, payload) => {
@@ -95,7 +114,8 @@ function scripturePackageToRelationships(packageData, timestamp = new Date().toI
     for (const target of passage.crossRefs || []) add(passage.content_id, referenceId(target), 'cross_reference', { source_reference: passage.ref, target_reference: target });
   }
   for (const note of packageData.study_notes) add(note.content_id, referenceId(note.reference), 'annotates', { reference: note.reference });
-  return relationships;
+  const selectedIds = scriptureSelectionIds(packageData, selection);
+  return selectedIds ? relationships.filter((entry) => selectedIds.has(entry.source_content_id) && selectedIds.has(entry.target_content_id)) : relationships;
 }
 
-module.exports = { loadScripturePackage, getScriptureChapter, referenceId, scripturePackageToItems, scripturePackageToRelationships };
+module.exports = { loadScripturePackage, getScriptureChapter, referenceId, scripturePackageToItems, scripturePackageToRelationships, scriptureSelectionIds };

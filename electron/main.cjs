@@ -180,6 +180,20 @@ app.whenReady().then(() => {
       licenseStatus: packageData.license_status
     });
   });
+  ipcMain.handle('content:attach-scripture-selection', (_event, input) => {
+    const packageData = getCachedScripturePackage();
+    const selection = { book: input?.book, chapter: input?.chapter, verse: input?.verse };
+    return store.attachContentPackage({
+      studyId: input?.studyId,
+      packageData,
+      items: scripturePackageToItems(packageData, new Date().toISOString(), selection),
+      relationships: scripturePackageToRelationships(packageData, new Date().toISOString(), selection),
+      sourceName: 'Sanctuary Studies local KJV Scripture selection',
+      sourcePath: 'shared/content/scripture/scripture-v2.json',
+      sourceRevision: `scripture-v2-selection-${JSON.stringify(selection)}`,
+      licenseStatus: packageData.license_status
+    });
+  });
   ipcMain.handle('content:library', () => loadLibraryPackage());
   ipcMain.handle('content:attach-library', (_event, input) => {
     const packageData = loadLibraryPackage();

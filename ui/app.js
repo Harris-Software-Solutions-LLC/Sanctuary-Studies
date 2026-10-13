@@ -25,7 +25,7 @@ const WORKSPACE_MODES = [
   { id: 'evidence', label: 'Evidence Wall', eyebrow: 'Relationships and comparisons' }
 ];
 const desktopData = window.sanctuaryDesktop?.data || null;
-const state = { database: Object.fromEntries([['schema_version', 3], ...TABLES.map((table) => [table, []])]), selectedId: null, query: '', statusFilter: 'all', sort: 'updated', view: 'library', section: 'overview', workspaceMode: 'desk', timelineContent: null, timelineStep: 1, folioRecordId: null, scriptureContent: null, scriptureQuery: '', scriptureReference: null, libraryContent: null, libraryQuery: '', libraryRecordId: null, symbolismContent: null, symbolismQuery: '', symbolismRecordId: null, colorsContent: null, colorsQuery: '', colorsRecordId: null, sanctuaryContent: null, sanctuaryQuery: '', sanctuaryRecordId: null, learningContent: null, learningQuery: '', learningCategory: 'all', learningAge: 'all', learningRecordId: null, learningGamesContent: null, learningTab: 'games', learningGameQuery: '', learningGameDifficulty: 'all', learningGameAge: 'all', learningGameId: null, activeGameSession: null, explorerContent: null, explorerQuery: '', explorerModelId: null, explorerZoneIndex: 0, explorerView: 'spatial' };
+const state = { database: Object.fromEntries([['schema_version', 3], ...TABLES.map((table) => [table, []])]), selectedId: null, query: '', statusFilter: 'all', sort: 'updated', view: 'library', section: 'overview', workspaceMode: 'desk', timelineContent: null, timelineStep: 1, folioRecordId: null, scriptureContent: null, scriptureQuery: '', scriptureReference: null, scriptureBook: null, scriptureChapter: 1, scriptureVerse: null, scriptureChapterData: null, scriptureChapterCache: {}, scriptureChapterLoadingKey: null, scriptureChapterError: '', libraryContent: null, libraryQuery: '', libraryRecordId: null, symbolismContent: null, symbolismQuery: '', symbolismRecordId: null, colorsContent: null, colorsQuery: '', colorsRecordId: null, sanctuaryContent: null, sanctuaryQuery: '', sanctuaryRecordId: null, learningContent: null, learningQuery: '', learningCategory: 'all', learningAge: 'all', learningRecordId: null, learningGamesContent: null, learningTab: 'games', learningGameQuery: '', learningGameDifficulty: 'all', learningGameAge: 'all', learningGameId: null, activeGameSession: null, explorerContent: null, explorerQuery: '', explorerModelId: null, explorerZoneIndex: 0, explorerView: 'spatial' };
 const $ = (selector) => document.querySelector(selector);
 const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
 const active = (record) => !record.deleted_at;
@@ -44,6 +44,23 @@ function rememberWorkspaceMode(studyId, mode) {
     saved[studyId] = mode;
     window.localStorage.setItem('sanctuary-study-workspace-views', JSON.stringify(saved));
   } catch { /* Local preference storage is optional and must not affect study data. */ }
+}
+
+function storedScriptureReader(studyId) {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem('sanctuary-scripture-reader') || '{}');
+    const entry = saved[studyId];
+    return entry && typeof entry.book === 'string' && Number.isInteger(Number(entry.chapter)) ? { book: entry.book, chapter: Number(entry.chapter), verse: entry.verse ? Number(entry.verse) : null } : null;
+  } catch { return null; }
+}
+
+function rememberScriptureReader(studyId) {
+  if (!studyId || !state.scriptureBook) return;
+  try {
+    const saved = JSON.parse(window.localStorage.getItem('sanctuary-scripture-reader') || '{}');
+    saved[studyId] = { book: state.scriptureBook, chapter: state.scriptureChapter, verse: state.scriptureVerse || null };
+    window.localStorage.setItem('sanctuary-scripture-reader', JSON.stringify(saved));
+  } catch { /* Local reading preferences are optional and must not affect study data. */ }
 }
 
 function showMessage(message, isError = false) {
@@ -105,12 +122,12 @@ function scriptureSearchRecords(query = '') {
   if (!state.scriptureContent) return [];
   const packageData = state.scriptureContent;
   const records = [
-    ...packageData.books.map((book) => ({ key: book.id, kind: 'Book', title: book.name, meta: `${book.chapter_count} chapters`, body: book.name })),
-    ...packageData.chapters.map((chapter) => ({ key: chapter.id, kind: 'Chapter', title: chapter.reference, meta: `${chapter.book} · ${chapter.verse_count} preserved verses`, body: chapter.reference })),
-    ...packageData.verses.map((verse) => ({ key: verse.id, kind: 'Verse', title: verse.reference, meta: 'KJV', body: verse.text })),
-    ...packageData.passages.map((passage) => ({ key: passage.content_id, kind: 'Passage', title: passage.title || passage.element, meta: `${passage.ref} · ${passage.zone}`, body: [passage.title, passage.ref, passage.element, passage.zone, passage.text, passage.symbolism, passage.type, ...(passage.crossRefs || [])].join(' ') })),
-    ...packageData.reference_index.map((reference) => ({ key: `reference:${reference}`, kind: 'Reference', title: reference, meta: 'Cross-reference index', body: reference })),
-    ...packageData.study_notes.map((note) => ({ key: note.content_id, kind: 'Study note', title: `Study note: ${note.reference}`, meta: note.reference, body: `${note.reference} ${note.body}` }))
+    ...packageData.books.map((book) => ({ key: book.id, kind: 'Book', title: book.name, meta: `${book.chapter_count} chapters`, body: book.name, book: book.name, chapter: 1 })),
+    ...packageData.chapters.map((chapter) => ({ key: chapter.id, kind: 'Chapter', title: chapter.reference, meta: `${chapter.book} · ${chapter.verse_count} preserved verses`, body: chapter.reference, book: chapter.book, chapter: chapter.chapter })),
+    ...packageData.verses.map((verse) => ({ key: verse.id, kind: 'Verse', title: verse.reference, meta: 'KJV', body: verse.text, book: verse.book, chapter: verse.chapter, verse: verse.verse })),
+    ...packageData.passages.map((passage) => ({ key: passage.content_id, kind: 'Passage', title: passage.title || passage.element, meta: `${passage.ref} · ${passage.zone}`, body: [passage.title, passage.ref, passage.element, passage.zone, passage.text, passage.symbolism, passage.type, ...(passage.crossRefs || [])].join(' '), ref: passage.ref })),
+    ...packageData.reference_index.map((reference) => ({ key: `reference:${reference}`, kind: 'Reference', title: reference, meta: 'Cross-reference index', body: reference, reference })),
+    ...packageData.study_notes.map((note) => ({ key: note.content_id, kind: 'Study note', title: `Study note: ${note.reference}`, meta: note.reference, body: `${note.reference} ${note.body}`, reference: note.reference }))
   ];
   const normalized = String(query).trim().toLowerCase();
   return (normalized ? records.filter((record) => `${record.kind} ${record.title} ${record.meta} ${record.body}`.toLowerCase().includes(normalized)) : records.filter((record) => record.kind === 'Book' || record.kind === 'Passage')).slice(0, 80);
@@ -553,6 +570,73 @@ function scriptureRecordByKey(key) {
     || (key.startsWith('reference:') ? { reference: key.slice('reference:'.length), content_id: key } : null);
 }
 
+function scriptureBookByName(bookName) {
+  return state.scriptureContent?.books.find((book) => book.name === bookName) || null;
+}
+
+function scriptureReferenceTarget(reference) {
+  const packageData = state.scriptureContent;
+  if (!packageData || !reference) return null;
+  const exact = packageData.verses.find((verse) => verse.reference === reference);
+  if (exact) return { book: exact.book, chapter: exact.chapter, verse: exact.verse };
+  const book = [...packageData.books].sort((left, right) => right.name.length - left.name.length).find((entry) => String(reference).startsWith(`${entry.name} `));
+  if (!book) return null;
+  const match = String(reference).slice(book.name.length).trim().match(/^(\d+)(?::(\d+))?/);
+  return match ? { book: book.name, chapter: Number(match[1]), verse: match[2] ? Number(match[2]) : null } : null;
+}
+
+function scriptureRecordTarget(record) {
+  if (!record) return null;
+  if (record.kind === 'Book' || record.name) return { book: record.book || record.name || record.title, chapter: 1, verse: null };
+  if (record.kind === 'Chapter' || (record.book && record.chapter)) return { book: record.book, chapter: Number(record.chapter), verse: null };
+  if (record.kind === 'Verse' || (record.book && record.verse)) return { book: record.book, chapter: Number(record.chapter), verse: Number(record.verse) };
+  return scriptureReferenceTarget(record.reference || record.ref);
+}
+
+function requestScriptureChapter(study, book, chapter, verse = null) {
+  const bookRecord = scriptureBookByName(book) || state.scriptureContent?.books[0];
+  const targetBook = bookRecord?.name || 'Genesis';
+  const targetChapter = Math.max(1, Math.min(Number(chapter) || 1, bookRecord?.chapter_count || 1));
+  const key = `${targetBook}|${targetChapter}`;
+  state.scriptureBook = targetBook;
+  state.scriptureChapter = targetChapter;
+  state.scriptureVerse = verse ? Number(verse) : null;
+  state.scriptureChapterError = '';
+  rememberScriptureReader(study?.id);
+  if (state.scriptureChapterCache[key]) {
+    state.scriptureChapterData = state.scriptureChapterCache[key];
+    state.scriptureChapterLoadingKey = null;
+    renderDetail();
+    return;
+  }
+  if (state.scriptureChapterLoadingKey === key) return;
+  state.scriptureChapterData = null;
+  state.scriptureChapterLoadingKey = key;
+  renderDetail();
+  if (!desktopData?.getScriptureChapter) {
+    state.scriptureChapterLoadingKey = null;
+    state.scriptureChapterError = 'The offline Scripture reader is available in the standalone Electron app.';
+    renderDetail();
+    return;
+  }
+  desktopData.getScriptureChapter(targetBook, targetChapter).then((chapterData) => {
+    state.scriptureChapterCache[key] = chapterData;
+    if (state.scriptureBook === targetBook && state.scriptureChapter === targetChapter) state.scriptureChapterData = chapterData;
+  }).catch((error) => {
+    state.scriptureChapterError = error.message || String(error);
+  }).finally(() => {
+    if (state.scriptureChapterLoadingKey === key) state.scriptureChapterLoadingKey = null;
+    renderDetail();
+  });
+}
+
+function openScriptureRecord(study, record) {
+  const target = scriptureRecordTarget(record);
+  state.scriptureReference = record?.key || record?.content_id || (record?.reference ? `reference:${record.reference}` : null);
+  if (target) requestScriptureChapter(study, target.book, target.chapter, target.verse);
+  else renderDetail();
+}
+
 function scriptureDetailMarkup(record) {
   if (!record) return '<div class="record-empty">Select a Scripture result to inspect it locally.</div>';
   if (record.content_id?.startsWith('scripture.passage.')) {
@@ -572,6 +656,24 @@ function scriptureReferenceSummary(studyId, limit = 8) {
   return references.length ? references.map((reference) => `<button class="reference-link" data-scripture-reference="${escapeHtml(reference)}" type="button">${escapeHtml(reference)}</button>`).join('') : '<span class="muted">No Scripture references attached or detected yet.</span>';
 }
 
+function scriptureReaderMarkup(study, packageData, results, selected, attached) {
+  const persisted = storedScriptureReader(study.id);
+  const selectedBook = scriptureBookByName(state.scriptureBook) || scriptureBookByName(persisted?.book) || packageData.books[0];
+  if (state.scriptureBook !== selectedBook.name) state.scriptureBook = selectedBook.name;
+  if (!Number.isInteger(state.scriptureChapter) || state.scriptureChapter < 1) state.scriptureChapter = persisted?.chapter || 1;
+  const chapterCount = selectedBook.chapter_count;
+  if (state.scriptureChapter > chapterCount) state.scriptureChapter = 1;
+  const oldTestament = packageData.books.slice(0, 39);
+  const newTestament = packageData.books.slice(39);
+  const bookButton = (book) => `<button class="scripture-book-button ${book.name === selectedBook.name ? 'is-selected' : ''}" data-scripture-book="${escapeHtml(book.name)}" type="button"><span>${escapeHtml(book.name)}</span><small>${book.chapter_count} chapters</small></button>`;
+  const chapterButtons = Array.from({ length: chapterCount }, (_, index) => index + 1).map((chapter) => `<button class="scripture-chapter-button ${chapter === state.scriptureChapter ? 'is-selected' : ''}" data-scripture-chapter="${chapter}" type="button">${chapter}</button>`).join('');
+  const chapterData = state.scriptureChapterData && state.scriptureChapterData.book?.name === selectedBook.name && state.scriptureChapterData.chapter?.chapter_number === state.scriptureChapter ? state.scriptureChapterData : null;
+  const readerBody = state.scriptureChapterError ? `<div class="scripture-reader-message is-error">${escapeHtml(state.scriptureChapterError)}</div>` : state.scriptureChapterLoadingKey ? '<div class="scripture-reader-message">Loading complete local KJV text…</div>' : chapterData ? `<div class="scripture-verse-list">${chapterData.verses.map((verse) => `<button class="scripture-verse ${Number(state.scriptureVerse) === verse.verse_number ? 'is-selected' : ''}" data-scripture-verse="${verse.verse_number}" type="button"><sup>${verse.verse_number}</sup><span>${escapeHtml(verse.text)}</span></button>`).join('')}</div>` : '<div class="scripture-reader-message">Select a chapter to begin reading.</div>';
+  const currentVerse = chapterData?.verses.find((verse) => verse.verse_number === Number(state.scriptureVerse));
+  const searchMarkup = results.length ? results.map((record) => `<button class="scripture-result ${record.key === state.scriptureReference ? 'is-selected' : ''}" data-scripture-record-key="${escapeHtml(record.key)}" type="button"><span>${escapeHtml(record.kind)}</span><strong>${escapeHtml(record.title)}</strong><small>${escapeHtml(record.meta)}</small></button>`).join('') : '<div class="record-empty">No Scripture records match this search.</div>';
+  return `<div class="scripture-reader-shell"><aside class="scripture-catalog"><div class="scripture-catalog-heading"><span class="eyebrow">Bible Reader</span><strong>Old Testament</strong></div><div class="scripture-book-list">${oldTestament.map(bookButton).join('')}</div><div class="scripture-catalog-heading"><strong>New Testament</strong></div><div class="scripture-book-list">${newTestament.map(bookButton).join('')}</div></aside><section class="scripture-reader-main"><div class="scripture-reader-heading"><div><span class="eyebrow">Selected book</span><h3>${escapeHtml(selectedBook.name)}</h3><p>${chapterCount} chapters · ${selectedBook.name === 'Genesis' || selectedBook.name === 'Matthew' ? 'KJV' : 'Complete local KJV text'}</p></div><div class="scripture-reader-actions"><button class="button button-secondary" id="scripture-prev-chapter" type="button" ${state.scriptureChapter <= 1 ? 'disabled' : ''}>← Previous</button><button class="button button-secondary" id="scripture-next-chapter" type="button" ${state.scriptureChapter >= chapterCount ? 'disabled' : ''}>Next →</button></div></div><div class="scripture-chapter-picker"><span class="eyebrow">Chapters</span><div class="scripture-chapter-grid">${chapterButtons}</div></div><article class="scripture-reading-panel"><div class="scripture-reading-heading"><div><span class="eyebrow">KJV Bible</span><h2>${escapeHtml(selectedBook.name)} ${state.scriptureChapter}</h2><p>${chapterData ? `${chapterData.verses.length} verses loaded locally` : 'Complete chapter reader'}</p></div><div class="scripture-attachment-actions"><button class="button button-secondary" id="scripture-attach-chapter" type="button">Attach chapter</button>${currentVerse ? '<button class="button button-secondary" id="scripture-attach-verse" type="button">Attach verse</button>' : ''}</div></div>${readerBody}${currentVerse ? `<p class="scripture-selected-note">Selected verse: ${escapeHtml(currentVerse.reference)}</p>` : ''}</article></section><aside class="scripture-search-panel"><div class="scripture-search-panel-heading"><span class="eyebrow">Search results</span><strong>${state.scriptureQuery ? `${results.length} matches` : 'Books and passages'}</strong></div><nav class="scripture-results" aria-label="Scripture search results">${searchMarkup}</nav>${selected && ['Passage', 'Reference', 'Study note'].includes(selected.kind) ? `<div class="scripture-selected-record">${scriptureDetailMarkup(selected)}</div>` : ''}</aside></div>`;
+}
+
 function renderScriptureWorkspace(study) {
   if (!state.scriptureContent) {
     $('#record-table-wrap').innerHTML = '<div class="record-empty">Loading the local Scripture package…</div>';
@@ -581,20 +683,43 @@ function renderScriptureWorkspace(study) {
   const packageData = state.scriptureContent;
   const results = scriptureSearchRecords(state.scriptureQuery);
   const selected = scriptureRecordByKey(state.scriptureReference) || scriptureRecordByKey(results[0]?.key);
-  state.scriptureReference = selected?.content_id || (selected?.reference ? `reference:${selected.reference}` : null);
+  state.scriptureReference = selected?.content_id || (selected?.reference ? `reference:${selected.reference}` : selected?.id || null);
   const attached = scriptureContentForStudy(study.id);
-  const resultMarkup = results.length ? results.map((record) => `<button class="scripture-result ${record.key === state.scriptureReference ? 'is-selected' : ''}" data-scripture-record-key="${escapeHtml(record.key)}" type="button"><span>${escapeHtml(record.kind)}</span><strong>${escapeHtml(record.title)}</strong><small>${escapeHtml(record.meta)}</small></button>`).join('') : '<div class="record-empty">No Scripture records match this search.</div>';
-  $('#record-table-wrap').innerHTML = `<div class="scripture-workspace"><div class="mode-introduction"><div><span class="eyebrow">Local Scripture package</span><h2>Scripture and cross-references</h2><p>${packageData.book_count} books · ${packageData.chapter_count} chapters · ${packageData.verse_count} KJV verses · ${packageData.passage_count} sanctuary passages.</p></div><button class="button button-secondary" id="scripture-attach" type="button" ${attached.length ? 'disabled' : ''}>${attached.length ? 'Scripture attached locally' : 'Attach Scripture to study'}</button></div><div class="scripture-toolbar"><label class="table-search" aria-label="Search Scripture"><span aria-hidden="true">⌕</span><input id="scripture-search" type="search" value="${escapeHtml(state.scriptureQuery)}" placeholder="Search all 66 books, chapters, verses, references…"></label><span id="scripture-attachment-state" class="muted">${attached.length ? `${attached.length} local content records attached` : 'Package available offline; attach it to this study to include it in exports.'}</span></div><div class="scripture-layout"><nav class="scripture-results" aria-label="Scripture results">${resultMarkup}</nav><article class="scripture-detail-panel">${scriptureDetailMarkup(selected)}</article></div></div>`;
+  const persisted = storedScriptureReader(study.id);
+  if (!state.scriptureBook) state.scriptureBook = persisted?.book || packageData.books[0]?.name || 'Genesis';
+  if (persisted && state.scriptureChapter === 1 && !state.scriptureChapterData) state.scriptureChapter = persisted.chapter;
+  $('#record-table-wrap').innerHTML = `<div class="scripture-workspace"><div class="mode-introduction"><div><span class="eyebrow">Local Scripture package</span><h2>Scripture and cross-references</h2><p>${packageData.book_count} books · ${packageData.chapter_count} chapters · ${packageData.verse_count} KJV verses · ${packageData.passage_count} sanctuary passages. Every chapter is available offline.</p></div><div class="scripture-attachment-actions"><button class="button button-secondary" id="scripture-attach" type="button">${attached.length ? 'Attach complete KJV again' : 'Attach complete KJV'}</button></div></div><div class="scripture-toolbar"><label class="table-search" aria-label="Search Scripture"><span aria-hidden="true">⌕</span><input id="scripture-search" type="search" value="${escapeHtml(state.scriptureQuery)}" placeholder="Search books, chapters, verses, references, or complete KJV text…"></label><span id="scripture-attachment-state" class="muted">${attached.length ? `${attached.length} local Scripture records attached to this study` : 'The complete KJV is available locally. Attach all or selected reading records to this study when desired.'}</span></div>${scriptureReaderMarkup(study, packageData, results, selected, attached)}</div>`;
   $('#scripture-search').addEventListener('input', (event) => { state.scriptureQuery = event.target.value; state.scriptureReference = null; renderDetail(); });
-  document.querySelectorAll('[data-scripture-record-key]').forEach((button) => button.addEventListener('click', () => { state.scriptureReference = button.dataset.scriptureRecordKey; renderDetail(); }));
-  document.querySelectorAll('[data-scripture-reference]').forEach((button) => button.addEventListener('click', () => { state.scriptureQuery = button.dataset.scriptureReference; state.scriptureReference = `reference:${button.dataset.scriptureReference}`; renderDetail(); }));
+  document.querySelectorAll('[data-scripture-record-key]').forEach((button) => button.addEventListener('click', () => { const result = results.find((entry) => entry.key === button.dataset.scriptureRecordKey); openScriptureRecord(study, result || scriptureRecordByKey(button.dataset.scriptureRecordKey)); }));
+  document.querySelectorAll('[data-scripture-book]').forEach((button) => button.addEventListener('click', () => { state.scriptureReference = button.dataset.scriptureBook === state.scriptureBook ? state.scriptureReference : `${packageData.books.find((book) => book.name === button.dataset.scriptureBook)?.id || ''}`; requestScriptureChapter(study, button.dataset.scriptureBook, 1); }));
+  document.querySelectorAll('[data-scripture-chapter]').forEach((button) => button.addEventListener('click', () => requestScriptureChapter(study, state.scriptureBook, Number(button.dataset.scriptureChapter))));
+  document.querySelectorAll('[data-scripture-verse]').forEach((button) => button.addEventListener('click', () => { state.scriptureVerse = Number(button.dataset.scriptureVerse); rememberScriptureReader(study.id); renderDetail(); }));
+  document.querySelectorAll('[data-scripture-reference]').forEach((button) => button.addEventListener('click', () => { const reference = button.dataset.scriptureReference; state.scriptureQuery = reference; state.scriptureReference = `reference:${reference}`; const target = scriptureReferenceTarget(reference); if (target) requestScriptureChapter(study, target.book, target.chapter, target.verse); else renderDetail(); }));
+  $('#scripture-prev-chapter')?.addEventListener('click', () => requestScriptureChapter(study, state.scriptureBook, state.scriptureChapter - 1));
+  $('#scripture-next-chapter')?.addEventListener('click', () => requestScriptureChapter(study, state.scriptureBook, state.scriptureChapter + 1));
   $('#scripture-attach')?.addEventListener('click', async () => {
     try {
       if (!desktopData?.attachScripture) throw new Error('Scripture attachment is available in the standalone Electron app.');
       await desktopData.attachScripture({ studyId: study.id });
-      await refreshFromDesktop(); state.view = 'study'; state.section = 'scripture'; renderDetail(); showMessage('Scripture and cross-references were attached locally.');
+      await refreshFromDesktop(); state.view = 'study'; state.section = 'scripture'; renderDetail(); showMessage('The complete 66-book KJV and cross-references were attached locally.');
     } catch (error) { showMessage(error.message || 'Unable to attach Scripture.', true); }
   });
+  $('#scripture-attach-chapter')?.addEventListener('click', async () => {
+    try {
+      if (!desktopData?.attachScriptureSelection) throw new Error('Selected Scripture attachment is available in the standalone Electron app.');
+      await desktopData.attachScriptureSelection({ studyId: study.id, book: state.scriptureBook, chapter: state.scriptureChapter });
+      await refreshFromDesktop(); state.view = 'study'; state.section = 'scripture'; renderDetail(); showMessage(`${state.scriptureBook} ${state.scriptureChapter} was attached locally.`);
+    } catch (error) { showMessage(error.message || 'Unable to attach the selected chapter.', true); }
+  });
+  $('#scripture-attach-verse')?.addEventListener('click', async () => {
+    try {
+      if (!desktopData?.attachScriptureSelection) throw new Error('Selected Scripture attachment is available in the standalone Electron app.');
+      await desktopData.attachScriptureSelection({ studyId: study.id, book: state.scriptureBook, chapter: state.scriptureChapter, verse: state.scriptureVerse });
+      await refreshFromDesktop(); state.view = 'study'; state.section = 'scripture'; renderDetail(); showMessage(`${state.scriptureBook} ${state.scriptureChapter}:${state.scriptureVerse} was attached locally.`);
+    } catch (error) { showMessage(error.message || 'Unable to attach the selected verse.', true); }
+  });
+  const chapterLoaded = state.scriptureChapterData?.book?.name === state.scriptureBook && state.scriptureChapterData?.chapter?.chapter_number === state.scriptureChapter;
+  if (!chapterLoaded && !state.scriptureChapterLoadingKey) requestScriptureChapter(study, state.scriptureBook, state.scriptureChapter, state.scriptureVerse);
 }
 
 function renderLibraryWorkspace(study) {
@@ -927,6 +1052,7 @@ function openRecordDialog() {
 async function refreshFromDesktop() {
   if (!desktopData?.snapshot) { render(); return; }
   state.database = await desktopData.snapshot();
+  if (!state.timelineContent && desktopData.getTimelineContent) state.timelineContent = await desktopData.getTimelineContent();
   if (!state.scriptureContent && desktopData.getScriptureContent) state.scriptureContent = await desktopData.getScriptureContent();
   if (!state.libraryContent && desktopData.getLibraryContent) state.libraryContent = await desktopData.getLibraryContent();
   if (!state.symbolismContent && desktopData.getSymbolismContent) state.symbolismContent = await desktopData.getSymbolismContent();

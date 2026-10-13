@@ -15,7 +15,7 @@ const { loadExplorerPackage } = require('../shared/content/explorer/index.cjs');
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-scripture-${process.pid}`);
 const databasePath = path.join(temporaryRoot, 'data.json');
-const report = { localOnly: true, packageLoaded: false, chapterLoaded: false, verseLoaded: false, searchWorks: false, completeBooksSearchWorks: false, crossReferenceOpens: false, attached: false, notesAndSourcesDetected: false, modeIntegration: false, exportRoundTrip: false, noExternalDependency: true };
+const report = { localOnly: true, packageLoaded: false, chapterLoaded: false, verseLoaded: false, allChaptersAvailable: false, requiredChaptersOpen: false, readerOpens: false, readerNavigationWorks: false, previousNextWorks: false, searchWorks: false, completeBooksSearchWorks: false, crossReferenceOpens: false, attached: false, selectedAttachment: false, notesAndSourcesDetected: false, modeIntegration: false, exportRoundTrip: false, noExternalDependency: true };
 
 function registerHandlers(store) {
   ipcMain.handle('data:snapshot', () => store.snapshot());
@@ -34,6 +34,11 @@ function registerHandlers(store) {
   ipcMain.handle('content:attach-scripture', (_event, input) => {
     const packageData = loadScripturePackage();
     return store.attachContentPackage({ studyId: input?.studyId, packageData, items: scripturePackageToItems(packageData), relationships: scripturePackageToRelationships(packageData), sourceName: 'test Scripture', sourcePath: 'test/scripture', sourceRevision: 'test', licenseStatus: 'review-required' });
+  });
+  ipcMain.handle('content:attach-scripture-selection', (_event, input) => {
+    const packageData = loadScripturePackage();
+    const selection = { book: input?.book, chapter: input?.chapter, verse: input?.verse };
+    return store.attachContentPackage({ studyId: input?.studyId, packageData, items: scripturePackageToItems(packageData, new Date().toISOString(), selection), relationships: scripturePackageToRelationships(packageData, new Date().toISOString(), selection), sourceName: 'test Scripture selection', sourcePath: 'test/scripture', sourceRevision: `selection-${JSON.stringify(selection)}`, licenseStatus: 'review-required' });
   });
 }
 
@@ -59,7 +64,50 @@ async function run() {
     const row = document.querySelector('[data-study-id="' + study.id + '"]');
     row?.click();
     document.querySelector('[data-study-section="scripture"]')?.click();
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    for (let attempt = 0; attempt < 40; attempt += 1) {
+      if ((document.querySelector('.scripture-verse-list')?.textContent || '').includes('In the beginning God created')) break;
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    const readerInitialText = document.querySelector('.scripture-reader-shell')?.textContent || '';
+    const genesisVerseText = document.querySelector('.scripture-verse-list')?.textContent || '';
+    document.querySelector('[data-scripture-book="2 Kings"]')?.click();
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    document.querySelector('[data-scripture-chapter="1"]')?.click();
+    for (let attempt = 0; attempt < 40; attempt += 1) {
+      if ((document.querySelector('.scripture-reading-panel')?.textContent || '').includes('2 Kings 1')) break;
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    const secondKingsText = document.querySelector('.scripture-reading-panel')?.textContent || '';
+    document.querySelector('[data-scripture-book="Revelation"]')?.click();
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    document.querySelector('[data-scripture-chapter="22"]')?.click();
+    for (let attempt = 0; attempt < 40; attempt += 1) {
+      if ((document.querySelector('.scripture-reading-panel')?.textContent || '').includes('Revelation 22')) break;
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    const revelationText = document.querySelector('.scripture-reading-panel')?.textContent || '';
+    document.querySelector('[data-scripture-book="Exodus"]')?.click();
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    document.querySelector('[data-scripture-chapter="25"]')?.click();
+    for (let attempt = 0; attempt < 40; attempt += 1) {
+      if ((document.querySelector('.scripture-reading-panel')?.textContent || '').includes('Exodus 25')) break;
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    const exodusText = document.querySelector('.scripture-reading-panel')?.textContent || '';
+    document.querySelector('[data-scripture-book="Hebrews"]')?.click();
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    document.querySelector('[data-scripture-chapter="9"]')?.click();
+    for (let attempt = 0; attempt < 40; attempt += 1) {
+      if ((document.querySelector('.scripture-reading-panel')?.textContent || '').includes('Hebrews 9')) break;
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    const hebrewsText = document.querySelector('.scripture-reading-panel')?.textContent || '';
+    document.querySelector('#scripture-prev-chapter')?.click();
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    const hebrewsPreviousText = document.querySelector('.scripture-reading-panel')?.textContent || '';
+    document.querySelector('#scripture-next-chapter')?.click();
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    const hebrewsNextText = document.querySelector('.scripture-reading-panel')?.textContent || '';
     const search = document.querySelector('#scripture-search');
     search.value = 'Hebrews 9:23-24';
     search.dispatchEvent(new Event('input', { bubbles: true }));
@@ -73,6 +121,19 @@ async function run() {
     search.dispatchEvent(new Event('input', { bubbles: true }));
     await new Promise((resolve) => setTimeout(resolve, 50));
     const completeBooksSearchText = document.querySelector('#record-table-wrap')?.textContent || '';
+    const genesisSearch = document.querySelector('#scripture-search');
+    genesisSearch.value = 'Genesis 1:1';
+    genesisSearch.dispatchEvent(new Event('input', { bubbles: true }));
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    document.querySelector('[data-scripture-record-key^="scripture.verse."]')?.click();
+    await new Promise((resolve) => setTimeout(resolve, 150));
+    const selectedVerseText = document.querySelector('.scripture-reading-panel')?.textContent || '';
+    document.querySelector('#scripture-attach-chapter')?.click();
+    for (let attempt = 0; attempt < 120; attempt += 1) {
+      if ((document.querySelector('#scripture-attachment-state')?.textContent || '').includes('attached')) break;
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    const selectedAttachmentText = document.querySelector('#app-message')?.textContent || '';
     document.querySelector('#scripture-attach')?.click();
     for (let attempt = 0; attempt < 120; attempt += 1) {
       if ((document.querySelector('#scripture-attachment-state')?.textContent || '').includes('attached')) break;
@@ -84,22 +145,35 @@ async function run() {
     for (const mode of ['desk', 'codex', 'atlas', 'folio', 'evidence']) {
       select.value = mode;
       select.dispatchEvent(new Event('change', { bubbles: true }));
-      await new Promise((resolve) => setTimeout(resolve, mode === 'atlas' ? 4000 : 300));
+      if (mode === 'atlas') {
+        for (let attempt = 0; attempt < 100; attempt += 1) {
+          if ((document.querySelector('#record-table-wrap')?.textContent || '').includes('Scripture connections')) break;
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+      } else {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+      }
       modeText[mode] = document.querySelector('#record-table-wrap')?.textContent || '';
     }
     const bundle = await window.sanctuaryDesktop.data.exportBundle();
-    return { packageData, chapter, verse, searchText, completeBooksSearchText, detailText, attachmentText, modeText, bundle, studyId: study.id };
+    return { packageData, chapter, verse, readerInitialText, genesisVerseText, secondKingsText, revelationText, exodusText, hebrewsText, hebrewsPreviousText, hebrewsNextText, selectedVerseText, searchText, completeBooksSearchText, detailText, attachmentText, selectedAttachmentText, modeText, bundle, studyId: study.id };
   })()`);
   const packageData = result.packageData;
   report.packageLoaded = packageData.book_count === 66 && packageData.chapter_count === 1189 && packageData.verse_count === 31102 && packageData.apocrypha_included === false && packageData.passage_count === 8 && packageData.reference_index.includes('Hebrews 9:23-24');
   report.chapterLoaded = result.chapter.chapter.reference === 'Genesis 1' && result.chapter.verses.length === 31;
   report.verseLoaded = result.verse.verses.length === 1 && result.verse.verses[0].reference === 'Genesis 1:1';
+  report.allChaptersAvailable = packageData.books.every((book) => Array.from({ length: book.chapter_count }, (_, index) => getScriptureChapter(packageData, book.name, index + 1).verses.length > 0).every(Boolean));
+  report.requiredChaptersOpen = result.exodusText.includes('Exodus 25') && result.hebrewsText.includes('Hebrews 9');
+  report.readerOpens = result.readerInitialText.includes('Genesis') && result.genesisVerseText.includes('In the beginning God created the heaven and the earth');
+  report.readerNavigationWorks = result.secondKingsText.includes('2 Kings 1') && result.revelationText.includes('Revelation 22') && result.selectedVerseText.includes('Genesis 1');
+  report.previousNextWorks = result.hebrewsPreviousText.includes('Hebrews 8') && result.hebrewsNextText.includes('Hebrews 9');
   report.searchWorks = result.searchText.includes('Hebrews 9:23-24');
   report.completeBooksSearchWorks = result.completeBooksSearchText.includes('Exodus 1:1') && result.completeBooksSearchText.includes('KJV verse');
   report.crossReferenceOpens = result.detailText.includes('Hebrews 9:23-24');
   report.attached = result.attachmentText.includes('attached') && store.listStudyContent({ studyId: result.studyId, contentType: 'scripture_passage' }).length === 8;
+  report.selectedAttachment = result.selectedAttachmentText.includes('was attached locally') && store.listStudyContent({ studyId: result.studyId, contentType: 'scripture_verse' }).some((item) => item.title === 'Genesis 1:1');
   report.notesAndSourcesDetected = result.modeText.folio.includes('Hebrews 9:23-24') && result.modeText.desk.includes('Scripture links');
-  report.modeIntegration = result.modeText.codex.includes('Scripture index') && result.modeText.atlas.includes('Scripture connections') && result.modeText.evidence.includes('scripture');
+  report.modeIntegration = result.modeText.codex.includes('Scripture index') && result.modeText.atlas.includes('Scripture connections') && result.modeText.evidence.includes('Scripture');
   report.exportRoundTrip = result.bundle.data.content_items.some((item) => item.content_type === 'scripture_passage') && result.bundle.data.content_relationships.some((relation) => relation.relationship_type === 'cross_reference') && result.bundle.data.study_content_links.length > 0;
   report.noExternalDependency = externalRequests.length === 0;
   window.close();

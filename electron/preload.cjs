@@ -18,6 +18,7 @@ contextBridge.exposeInMainWorld('sanctuaryDesktop', Object.freeze({
     getScriptureContent: () => ipcRenderer.invoke('content:scripture'),
     getScriptureChapter: (book, chapter, verse) => ipcRenderer.invoke('content:scripture-chapter', { book, chapter, verse }),
     attachScripture: (input) => ipcRenderer.invoke('content:attach-scripture', input),
+    attachScriptureSelection: (input) => ipcRenderer.invoke('content:attach-scripture-selection', input),
     getLibraryContent: () => ipcRenderer.invoke('content:library'),
     attachLibrary: (input) => ipcRenderer.invoke('content:attach-library', input),
     getSymbolismContent: () => ipcRenderer.invoke('content:symbolism'),

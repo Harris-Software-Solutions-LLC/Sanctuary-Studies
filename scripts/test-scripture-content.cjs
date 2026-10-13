@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createStore } = require('../shared/store.cjs');
 const { parseBundle, validateDatabase } = require('../shared/model.cjs');
-const { loadScripturePackage, getScriptureChapter, scripturePackageToItems, scripturePackageToRelationships } = require('../shared/content/scripture/index.cjs');
+const { loadScripturePackage, getScriptureChapter, scripturePackageToItems, scripturePackageToRelationships, scriptureSelectionIds } = require('../shared/content/scripture/index.cjs');
 
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-scripture-${process.pid}`);
@@ -44,6 +44,12 @@ try {
 
   const items = scripturePackageToItems(packageData, '2026-01-01T00:00:00.000Z');
   const relationships = scripturePackageToRelationships(packageData, '2026-01-01T00:00:00.000Z');
+  const genesisChapterItems = scripturePackageToItems(packageData, '2026-01-01T00:00:00.000Z', { book: 'Genesis', chapter: 1 });
+  const genesisChapterIds = scriptureSelectionIds(packageData, { book: 'Genesis', chapter: 1 });
+  assert.equal(genesisChapterIds.size, 33);
+  assert.equal(genesisChapterItems.length, 33);
+  assert.equal(genesisChapterItems.filter((item) => item.content_type === 'scripture_verse').length, 31);
+  assert.ok(genesisChapterItems.some((item) => item.title === 'Genesis 1'));
   assert.ok(items.some((item) => item.content_type === 'scripture_passage'));
   assert.ok(items.some((item) => item.content_type === 'scripture_verse'));
   assert.ok(relationships.some((relation) => relation.relationship_type === 'cross_reference'));
@@ -63,7 +69,7 @@ try {
   assert.equal(roundTrip.content_items.length, database.content_items.length);
   assert.equal(roundTrip.content_relationships.length, database.content_relationships.length);
   assert.equal(roundTrip.study_content_links.length, database.study_content_links.length);
-  console.log(`Scripture content tests passed: ${items.length} items, ${relationships.length} relationships, ${packageData.reference_index.length} searchable references`);
+  console.log(`Scripture content tests passed: ${items.length} items, ${relationships.length} relationships, ${packageData.reference_index.length} searchable references; selection ${genesisChapterItems.length} items`);
 } finally {
   if (fs.existsSync(temporaryRoot)) fs.rmSync(temporaryRoot, { recursive: true, force: true });
 }
