@@ -15,5 +15,6 @@ directories:
   # This is a deliberately external sentinel. The release wrapper always overrides it.
   output: E:\Sanctuary Studies Builds\__sanctuary-studies-packaging-wrapper-required
 win:
+  icon: assets/icons/sanctuary-studies.ico
   target:
     - nsis
