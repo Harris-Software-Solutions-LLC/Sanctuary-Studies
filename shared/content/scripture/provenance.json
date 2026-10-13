@@ -1,13 +1,20 @@
 {
   "package_id": "scripture",
-  "package_version": 1,
+  "package_version": 2,
   "source_files": [
     "app-data.js",
-    "app-pages1.js"
+    "app-pages1.js",
+    "sources/kjv-gutenberg-7999.txt"
   ],
-  "source_revision": "937468ae441adccd2268f2763dbd44ccad455a0c",
-  "import_method": "scripts/import-legacy-scripture.cjs",
-  "license_status": "review-required",
+  "source_revision": "gutenberg-7999-sha256-b7ffd69e881b8e676e4e2881f2c945f0461e098ed73b383ccc0c9f98ce2bf103",
+  "import_method": "scripts/import-complete-kjv.cjs",
+  "license_status": "public-domain-source",
+  "apocrypha_included": false,
+  "source_citation": "Project Gutenberg eBook 7999, The Bible, King James Version, Complete Contents, Books 1–66",
+  "source_url": "https://www.gutenberg.org/cache/epub/7999/pg7999.txt",
+  "book_count": 66,
+  "chapter_count": 1189,
+  "verse_count": 31102,
   "offline_policy": "No network requests or hosted content are required.",
   "excluded_infrastructure": [
     "legacy page markup",
@@ -16,5 +23,5 @@
     "community/forum behavior",
     "external media and hosted fonts"
   ],
-  "notes": "The KJV data and sanctuary-focused Scripture records are normalized into a local package. The preserved root Scripture and Bible routes remain available as compatibility surfaces."
+  "notes": "Only the historical 66-book KJV collection is included; the Apocrypha is explicitly excluded. The KJV source text is public domain in the United States according to the cited Project Gutenberg record. The preserved root Scripture and Bible routes remain available as compatibility surfaces."
 }

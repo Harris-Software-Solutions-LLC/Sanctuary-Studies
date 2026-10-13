@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const packagePath = path.join(__dirname, 'scripture-v1.json');
+const packagePath = path.join(__dirname, 'scripture-v2.json');
 
 function loadScripturePackage() {
   return JSON.parse(fs.readFileSync(packagePath, 'utf8'));
@@ -31,7 +31,7 @@ function item({ id, contentType, title, summary = '', payload, timestamp }) {
 
 function scripturePackageToItems(packageData, timestamp = new Date().toISOString()) {
   const books = packageData.books.map((book) => item({ id: book.id, contentType: 'scripture_book', title: book.name, summary: `${book.chapter_count} chapters`, payload: book, timestamp }));
-  const chapters = packageData.chapters.map((chapter) => item({ id: chapter.id, contentType: 'scripture_chapter', title: chapter.reference, summary: `${chapter.verse_count} preserved verses`, payload: chapter, timestamp }));
+  const chapters = packageData.chapters.map((chapter) => item({ id: chapter.id, contentType: 'scripture_chapter', title: chapter.reference, summary: `${chapter.verse_count} KJV verses`, payload: chapter, timestamp }));
   const verses = packageData.verses.map((verse) => item({ id: verse.id, contentType: 'scripture_verse', title: verse.reference, summary: verse.text, payload: verse, timestamp }));
   const passages = packageData.passages.map((passage) => item({ id: passage.content_id, contentType: 'scripture_passage', title: passage.title || passage.element, summary: `${passage.ref} · ${passage.zone}`, payload: passage, timestamp }));
   const references = packageData.reference_index.map((reference) => item({ id: referenceId(reference), contentType: 'scripture_reference', title: reference, summary: 'Local Scripture reference', payload: { reference }, timestamp }));

@@ -15,7 +15,7 @@ const { loadExplorerPackage } = require('../shared/content/explorer/index.cjs');
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-scripture-${process.pid}`);
 const databasePath = path.join(temporaryRoot, 'data.json');
-const report = { localOnly: true, packageLoaded: false, searchWorks: false, crossReferenceOpens: false, attached: false, notesAndSourcesDetected: false, modeIntegration: false, exportRoundTrip: false, noExternalDependency: true };
+const report = { localOnly: true, packageLoaded: false, searchWorks: false, completeBooksSearchWorks: false, crossReferenceOpens: false, attached: false, notesAndSourcesDetected: false, modeIntegration: false, exportRoundTrip: false, noExternalDependency: true };
 
 function registerHandlers(store) {
   ipcMain.handle('data:snapshot', () => store.snapshot());
@@ -66,10 +66,14 @@ async function run() {
     resultButton?.click();
     await new Promise((resolve) => setTimeout(resolve, 30));
     const detailText = document.querySelector('#record-table-wrap')?.textContent || '';
+    search.value = 'Exodus 1:1';
+    search.dispatchEvent(new Event('input', { bubbles: true }));
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    const completeBooksSearchText = document.querySelector('#record-table-wrap')?.textContent || '';
     document.querySelector('#scripture-attach')?.click();
-    for (let attempt = 0; attempt < 30; attempt += 1) {
+    for (let attempt = 0; attempt < 120; attempt += 1) {
       if ((document.querySelector('#scripture-attachment-state')?.textContent || '').includes('attached')) break;
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
     const attachmentText = document.querySelector('#scripture-attachment-state')?.textContent || '';
     const modeText = {};
@@ -77,15 +81,16 @@ async function run() {
     for (const mode of ['desk', 'codex', 'atlas', 'folio', 'evidence']) {
       select.value = mode;
       select.dispatchEvent(new Event('change', { bubbles: true }));
-      await new Promise((resolve) => setTimeout(resolve, mode === 'atlas' ? 1000 : 120));
+      await new Promise((resolve) => setTimeout(resolve, mode === 'atlas' ? 4000 : 300));
       modeText[mode] = document.querySelector('#record-table-wrap')?.textContent || '';
     }
     const bundle = await window.sanctuaryDesktop.data.exportBundle();
-    return { packageData, searchText, detailText, attachmentText, modeText, bundle, studyId: study.id };
+    return { packageData, searchText, completeBooksSearchText, detailText, attachmentText, modeText, bundle, studyId: study.id };
   })()`);
   const packageData = result.packageData;
-  report.packageLoaded = packageData.book_count === 66 && packageData.chapter_count === 1189 && packageData.passage_count === 8 && packageData.reference_index.includes('Hebrews 9:23-24');
+  report.packageLoaded = packageData.book_count === 66 && packageData.chapter_count === 1189 && packageData.verse_count === 31102 && packageData.apocrypha_included === false && packageData.passage_count === 8 && packageData.reference_index.includes('Hebrews 9:23-24');
   report.searchWorks = result.searchText.includes('Hebrews 9:23-24');
+  report.completeBooksSearchWorks = result.completeBooksSearchText.includes('Exodus 1:1') && result.completeBooksSearchText.includes('KJV verse');
   report.crossReferenceOpens = result.detailText.includes('Hebrews 9:23-24');
   report.attached = result.attachmentText.includes('attached') && store.listStudyContent({ studyId: result.studyId, contentType: 'scripture_passage' }).length === 8;
   report.notesAndSourcesDetected = result.modeText.folio.includes('Hebrews 9:23-24') && result.modeText.desk.includes('Scripture links');
@@ -95,7 +100,7 @@ async function run() {
   window.close();
   await app.quit();
   report.ok = Object.values(report).every((value) => value === true);
-  console.log(JSON.stringify({ ...report, externalRequests }, null, 2));
+  console.log(JSON.stringify({ ...report, attachmentText: result.attachmentText, modeKeys: Object.keys(result.modeText), modeSnippets: Object.fromEntries(Object.entries(result.modeText).map(([key, value]) => [key, value.slice(0, 180)])), externalRequests }, null, 2));
   return report.ok;
 }
 
