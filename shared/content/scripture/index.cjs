@@ -7,6 +7,35 @@ function loadScripturePackage() {
   return JSON.parse(fs.readFileSync(packagePath, 'utf8'));
 }
 
+function normalizeBookName(value) {
+  return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+function getScriptureChapter(packageData, book, chapter, verse) {
+  const requestedBook = normalizeBookName(book);
+  const chapterNumber = Number.parseInt(chapter, 10);
+  const verseNumber = verse === undefined || verse === null || verse === '' ? null : Number.parseInt(verse, 10);
+  const bookRecord = packageData.books.find((entry) => normalizeBookName(entry.name) === requestedBook);
+  if (!bookRecord) throw new Error(`Unknown Scripture book: ${book}`);
+  if (!Number.isInteger(chapterNumber) || chapterNumber < 1 || chapterNumber > bookRecord.chapter_count) {
+    throw new Error(`Invalid chapter for ${bookRecord.name}: ${chapter}`);
+  }
+  if (verseNumber !== null && (!Number.isInteger(verseNumber) || verseNumber < 1)) {
+    throw new Error(`Invalid verse for ${bookRecord.name} ${chapterNumber}: ${verse}`);
+  }
+  const chapterRecord = packageData.chapters.find((entry) => normalizeBookName(entry.book) === normalizeBookName(bookRecord.name) && entry.chapter === chapterNumber);
+  const verses = packageData.verses.filter((entry) => normalizeBookName(entry.book) === normalizeBookName(bookRecord.name) && entry.chapter === chapterNumber);
+  if (!chapterRecord || verses.length === 0) throw new Error(`Scripture text is unavailable for ${bookRecord.name} ${chapterNumber}.`);
+  const selectedVerses = verseNumber === null ? verses : verses.filter((entry) => entry.verse === verseNumber);
+  if (verseNumber !== null && selectedVerses.length === 0) throw new Error(`Invalid verse for ${bookRecord.name} ${chapterNumber}: ${verse}`);
+  return {
+    book: { id: bookRecord.id, name: bookRecord.name, testament: bookRecord.testament },
+    chapter: { id: chapterRecord.id, reference: chapterRecord.reference, chapter_number: chapterNumber, verse_count: chapterRecord.verse_count },
+    verses: selectedVerses.map((entry) => ({ id: entry.id, reference: entry.reference, verse_number: entry.verse, text: entry.text })),
+    requested_verse: verseNumber
+  };
+}
+
 function slug(value) {
   return String(value).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
@@ -69,4 +98,4 @@ function scripturePackageToRelationships(packageData, timestamp = new Date().toI
   return relationships;
 }
 
-module.exports = { loadScripturePackage, referenceId, scripturePackageToItems, scripturePackageToRelationships };
+module.exports = { loadScripturePackage, getScriptureChapter, referenceId, scripturePackageToItems, scripturePackageToRelationships };

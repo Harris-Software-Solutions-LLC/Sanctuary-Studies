@@ -15,6 +15,7 @@
     "test:electron": "electron scripts/test-electron-root-workspace.cjs",
     "test:electron:library": "electron scripts/test-electron-library.cjs",
     "test:electron:scripture": "electron scripts/test-electron-scripture.cjs",
+    "test:electron:legacy-scripture-v2": "electron scripts/test-electron-legacy-scripture-v2.cjs",
     "test:electron:library-content": "electron scripts/test-electron-library-content.cjs",
     "test:electron:symbolism-colors": "electron scripts/test-electron-symbolism-colors.cjs",
     "test:electron:study-lifecycle": "electron scripts/test-electron-study-lifecycle.cjs",

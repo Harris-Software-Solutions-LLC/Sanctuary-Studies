@@ -4,7 +4,7 @@ const path = require('node:path');
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { createStore } = require('../shared/store.cjs');
 const { loadTimelinePackage } = require('../shared/content/timeline/index.cjs');
-const { loadScripturePackage, scripturePackageToItems, scripturePackageToRelationships } = require('../shared/content/scripture/index.cjs');
+const { loadScripturePackage, getScriptureChapter, scripturePackageToItems, scripturePackageToRelationships } = require('../shared/content/scripture/index.cjs');
 const { loadLibraryPackage } = require('../shared/content/library/index.cjs');
 const { loadSymbolismPackage } = require('../shared/content/symbolism/index.cjs');
 const { loadColorsPackage } = require('../shared/content/colors/index.cjs');
@@ -15,7 +15,7 @@ const { loadExplorerPackage } = require('../shared/content/explorer/index.cjs');
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-electron-scripture-${process.pid}`);
 const databasePath = path.join(temporaryRoot, 'data.json');
-const report = { localOnly: true, packageLoaded: false, searchWorks: false, completeBooksSearchWorks: false, crossReferenceOpens: false, attached: false, notesAndSourcesDetected: false, modeIntegration: false, exportRoundTrip: false, noExternalDependency: true };
+const report = { localOnly: true, packageLoaded: false, chapterLoaded: false, verseLoaded: false, searchWorks: false, completeBooksSearchWorks: false, crossReferenceOpens: false, attached: false, notesAndSourcesDetected: false, modeIntegration: false, exportRoundTrip: false, noExternalDependency: true };
 
 function registerHandlers(store) {
   ipcMain.handle('data:snapshot', () => store.snapshot());
@@ -23,6 +23,7 @@ function registerHandlers(store) {
   ipcMain.handle('study:add-record', (_event, input) => store.addStudyRecord(input));
   ipcMain.handle('data:export-bundle', () => store.exportBundle());
   ipcMain.handle('content:scripture', () => loadScripturePackage());
+  ipcMain.handle('content:scripture-chapter', (_event, input) => getScriptureChapter(loadScripturePackage(), input?.book, input?.chapter, input?.verse));
   ipcMain.handle('content:timeline', () => loadTimelinePackage());
   ipcMain.handle('content:library', () => loadLibraryPackage());
   ipcMain.handle('content:symbolism', () => loadSymbolismPackage());
@@ -43,7 +44,7 @@ async function run() {
   app.setPath('userData', temporaryRoot);
   app.setPath('cache', path.join(temporaryRoot, 'cache'));
   await app.whenReady();
-  const window = new BrowserWindow({ show: false, width: 1200, height: 800, webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, preload: path.join(root, 'electron', 'preload.cjs') } });
+  const window = new BrowserWindow({ show: false, width: 1200, height: 800, webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, preload: path.join(root, 'electron', 'preload.js') } });
   const externalRequests = [];
   window.webContents.session.webRequest.onBeforeRequest({ urls: ['http://*/*', 'https://*/*'] }, (details, callback) => { externalRequests.push(details.url); callback({ cancel: true }); });
   await window.loadFile(path.join(root, 'ui', 'index.html'));
@@ -52,6 +53,8 @@ async function run() {
     await window.sanctuaryDesktop.data.addStudyRecord({ studyId: study.id, section: 'notes', payload: { title: 'Cross-reference note', body: 'Compare Hebrews 9:23-24 with Revelation 11:19.' } });
     await window.sanctuaryDesktop.data.addStudyRecord({ studyId: study.id, section: 'sources', payload: { title: 'Hebrews study source', citation: 'Hebrews 9:23-24', notes: 'Local citation.' } });
     const packageData = await window.sanctuaryDesktop.data.getScriptureContent();
+    const chapter = await window.sanctuaryDesktop.data.getScriptureChapter('Genesis', 1);
+    const verse = await window.sanctuaryDesktop.data.getScriptureChapter('Genesis', 1, 1);
     await window.refreshFromDesktop();
     const row = document.querySelector('[data-study-id="' + study.id + '"]');
     row?.click();
@@ -85,10 +88,12 @@ async function run() {
       modeText[mode] = document.querySelector('#record-table-wrap')?.textContent || '';
     }
     const bundle = await window.sanctuaryDesktop.data.exportBundle();
-    return { packageData, searchText, completeBooksSearchText, detailText, attachmentText, modeText, bundle, studyId: study.id };
+    return { packageData, chapter, verse, searchText, completeBooksSearchText, detailText, attachmentText, modeText, bundle, studyId: study.id };
   })()`);
   const packageData = result.packageData;
   report.packageLoaded = packageData.book_count === 66 && packageData.chapter_count === 1189 && packageData.verse_count === 31102 && packageData.apocrypha_included === false && packageData.passage_count === 8 && packageData.reference_index.includes('Hebrews 9:23-24');
+  report.chapterLoaded = result.chapter.chapter.reference === 'Genesis 1' && result.chapter.verses.length === 31;
+  report.verseLoaded = result.verse.verses.length === 1 && result.verse.verses[0].reference === 'Genesis 1:1';
   report.searchWorks = result.searchText.includes('Hebrews 9:23-24');
   report.completeBooksSearchWorks = result.completeBooksSearchText.includes('Exodus 1:1') && result.completeBooksSearchText.includes('KJV verse');
   report.crossReferenceOpens = result.detailText.includes('Hebrews 9:23-24');

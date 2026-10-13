@@ -5,7 +5,7 @@ const { fileURLToPath } = require('node:url');
 const { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage, session, Tray } = require('electron');
 const { createStore } = require('../shared/store.cjs');
 const { loadTimelinePackage, timelinePackageToItems } = require('../shared/content/timeline/index.cjs');
-const { loadScripturePackage, scripturePackageToItems, scripturePackageToRelationships } = require('../shared/content/scripture/index.cjs');
+const { loadScripturePackage, getScriptureChapter, scripturePackageToItems, scripturePackageToRelationships } = require('../shared/content/scripture/index.cjs');
 const { loadLibraryPackage, libraryPackageToItems, libraryPackageToRelationships } = require('../shared/content/library/index.cjs');
 const { loadSymbolismPackage, symbolismPackageToItems, symbolismPackageToRelationships } = require('../shared/content/symbolism/index.cjs');
 const { loadColorsPackage, colorsPackageToItems, colorsPackageToRelationships } = require('../shared/content/colors/index.cjs');
@@ -70,7 +70,7 @@ function createWindow() {
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
-      preload: path.join(__dirname, 'preload.cjs')
+      preload: path.join(__dirname, 'preload.js')
     }
   });
 
@@ -93,7 +93,7 @@ function createLegacyWindow(initialRoute = '') {
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
-      preload: path.join(__dirname, 'preload.cjs')
+      preload: path.join(__dirname, 'preload.js')
     }
   });
 
@@ -104,6 +104,12 @@ function createLegacyWindow(initialRoute = '') {
 }
 
 const LEGACY_ROUTES = new Set(['explorer', 'heavenly', 'compare', 'symbolism', 'colors', 'bible', 'scripture', 'timeline', 'judgment', 'library', 'media', 'educators', 'forums', 'profiles', 'myths']);
+let scripturePackageCache;
+
+function getCachedScripturePackage() {
+  if (!scripturePackageCache) scripturePackageCache = loadScripturePackage();
+  return scripturePackageCache;
+}
 
 function createLegacyRouteWindow(route) {
   if (!LEGACY_ROUTES.has(route)) throw new Error('The requested legacy route is not available offline.');
@@ -159,7 +165,8 @@ app.whenReady().then(() => {
       licenseStatus: 'review-required'
     });
   });
-  ipcMain.handle('content:scripture', () => loadScripturePackage());
+  ipcMain.handle('content:scripture', () => getCachedScripturePackage());
+  ipcMain.handle('content:scripture-chapter', (_event, input) => getScriptureChapter(getCachedScripturePackage(), input?.book, input?.chapter, input?.verse));
   ipcMain.handle('content:attach-scripture', (_event, input) => {
     const packageData = loadScripturePackage();
     return store.attachContentPackage({

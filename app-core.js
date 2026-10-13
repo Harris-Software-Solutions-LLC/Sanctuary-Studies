@@ -15,6 +15,7 @@ let currentCompareTab = 'structural';
 let currentScripturePassage = 0;
 let currentBookChapter = {};
 let currentColorsItem = null;
+let legacyScriptureRequest = 0;
 
 // ===== NAVIGATION =====
 function navigate(page, opts) {
@@ -271,9 +272,31 @@ function renderBibleText() {
     'John|3':"Born again — God so loved the world — eternal life through Christ"
   };
   const ctx=ctxMap[currentBibleBook+'|'+currentBibleChapter];
+  const requestId = ++legacyScriptureRequest;
+  const renderVerses = (verses, sourceLabel) => {
+    if (requestId !== legacyScriptureRequest || !document.getElementById('bible-text')) return;
+    const contextMarkup = ctx?`<p class="chapter-context-note">${ctx}</p>`:'';
+    const sourceMarkup = sourceLabel ? `<p class="scripture-source-note">${sourceLabel}</p>` : '';
+    el.innerHTML=contextMarkup+sourceMarkup+`<div class="bible-verses">${verses.map(v=>`<p class="bible-verse" data-verse="${v.verse_number || v.v}"><sup class="verse-num">${v.verse_number || v.v}</sup>${v.text || v.t}</p>`).join('')}</div>`;
+    renderBibleCrossRefs();
+    renderBibleStudyNotes();
+    if (memMode) document.querySelectorAll('.bible-verse').forEach(v => v.classList.add('mem-mode'));
+  };
+  const desktopChapter = window.sanctuaryDesktop?.data?.getScriptureChapter;
+  if (desktopChapter) {
+    el.innerHTML=(ctx?`<p class="chapter-context-note">${ctx}</p>`:'')+'<p class="notice-box">Loading complete local KJV text…</p>';
+    desktopChapter(currentBibleBook, currentBibleChapter).then((chapter) => {
+      renderVerses(chapter.verses, `Complete local KJV text · ${chapter.chapter.reference}`);
+    }).catch((error) => {
+      if (chData) renderVerses(chData, 'Compatibility text from the preserved legacy dataset.');
+      else if (requestId === legacyScriptureRequest) el.innerHTML=(ctx?`<p class="chapter-context-note">${ctx}</p>`:'')+`<div class="notice-box"><p><strong>${currentBibleBook} ${currentBibleChapter}</strong> could not be loaded from the local KJV package.</p><p style="margin-top:.5rem;font-size:.85rem;color:#666">${String(error?.message || 'The local Scripture package is unavailable.')}</p><button class="tool-btn" onclick="navigate('scripture')">🔍 Open Scripture Navigator</button></div>`;
+      renderBibleCrossRefs();
+      renderBibleStudyNotes();
+    });
+    return;
+  }
   if (chData) {
-    el.innerHTML=(ctx?`<p class="chapter-context-note">${ctx}</p>`:'')+
-      `<div class="bible-verses">${chData.map(v=>`<p class="bible-verse"><sup class="verse-num">${v.v}</sup>${v.t}</p>`).join('')}</div>`;
+    renderVerses(chData, 'Compatibility text from the preserved legacy dataset.');
   } else {
     el.innerHTML=(ctx?`<p class="chapter-context-note">${ctx}</p>`:'')+
       `<div class="notice-box">
@@ -308,6 +331,16 @@ function searchBible(q) {
   if (!q||q.trim().length<3) { el.innerHTML=''; return; }
   q = q.toLowerCase();
   const results=[];
+  const desktopSearch = window.sanctuaryDesktop?.data?.getScriptureContent;
+  if (desktopSearch) {
+    desktopSearch().then((packageData) => {
+      if (!q || q.trim().length<3) return;
+      const query = q.toLowerCase();
+      const fullResults = packageData.verses.filter((v) => v.text.toLowerCase().includes(query)).slice(0, 8);
+      if (fullResults.length===0) { el.innerHTML='<p style="font-size:.8rem;color:#888;padding:.5rem">No results found</p>'; return; }
+      el.innerHTML = fullResults.map(r => `<div class="bible-search-result" onclick="goToVerse('${r.book}',${r.chapter})"><div style="font-size:.75rem;font-weight:700;color:#8C6B3C">${r.reference}</div><div style="font-size:.8rem;color:#555">${r.text.substring(0,80)}...</div></div>`).join('');
+    }).catch(() => {});
+  }
   if (typeof KJV_VERSES!=='undefined') {
     Object.keys(KJV_VERSES).forEach(book => {
       Object.keys(KJV_VERSES[book]).forEach(ch => {

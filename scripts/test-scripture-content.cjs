@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createStore } = require('../shared/store.cjs');
 const { parseBundle, validateDatabase } = require('../shared/model.cjs');
-const { loadScripturePackage, scripturePackageToItems, scripturePackageToRelationships } = require('../shared/content/scripture/index.cjs');
+const { loadScripturePackage, getScriptureChapter, scripturePackageToItems, scripturePackageToRelationships } = require('../shared/content/scripture/index.cjs');
 
 const root = path.resolve(__dirname, '..');
 const temporaryRoot = path.join(root, `.audit-temp-scripture-${process.pid}`);
@@ -35,6 +35,12 @@ try {
   assert.ok(packageData.verses.some((verse) => verse.reference === 'Exodus 1:1'));
   assert.ok(packageData.verses.some((verse) => verse.reference === '3 John 1:14'));
   assert.ok(!packageData.books.some((book) => /Tobit|Judith|Maccabees|Apocrypha/i.test(book.name)));
+  const chapter = getScriptureChapter(packageData, 'Genesis', 1);
+  const verse = getScriptureChapter(packageData, 'Genesis', 1, 1);
+  assert.equal(chapter.chapter.reference, 'Genesis 1');
+  assert.equal(chapter.verses.length, 31);
+  assert.equal(verse.verses.length, 1);
+  assert.equal(verse.verses[0].reference, 'Genesis 1:1');
 
   const items = scripturePackageToItems(packageData, '2026-01-01T00:00:00.000Z');
   const relationships = scripturePackageToRelationships(packageData, '2026-01-01T00:00:00.000Z');

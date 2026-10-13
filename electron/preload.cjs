@@ -16,6 +16,7 @@ contextBridge.exposeInMainWorld('sanctuaryDesktop', Object.freeze({
     getTimelineContent: () => ipcRenderer.invoke('content:timeline'),
     attachTimeline: (input) => ipcRenderer.invoke('content:attach-timeline', input),
     getScriptureContent: () => ipcRenderer.invoke('content:scripture'),
+    getScriptureChapter: (book, chapter, verse) => ipcRenderer.invoke('content:scripture-chapter', { book, chapter, verse }),
     attachScripture: (input) => ipcRenderer.invoke('content:attach-scripture', input),
     getLibraryContent: () => ipcRenderer.invoke('content:library'),
     attachLibrary: (input) => ipcRenderer.invoke('content:attach-library', input),
