@@ -25,6 +25,27 @@
       "aaronRef": "Leviticus 16:4 - He shall put on the holy linen coat, and he shall have the linen breeches upon his flesh, and shall be girded with a linen girdle, and with the linen mitre shall he be attired: these are holy garments; therefore shall he wash his flesh in water, and so put them on.\nExodus 30:18-21 - Thou shalt also make a laver of brass, and his foot also of brass, to wash withal: and thou shalt put it between the tabernacle of the congregation and the altar, and thou shalt put water therein. For Aaron and his sons shall wash their hands and their feet thereat: When they go into the tabernacle of the congregation, they shall wash with water, that they die not; or when they come near to the altar to minister, to burn offering made by fire unto the LORD: So they shall wash their hands and their feet, that they die not: and it shall be a statute for ever to them, even to him and to his seed throughout their generations.",
       "jesusRef": "Matthew 3:13-17 - Then cometh Jesus from Galilee to Jordan unto John, to be baptized of him. But John forbad him, saying, I have need to be baptized of thee, and comest thou to me? And Jesus answering said unto him, Suffer it to be so now: for thus it becometh us to fulfil all righteousness. Then he suffered him. And Jesus, when he was baptized, went up straightway out of the water: and, lo, the heavens were opened unto him, and he saw the Spirit of God descending like a dove, and lighting upon him: And lo a voice from heaven, saying, This is my beloved Son, in whom I am well pleased.; Mark 1:9-11; Luke 3:21-22",
       "description": "Consecration and preparation for ministry.",
+      "annotation": {
+        "title": "Step 1 — Washing and baptism",
+        "source_image": "Step 1 of Aaron and Jesus p1.png",
+        "source_page": "The Sanctuary Cross, page 91",
+        "aaron": {
+          "caption": "Aaron washes at the laver and puts on only the linen garments of the common priest to start his common priest’s work. He does not put on the High Priest’s garments until later.",
+          "scripture_excerpt": "He shall put on the holy linen coat, and he shall have the linen breeches upon his flesh, and shall be girded with a linen girdle, and with the linen mitre shall he be attired: these are holy garments; therefore shall he wash his flesh in water, and so put them on.",
+          "references": ["Leviticus 16:4", "Exodus 30:18-21"],
+          "sanctuary_location": "Court — laver"
+        },
+        "jesus": {
+          "caption": "Jesus is baptized by John in the Jordan River to start His common priest’s work.",
+          "scripture_excerpt": "Then cometh Jesus from Galilee to Jordan unto John, to be baptized of him.",
+          "references": ["Matthew 3:13-17", "Mark 1:9-11", "Luke 3:21-22"],
+          "additional_annotation": "As the glory of God encircled Him, and the voice from heaven was heard, John recognized the token which God had promised. He knew that it was the world’s Redeemer whom he had baptized. The Holy Spirit rested upon Him, and John pointed to Jesus and declared, ‘Behold the Lamb of God, which taketh away the sin of the world.’",
+          "source_citation": "The Desire of Ages, page 112, paragraph 4",
+          "date_marker": "A.D. 27"
+        },
+        "comparison": "Aaron’s washing and linen investiture begin the common priest’s work in the earthly sanctuary. Jesus’ baptism begins His corresponding work in the plan of salvation, publicly identifying Him as the Lamb of God.",
+        "private_notes": []
+      },
       "source_step": 1,
       "display_step": 1,
       "content_id": "timeline.step.01"
