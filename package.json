@@ -9,6 +9,7 @@
     "test:shared": "node scripts/test-shared-model.cjs",
     "test:store": "node scripts/test-store-persistence.cjs",
     "test:timeline": "node scripts/test-timeline-content.cjs",
+    "test:electron:timeline-visual": "node scripts/test-electron-timeline-visual.cjs",
     "test:scripture": "node scripts/test-scripture-content.cjs",
     "test:library": "node scripts/test-library-content.cjs",
     "test:symbolism-colors": "node scripts/test-symbolism-colors-content.cjs",

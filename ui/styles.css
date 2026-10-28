@@ -228,6 +228,27 @@ tbody tr:hover, tbody tr.is-selected { background: #f1f4ee; }
 .timeline-comparison, .timeline-private-notes { margin-top: 12px; padding: 10px 12px; border-top: 1px solid var(--line); }
 .timeline-comparison p, .timeline-private-notes p { margin: 5px 0 0; color: var(--ink-muted); font-size: 11px; line-height: 1.55; }
 @media (max-width: 760px) { .timeline-annotation-grid { grid-template-columns: 1fr; } }
+.timeline-visual-panel { margin-top: 18px; }
+.timeline-visual-toolbar { display: flex; align-items: center; gap: 6px; margin: 10px 0 12px; }
+.timeline-visual-toolbar .muted { margin-left: 4px; }
+.timeline-visual-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.timeline-visual-card { border: 1px solid var(--line); background: #fbfaf6; padding: 8px; }
+.timeline-visual-card.is-selected { border-color: #b89b50; box-shadow: inset 0 0 0 1px #b89b50; }
+.timeline-track-select { border: 0; padding: 0 0 7px; color: var(--ink); background: transparent; font: 700 14px Georgia, serif; cursor: pointer; }
+.timeline-visual-viewport, .timeline-source-viewport { position: relative; overflow: hidden; background: #eee9df; cursor: grab; }
+.timeline-visual-viewport { height: 210px; }
+.timeline-source-viewport { height: 330px; }
+.timeline-visual-viewport:active, .timeline-source-viewport:active { cursor: grabbing; }
+.timeline-visual-viewport img, .timeline-source-viewport img { display: block; max-width: none; transform-origin: center center; user-select: none; pointer-events: none; }
+.timeline-aaron img { width: 200%; height: 100%; object-fit: cover; object-position: left top; }
+.timeline-jesus img { width: 200%; height: 100%; object-fit: cover; object-position: right top; }
+.timeline-source-viewport img { width: 100%; height: auto; min-height: 100%; object-fit: contain; object-position: center; }
+.timeline-visual-card p { margin: 8px 2px 0; color: var(--ink-muted); font-size: 10px; line-height: 1.45; }
+.timeline-source-viewer { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+.timeline-source-viewer h4 { margin: 0; font: 700 14px Georgia, serif; }
+.timeline-private-notes textarea { display: block; width: 100%; margin: 8px 0; border: 1px solid var(--line); padding: 8px; color: var(--ink); background: #fffdf8; font: inherit; resize: vertical; }
+.timeline-private-notes .button { margin-bottom: 8px; }
+@media (max-width: 900px) { .timeline-visual-grid { grid-template-columns: 1fr; } .timeline-source-viewport { height: 250px; } }
 
 @media (max-width: 1180px) { .app-body { grid-template-columns: 190px minmax(550px, 1fr); } .inspector { display: none; } .folio-layout { grid-template-columns: 150px minmax(0, 1fr); } .folio-references { display: none; } }
 
