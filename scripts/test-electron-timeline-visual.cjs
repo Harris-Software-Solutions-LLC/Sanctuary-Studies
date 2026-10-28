@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { listPackage, extractFile } = require('@electron/asar');
+const { listPackage, extractAll } = require('@electron/asar');
 
 const root = path.resolve(__dirname, '..');
 const asarPath = process.argv[2];
@@ -27,7 +27,14 @@ function assertVisualContract(readFile, hasFile) {
 
 if (asarPath) {
   const files = new Set(listPackage(asarPath));
-  assertVisualContract((relativePath) => extractFile(asarPath, relativePath), (relativePath) => files.has(relativePath));
+  const tempRoot = process.platform === 'win32' ? 'E:\\CodexHome' : require('node:os').tmpdir();
+  const extractionRoot = fs.mkdtempSync(path.join(tempRoot, 'sanctuary-timeline-visual-'));
+  try {
+    extractAll(asarPath, extractionRoot);
+    assertVisualContract((relativePath) => fs.readFileSync(path.join(extractionRoot, relativePath), 'utf8'), (relativePath) => files.has(`\\${relativePath.replaceAll('/', '\\')}`));
+  } finally {
+    fs.rmSync(extractionRoot, { recursive: true, force: true });
+  }
   console.log(`Electron timeline visual package test passed: ${path.basename(asarPath)}`);
 } else {
   assertVisualContract((relativePath) => readProjectFile(relativePath), (relativePath) => fs.existsSync(path.join(root, relativePath)));
