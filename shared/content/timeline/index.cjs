@@ -2,9 +2,17 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const packagePath = path.join(__dirname, 'timeline-v1.json');
+const dailyAnnotationsPath = path.join(__dirname, 'daily-annotations-v1.json');
 
 function loadTimelinePackage() {
-  return JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+  const packageData = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+  const dailyAnnotations = JSON.parse(fs.readFileSync(dailyAnnotationsPath, 'utf8'));
+  packageData.steps = packageData.steps.map((step) => {
+    const annotation = dailyAnnotations.steps[String(step.display_step)];
+    return annotation ? { ...step, annotation: { ...annotation, private_notes: step.annotation?.private_notes || [] } } : step;
+  });
+  packageData.full_timeline = dailyAnnotations.full_timeline;
+  return packageData;
 }
 
 function timelinePackageToItems(packageData, timestamp = new Date().toISOString()) {

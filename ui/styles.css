@@ -246,9 +246,16 @@ tbody tr:hover, tbody tr.is-selected { background: #f1f4ee; }
 .timeline-visual-card p { margin: 8px 2px 0; color: var(--ink-muted); font-size: 10px; line-height: 1.45; }
 .timeline-source-viewer { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
 .timeline-source-viewer h4 { margin: 0; font: 700 14px Georgia, serif; }
+.timeline-source-page-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+.timeline-source-page { min-width: 0; }
+.timeline-source-page > .eyebrow { display: block; margin-bottom: 5px; }
+.timeline-full-reference { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.timeline-full-reference figure { margin: 0; padding: 8px; border: 1px solid var(--line); background: #fbfaf6; }
+.timeline-full-reference figcaption { margin-bottom: 7px; color: var(--ink); font: 700 13px Georgia, serif; }
+.timeline-full-reference img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #eee9df; }
 .timeline-private-notes textarea { display: block; width: 100%; margin: 8px 0; border: 1px solid var(--line); padding: 8px; color: var(--ink); background: #fffdf8; font: inherit; resize: vertical; }
 .timeline-private-notes .button { margin-bottom: 8px; }
-@media (max-width: 900px) { .timeline-visual-grid { grid-template-columns: 1fr; } .timeline-source-viewport { height: 250px; } }
+@media (max-width: 900px) { .timeline-visual-grid, .timeline-full-reference { grid-template-columns: 1fr; } .timeline-source-viewport { height: 250px; } }
 
 @media (max-width: 1180px) { .app-body { grid-template-columns: 190px minmax(550px, 1fr); } .inspector { display: none; } .folio-layout { grid-template-columns: 150px minmax(0, 1fr); } .folio-references { display: none; } }
 

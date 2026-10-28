@@ -1,6 +1,6 @@
 const assert = require('node:assert/strict');
-const timeline = require('../shared/content/timeline/timeline-v1.json');
-const { timelinePackageToItems } = require('../shared/content/timeline/index.cjs');
+const { loadTimelinePackage, timelinePackageToItems } = require('../shared/content/timeline/index.cjs');
+const timeline = loadTimelinePackage();
 
 assert.equal(timeline.step_count, 24);
 assert.equal(timeline.steps.length, 24);
@@ -11,6 +11,10 @@ assert.equal(timeline.steps[0].annotation.title, 'Step 1 — Washing and baptism
 assert.equal(timeline.steps[0].annotation.aaron.references.includes('Leviticus 16:4'), true);
 assert.equal(timeline.steps[0].annotation.jesus.date_marker, 'A.D. 27');
 assert.equal(timeline.steps[0].annotation.private_notes.length, 0);
+for (let number = 2; number <= 10; number += 1) {
+  assert.ok(timeline.steps[number - 1].annotation, `Step ${number} annotation is present`);
+  assert.ok(timeline.steps[number - 1].annotation.source_pages.length >= 1, `Step ${number} source page is present`);
+}
 assert.equal(timeline.question_count, 189);
 assert.equal(new Set(timeline.questions.map((question) => question.questionId)).size, 189);
 assert.deepEqual([...new Set(timeline.questions.map((question) => question.display_step))].sort((a, b) => a - b), Array.from({ length: 25 }, (_, index) => index));

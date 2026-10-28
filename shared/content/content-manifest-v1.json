@@ -4,7 +4,7 @@
   "runtime": "offline-local",
   "packages": [
     { "id": "scripture", "path": "scripture/scripture-v1.json", "source_files": ["app-data.js", "app-pages1.js"], "status": "integrated" },
-    { "id": "timeline", "path": "timeline/timeline-v1.json", "source_files": ["app-data.js", "project/src/components/TimelinePage.tsx", "project/src/data/timelineQuestions.ts"], "status": "integrated" },
+    { "id": "timeline", "path": "timeline/timeline-v1.json", "source_files": ["app-data.js", "project/src/components/TimelinePage.tsx", "project/src/data/timelineQuestions.ts", "timeline/daily-annotations-v1.json", "assets/timeline/Step 2.png", "assets/timeline/Step 3.png", "assets/timeline/Step 4.png", "assets/timeline/Step 5A.png", "assets/timeline/Step 5B.png", "assets/timeline/Step 6A.png", "assets/timeline/Step 6B.png", "assets/timeline/Step 7.png", "assets/timeline/Step 8.png", "assets/timeline/Step 9.png", "assets/timeline/Step 10A.png", "assets/timeline/Step 10B.png"], "status": "integrated" },
     { "id": "library", "path": "library/library-v1.json", "source_files": ["app-data.js", "app-core.js", "app-books.js"], "status": "integrated" },
     { "id": "sanctuary", "path": "sanctuary/sanctuary-v1.json", "source_files": ["app-pages2.js", "app-pages3.js"], "status": "integrated" },
     { "id": "symbolism", "path": "symbolism/symbolism-v1.json", "source_files": ["app-pages2.js"], "status": "integrated" },

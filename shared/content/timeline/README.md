@@ -6,6 +6,8 @@
 - Preserved source prelude: 1 (source step 0, not counted)
 - Learning questions: 189
 - Question types: multiple-choice, fill-blank, and true-false
+- Daily Service visual annotations: Steps 1–10, including multi-page Steps 5, 6, and 10
+- Full 24-step Daily/Yearly reference charts are packaged as local navigation aids; Yearly step content remains additive future work
 - Runtime dependency: none; the Electron main process reads the JSON locally
 - Source and normalization details: `shared/content/provenance/timeline-v1.json`
 

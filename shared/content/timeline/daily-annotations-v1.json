@@ -1,0 +1,85 @@
+{
+  "content_type": "timeline_daily_annotations",
+  "version": 1,
+  "service": "daily",
+  "steps": {
+    "2": {
+      "title": "Step 2 — The personal sacrifice",
+      "source_pages": ["assets/timeline/Step 2.png"],
+      "aaron": { "caption": "Aaron offers the bull for himself and his household before entering the Most Holy Place as High Priest.", "references": ["Leviticus 16:11"], "sanctuary_location": "Court — altar of sacrifice", "scripture_excerpt": "Aaron shall bring the bullock of the sin offering which is for himself, and shall make an atonement for himself, and for his house." },
+      "jesus": { "caption": "Jesus dies as the corresponding sacrifice for Himself on Calvary.", "references": ["Matthew 27:50", "Hebrews 7:27"], "sanctuary_location": "Earth — Calvary", "date_marker": "A.D. 31", "scripture_excerpt": "Jesus, when he had cried again with a loud voice, yielded up the ghost." },
+      "comparison": "Aaron’s personal bull represents the sacrifice required before his ministry; Jesus gives Himself as the once-for-all sacrifice for sin.",
+      "source_citation": "The Sanctuary Cross — Daily Service, Step 2"
+    },
+    "3": {
+      "title": "Step 3 — Washing before the Most Holy Place",
+      "source_pages": ["assets/timeline/Step 3.png"],
+      "aaron": { "caption": "Aaron washes his hands and feet at the laver before entering the Most Holy Place as a common priest.", "references": ["Exodus 30:19-20"], "sanctuary_location": "Court — laver", "scripture_excerpt": "Aaron and his sons shall wash their hands and their feet thereat, when they go into the tabernacle of the congregation." },
+      "jesus": { "caption": "Jesus’ resurrection marks His passage from death into the heavenly ministry, with the former condition removed from Him.", "references": ["John 20:17", "Romans 6:9-10", "1 Corinthians 15:20-22"], "sanctuary_location": "Earth — resurrection", "date_marker": "A.D. 31", "scripture_excerpt": "Christ being raised from the dead dieth no more; death hath no more dominion over him." },
+      "comparison": "Aaron washes before the next phase of service. Jesus rises victorious over death and begins the corresponding heavenly phase of ministry.",
+      "source_citation": "The Sanctuary Cross — Daily Service, Step 3"
+    },
+    "4": {
+      "title": "Step 4 — Incense and entrance before God",
+      "source_pages": ["assets/timeline/Step 4.png"],
+      "aaron": { "caption": "Aaron takes the censer and incense through the veil into the Most Holy Place, where the incense covers the mercy seat.", "references": ["Leviticus 16:12-13"], "sanctuary_location": "Holy Place → Most Holy Place", "scripture_excerpt": "He shall take a censer full of burning coals of fire from off the altar before the LORD, and his hands full of sweet incense beaten small, and bring it within the vail." },
+      "jesus": { "caption": "Jesus passes through the heavenly Holy Place as the common priest on His way to the Father.", "references": ["John 20:17", "Hebrews 9:11-12"], "sanctuary_location": "Heavenly sanctuary", "date_marker": "A.D. 31", "scripture_excerpt": "I am not yet ascended to my Father: but go to my brethren, and say unto them, I ascend unto my Father." },
+      "comparison": "Aaron’s incense accompanies entrance before God. Jesus ascends to the Father and ministers through the greater and more perfect tabernacle.",
+      "source_citation": "The Sanctuary Cross — Daily Service, Step 4"
+    },
+    "5": {
+      "title": "Step 5 — Acceptance by the blood",
+      "source_pages": ["assets/timeline/Step 5A.png", "assets/timeline/Step 5B.png"],
+      "aaron": { "caption": "Aaron stands in the common priest’s robe of righteousness, with incense representing Christ’s merits and the bull’s blood representing sacrifice, while the glory of God accepts the service.", "references": ["Leviticus 16:13-14", "Hebrews 10:20"], "sanctuary_location": "Most Holy Place — mercy seat", "scripture_excerpt": "He shall sprinkle of the blood with his finger upon the mercy seat eastward seven times." },
+      "jesus": { "caption": "Jesus stands as High Priest in the heavenly sanctuary, presenting His own blood and remaining accepted by the Father.", "references": ["Hebrews 9:12", "Hebrews 10:12-14"], "sanctuary_location": "Most Holy Place — heavenly sanctuary", "date_marker": "A.D. 31", "scripture_excerpt": "By his own blood he entered in once into the holy place, having obtained eternal redemption for us." },
+      "comparison": "Aaron’s acceptance rests on the blood and merits represented in the earthly service. Jesus presents the reality of His own sacrifice in the heavenly sanctuary.",
+      "source_citation": "The Sanctuary Cross — Daily Service, Step 5"
+    },
+    "6": {
+      "title": "Step 6 — Return to the court and co-laborers",
+      "source_pages": ["assets/timeline/Step 6A.png", "assets/timeline/Step 6B.png"],
+      "aaron": { "caption": "Aaron returns to the court, meets with his fellow priests, and returns to the altar to complete the morning service with the lamb.", "references": ["Leviticus 16:18"], "sanctuary_location": "Most Holy Place → Court — altar", "scripture_excerpt": "And he shall go out unto the altar that is before the LORD, and make an atonement for it." },
+      "jesus": { "caption": "Jesus returns to earth and meets with His disciples and co-laborers for forty days after His resurrection.", "references": ["John 20:19", "Acts 1:3", "Luke 24:36-43"], "sanctuary_location": "Earth — with the disciples", "date_marker": "A.D. 31", "scripture_excerpt": "He shewed himself alive after his passion by many infallible proofs, being seen of them forty days." },
+      "comparison": "Aaron returns to the court after acceptance and continues the service with his fellow priests. Jesus spends forty days with His disciples before ascending.",
+      "source_citation": "The Sanctuary Cross — Daily Service, Step 6"
+    },
+    "7": {
+      "title": "Step 7 — Renewed washing and restored stature",
+      "source_pages": ["assets/timeline/Step 7.png"],
+      "aaron": { "caption": "Aaron stops at the laver a second time to wash his hands and feet before entering the Holy Place as High Priest.", "references": ["Exodus 30:18-19"], "sanctuary_location": "Court — laver", "scripture_excerpt": "Thou shalt also make a laver of brass, and his foot also of brass, to wash withal." },
+      "jesus": { "caption": "Jesus changes from the stature of a common priest to the stature of the High Priest as He enters the heavenly sanctuary.", "references": ["Hebrews 2:5-19", "1 Corinthians 15:35-53"], "sanctuary_location": "Earth → heavenly sanctuary", "date_marker": "A.D. 31", "scripture_excerpt": "Before Christ’s resurrection He was seen in human likeness; after His resurrection He enters the heavenly ministry in glorified stature." },
+      "comparison": "Aaron washes again before the High Priest phase. Jesus enters the heavenly ministry in His resurrected and glorified condition.",
+      "source_citation": "The Sanctuary Cross — Daily Service, Step 7"
+    },
+    "8": {
+      "title": "Step 8 — High-priestly investiture",
+      "source_pages": ["assets/timeline/Step 8.png"],
+      "aaron": { "caption": "Aaron dresses in the High Priest’s garments and enters the Holy Place to begin the High Priest’s work.", "references": ["Leviticus 16:4", "Leviticus 16:23-24"], "sanctuary_location": "Holy Place", "scripture_excerpt": "He shall put on his garments, and come forth, and offer his burnt offering, and the burnt offering of the people." },
+      "jesus": { "caption": "Jesus enters through the first veil as High Priest after ascending and being inaugurated for His heavenly ministry.", "references": ["Hebrews 4:14", "Hebrews 8:1-2", "Ephesians 4:8"], "sanctuary_location": "Holy Place — heavenly sanctuary", "date_marker": "A.D. 31", "scripture_excerpt": "We have such an high priest, who is set on the right hand of the throne of the Majesty in the heavens." },
+      "comparison": "Aaron’s change of garments marks the High Priest’s ministry. Jesus is inaugurated as the true High Priest and minister of the heavenly sanctuary.",
+      "source_citation": "The Sanctuary Cross — Daily Service, Step 8"
+    },
+    "9": {
+      "title": "Step 9 — Light and Pentecost",
+      "source_pages": ["assets/timeline/Step 9.png"],
+      "aaron": { "caption": "Aaron pours oil into the lamp so the light burns continually in the Holy Place.", "references": ["Exodus 27:20-21", "Exodus 30:7-8"], "sanctuary_location": "Holy Place — lamp", "scripture_excerpt": "They shall bring thee pure oil olive beaten for the light, to cause the lamp to burn always." },
+      "jesus": { "caption": "Jesus pours out the Holy Spirit at Pentecost after entering the heavenly sanctuary as High Priest.", "references": ["Acts 2:1-4", "John 16:7"], "sanctuary_location": "Holy Place — heavenly sanctuary", "date_marker": "A.D. 31", "scripture_excerpt": "Ye shall receive power, after that the Holy Ghost is come upon you: and ye shall be witnesses unto me." },
+      "comparison": "Aaron supplies oil for continual light. Jesus sends the Holy Spirit, empowering the disciples to bear witness throughout the world.",
+      "source_citation": "The Sanctuary Cross — Daily Service, Step 9"
+    },
+    "10": {
+      "title": "Step 10 — The Daily Service ends",
+      "source_pages": ["assets/timeline/Step 10A.png", "assets/timeline/Step 10B.png"],
+      "aaron": { "caption": "Aaron places incense on the altar as the High Priest, while the daily service continues through the morning sacrifice, transferred sin, and evening service.", "references": ["Exodus 30:7-10", "Leviticus 16:15-19"], "sanctuary_location": "Holy Place — altar of incense and Court — altar", "scripture_excerpt": "Aaron shall burn thereon sweet incense every morning: when he dresseth the lamps, he shall burn incense upon it." },
+      "jesus": { "caption": "Jesus is reinstated as ruler of the universe and High Priest after His ascension; the Daily Service closes with the forty days and the ascent to heaven completed.", "references": ["Hebrews 7:25", "Revelation 8:3-4", "Acts 1:9-11"], "sanctuary_location": "Heavenly sanctuary", "date_marker": "A.D. 31", "scripture_excerpt": "He ever liveth to make intercession for them." },
+      "comparison": "The daily service closes after the morning and evening ministry. Aaron’s incense and sacrifices correspond to Christ’s continuing intercession and the completion of His ascension ministry.",
+      "source_citation": "The Sanctuary Cross — Daily Service, Steps 10A–10B",
+      "daily_service_end": true
+    }
+  },
+  "full_timeline": {
+    "daily_image": "assets/timeline/Sanctuary Timeline (Daily).png",
+    "yearly_image": "assets/timeline/Sanctuary Timeline (Yearly).png",
+    "label": "Full 24-step Sanctuary Timeline — Daily and Yearly reference"
+  }
+}
