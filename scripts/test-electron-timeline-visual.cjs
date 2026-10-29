@@ -39,8 +39,8 @@ function assertVisualContract(readFile, hasFile) {
   assert.ok(hasFile('assets/timeline/24 StepsOfSanctuary/Sanctuary Timeline (Yearly).png'), '24-step gallery Yearly image must be packaged');
   const app = readFile(rendererPath);
   const css = readFile(stylesheetPath);
-  for (const marker of ['timelineVisualMarkup', 'timelineReferenceMarkup', 'data-timeline-track', 'data-timeline-reference-image', 'data-timeline-image-action', 'open-chart-pack', 'save-timeline-note', 'timeline-source-viewport', 'timeline-full-view']) assert.ok(app.includes(marker), `renderer missing ${marker}`);
-  for (const marker of ['timeline-visual-grid', 'timeline-source-viewport', 'timeline-private-notes', 'timeline-reference-panel', 'timeline-reference-thumb']) assert.ok(css.includes(marker), `stylesheet missing ${marker}`);
+  for (const marker of ['timelineVisualMarkup', 'timelineReferenceMarkup', 'data-timeline-track', 'data-timeline-reference-image', 'data-timeline-reference-action', 'data-timeline-image-action', 'open-chart-pack', 'save-timeline-note', 'timeline-source-viewport', 'timeline-full-view']) assert.ok(app.includes(marker), `renderer missing ${marker}`);
+  for (const marker of ['timeline-visual-grid', 'timeline-source-viewport', 'timeline-private-notes', 'timeline-reference-panel', 'timeline-reference-toolbar', 'timeline-reference-thumb']) assert.ok(css.includes(marker), `stylesheet missing ${marker}`);
 }
 
 if (asarPath) {

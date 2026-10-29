@@ -13,7 +13,7 @@
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; min-width: 1080px; color: var(--ink); background: var(--canvas); font-size: calc(100% * var(--app-font-scale, 1)); }
+body { margin: 0; min-width: 1080px; color: var(--ink); background: var(--canvas); }
 button, input, textarea { font: inherit; }
 button { cursor: pointer; }
 
@@ -256,6 +256,7 @@ tbody tr:hover, tbody tr.is-selected { background: #f1f4ee; }
 .timeline-full-viewport:active { cursor: grabbing; }
 .timeline-full-viewport img { width: 100%; max-height: none; transform-origin: center center; user-select: none; pointer-events: none; }
 .timeline-reference-panel { margin-top: 12px; }
+.timeline-reference-toolbar { display: flex; align-items: center; gap: 6px; margin: 8px 0; }
 .timeline-reference-preview { min-height: 260px; height: 520px; overflow: hidden; border: 1px solid var(--line); background: #eee9df; cursor: grab; }
 .timeline-reference-preview:active { cursor: grabbing; }
 .timeline-reference-preview img { display: block; width: 100%; height: 100%; object-fit: contain; transform-origin: center center; user-select: none; pointer-events: none; }

@@ -4,8 +4,8 @@ const path = require('node:path');
 const packagePath = path.join(__dirname, 'timeline-v1.json');
 const dailyAnnotationsPath = path.join(__dirname, 'daily-annotations-v1.json');
 const referenceVisualsPath = path.join(__dirname, 'reference-visuals-v1.json');
-const chartPackRoot = path.join(__dirname, '..', '..', 'assets', 'Sanctuary-Studies-Chart-Pack', 'sanctuary-charts');
-const timelineGalleryRoot = path.join(__dirname, '..', '..', 'assets', 'timeline', '24 StepsOfSanctuary');
+const chartPackRoot = path.join(__dirname, '..', '..', '..', 'assets', 'Sanctuary-Studies-Chart-Pack', 'sanctuary-charts');
+const timelineGalleryRoot = path.join(__dirname, '..', '..', '..', 'assets', 'timeline', '24 StepsOfSanctuary');
 
 function localPngFiles(root, prefix) {
   if (!fs.existsSync(root)) return [];
