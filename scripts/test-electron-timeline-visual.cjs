@@ -29,10 +29,14 @@ function assertVisualContract(readFile, hasFile) {
   }
   assert.ok(hasFile(daily.full_timeline.daily_image), 'Full Daily timeline reference must be packaged');
   assert.ok(hasFile(daily.full_timeline.yearly_image), 'Full Yearly timeline reference must be packaged');
+  assert.ok(hasFile('assets/Sanctuary-Studies-Chart-Pack/sanctuary-charts/assets/daily.png'), 'Chart pack Daily chart must be packaged');
+  assert.ok(hasFile('assets/Sanctuary-Studies-Chart-Pack/sanctuary-charts/assets/yearly.png'), 'Chart pack Yearly chart must be packaged');
+  assert.ok(hasFile('assets/timeline/24 StepsOfSanctuary/Sanctuary Timeline (Daily).png'), '24-step gallery Daily image must be packaged');
+  assert.ok(hasFile('assets/timeline/24 StepsOfSanctuary/Sanctuary Timeline (Yearly).png'), '24-step gallery Yearly image must be packaged');
   const app = readFile(rendererPath);
   const css = readFile(stylesheetPath);
-  for (const marker of ['timelineVisualMarkup', 'data-timeline-track', 'data-timeline-image-action', 'save-timeline-note', 'timeline-source-viewport', 'timeline-full-view']) assert.ok(app.includes(marker), `renderer missing ${marker}`);
-  for (const marker of ['timeline-visual-grid', 'timeline-source-viewport', 'timeline-private-notes']) assert.ok(css.includes(marker), `stylesheet missing ${marker}`);
+  for (const marker of ['timelineVisualMarkup', 'timelineReferenceMarkup', 'data-timeline-track', 'data-timeline-reference-image', 'data-timeline-image-action', 'save-timeline-note', 'timeline-source-viewport', 'timeline-full-view']) assert.ok(app.includes(marker), `renderer missing ${marker}`);
+  for (const marker of ['timeline-visual-grid', 'timeline-source-viewport', 'timeline-private-notes', 'timeline-reference-panel', 'timeline-reference-thumb']) assert.ok(css.includes(marker), `stylesheet missing ${marker}`);
 }
 
 if (asarPath) {

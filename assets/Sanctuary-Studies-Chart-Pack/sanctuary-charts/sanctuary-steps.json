@@ -1,0 +1,265 @@
+{
+  "title": "The Sanctuary Work",
+  "version": "1.0",
+  "source": "User-provided analysis of Sanctuary Timeline (Daily).png and Sanctuary Timeline (Yearly).png; source numbering and interpretations retained.",
+  "notes": {
+    "court": "Step 18 is an entrance/courtyard boundary action. Step 24 occurs outside the camp and is grouped here for continuity.",
+    "holy": "Steps 11–12 follow the diagram’s Holy Place approach grouping; their actions concern the entrance/court. Neither uses the lampstand. Step 19 is a garment transition.",
+    "most": "Step 5 belongs to the Daily sequence. Steps 13–16 belong to the Yearly sequence. Step 14 has no Aaron counterpart.",
+    "daily": "Aaron’s “about 6 a.m.” and “most part of the day” describe the symbolic service-day clock, not historical calendar dates.",
+    "yearly": "AM = anno mundi, year of the world—not a.m. clock time. 6,000/7,000 AM are the source’s schematic framework, not Gregorian predictions. The interval between Steps 23–24 is unspecified."
+  },
+  "showbread": "Table of showbread: present in the sanctuary, but no numbered action is specified in these diagrams.",
+  "steps": [
+    {
+      "step": 0,
+      "region": "court",
+      "title": "Enter the gate",
+      "aaron": "Comes into the courtyard to begin ministry.",
+      "christ": "Jesus is born.",
+      "furniture": "Courtyard gate",
+      "date": "Beginning of service",
+      "date_kind": "Birth date not specified"
+    },
+    {
+      "step": 1,
+      "region": "court",
+      "title": "Wash and dress",
+      "aaron": "Washes body; puts on common priest’s garments to prepare for service.",
+      "christ": "Baptism.",
+      "furniture": "Laver",
+      "date": "AD 27",
+      "date_kind": "Historical date"
+    },
+    {
+      "step": 2,
+      "region": "court",
+      "title": "Offer the bull",
+      "aaron": "Offers a bull for himself and his household before serving the people.",
+      "christ": "Crucifixion; represented as the bull offering for Himself and His co-laborers.",
+      "furniture": "Altar of sacrifice",
+      "date": "AD 31 · Crucifixion",
+      "date_kind": "Historical date"
+    },
+    {
+      "step": 3,
+      "region": "court",
+      "title": "Wash hands and feet",
+      "aaron": "Cleanses before proceeding inward.",
+      "christ": "Resurrection; source describes removal of “traces of sin.”",
+      "furniture": "Laver",
+      "date": "AD 31 · Resurrection",
+      "date_kind": "Event within AD 31"
+    },
+    {
+      "step": 4,
+      "region": "holy",
+      "title": "Take incense and censer",
+      "aaron": "Collects incense and censer to carry inward.",
+      "christ": "Passes through with His own merits.",
+      "furniture": "Altar of incense; censer",
+      "date": "AD 31 · Following resurrection",
+      "date_kind": "Sequence placement"
+    },
+    {
+      "step": 5,
+      "region": "most",
+      "title": "Present blood; acceptance",
+      "aaron": "Places bull’s blood on the ark/mercy seat and brings incense before God.",
+      "christ": "Presents His blood; acceptance by God.",
+      "furniture": "Ark; mercy seat; censer",
+      "date": "AD 31 · Following resurrection",
+      "date_kind": "Sequence placement"
+    },
+    {
+      "step": 6,
+      "region": "court",
+      "title": "Return to co-laborers",
+      "aaron": "Meets his sons; prepares the people’s lamb offering.",
+      "christ": "Returns to His co-laborers; forty days on earth; represented as the Lamb for the people.",
+      "furniture": "Altar of sacrifice",
+      "date": "AD 31 · Forty-day period",
+      "date_kind": "Event period"
+    },
+    {
+      "step": 7,
+      "region": "court",
+      "title": "Wash again",
+      "aaron": "Washes hands and feet before high-priestly service.",
+      "christ": "Divine stature restored to sixteen feet, according to the source.",
+      "furniture": "Laver",
+      "date": "AD 31 · Before inauguration",
+      "date_kind": "Sequence placement"
+    },
+    {
+      "step": 8,
+      "region": "holy",
+      "title": "Dress as High Priest",
+      "aaron": "Dresses for high-priestly service.",
+      "christ": "Inauguration as High Priest.",
+      "furniture": "Holy Place; priestly garments",
+      "date": "AD 31 · Inauguration",
+      "date_kind": "Event within AD 31"
+    },
+    {
+      "step": 9,
+      "region": "holy",
+      "title": "Pour oil into the lamp",
+      "aaron": "Supplies the lamp with oil.",
+      "christ": "Pentecost; pours out the Holy Spirit.",
+      "furniture": "Golden lampstand",
+      "date": "AD 31 · Pentecost",
+      "date_kind": "Event within AD 31"
+    },
+    {
+      "step": 10,
+      "region": "holy",
+      "title": "Offer incense",
+      "aaron": "Offers incense during the continuing daily service.",
+      "christ": "At the first throne, pleading His merits for the people.",
+      "furniture": "Altar of incense",
+      "date": "Continuing daily service",
+      "date_kind": "Continuing period"
+    },
+    {
+      "step": 11,
+      "region": "holy",
+      "title": "Blow the trumpet",
+      "aaron": "Gives the first warning of the Day of Atonement.",
+      "christ": "First angel’s message preached.",
+      "furniture": "Silver trumpet · not furniture",
+      "date": "1833",
+      "date_kind": "Historical date in source"
+    },
+    {
+      "step": 12,
+      "region": "holy",
+      "title": "Cast lots; Lord’s goat",
+      "aaron": "Begins the congregation’s offering; common priests leave the court.",
+      "christ": "Twenty-four elders’ work ends; Jesus represented as the goat for the people, according to the source.",
+      "furniture": "Two goats; lots; entrance/court",
+      "date": "Approach to Day of Atonement",
+      "date_kind": "No separate precise date"
+    },
+    {
+      "step": 13,
+      "region": "most",
+      "title": "Enter with goat’s blood",
+      "aaron": "Carries the congregation’s offering within the veil.",
+      "christ": "Enters the Most Holy Place in heaven.",
+      "furniture": "Inner veil; ark; mercy seat",
+      "date": "October 22, 1844",
+      "date_kind": "Historical date in source"
+    },
+    {
+      "step": 14,
+      "region": "most",
+      "title": "Show the law and Sabbath",
+      "aaron": "No Aaron counterpart is shown.",
+      "christ": "Stands before the law, showing the Sabbath to believers in 1844.",
+      "furniture": "Ark; tablets of the law",
+      "date": "1844",
+      "date_kind": "Historical date in source"
+    },
+    {
+      "step": 15,
+      "region": "most",
+      "title": "Judgment before God",
+      "aaron": "Participates in the yearly service before God.",
+      "christ": "Sits with God as Judge; investigative judgment.",
+      "furniture": "Ark/mercy-seat setting; throne",
+      "date": "1844 onward",
+      "date_kind": "Judgment period"
+    },
+    {
+      "step": 16,
+      "region": "most",
+      "title": "Sprinkle blood; complete judgment",
+      "aaron": "Sprinkles blood on the mercy seat and before the law.",
+      "christ": "Pleads His blood; sins removed, people sealed, sins blotted from the book.",
+      "furniture": "Mercy seat; law; record books",
+      "date": "Completion of judgment",
+      "date_kind": "Sequence; no calendar date"
+    },
+    {
+      "step": 17,
+      "region": "holy",
+      "title": "Cleanse the incense altar",
+      "aaron": "Stops at the altar and cleanses it by blood.",
+      "christ": "Throws down censer; cleanses Holy Place; close of probation.",
+      "furniture": "Altar of incense; censer",
+      "date": "Near 6,000 AM",
+      "date_kind": "Schematic source chronology"
+    },
+    {
+      "step": 18,
+      "region": "court",
+      "title": "Place sins on scapegoat",
+      "aaron": "Transfers sins removed from the sanctuary to the live goat.",
+      "christ": "Places sins upon Satan.",
+      "furniture": "Live scapegoat; sanctuary entrance",
+      "date": "Following Step 17",
+      "date_kind": "Sequence; no calendar date"
+    },
+    {
+      "step": 19,
+      "region": "holy",
+      "title": "Remove high-priestly robes",
+      "aaron": "Changes out of the high-priestly garments.",
+      "christ": "Removes high-priestly robes.",
+      "furniture": "Garments; sanctuary transition",
+      "date": "Following Step 18",
+      "date_kind": "Sequence; no calendar date"
+    },
+    {
+      "step": 20,
+      "region": "court",
+      "title": "Leave the sanctuary",
+      "aaron": "Comes out in white garments after completing the inward service.",
+      "christ": "Leaves sanctuary; associated with the plagues in the source.",
+      "furniture": "Door; exit route",
+      "date": "Following Step 19",
+      "date_kind": "Sequence; no calendar date"
+    },
+    {
+      "step": 21,
+      "region": "court",
+      "title": "Wash body again",
+      "aaron": "Washes at the laver following the sanctuary service.",
+      "christ": "Jacob’s time of trouble; plagues; “cup of baptism.”",
+      "furniture": "Laver",
+      "date": "6,000 AM era · After sanctuary exit",
+      "date_kind": "Schematic source chronology"
+    },
+    {
+      "step": 22,
+      "region": "court",
+      "title": "Offer two rams",
+      "aaron": "Places the burnt offerings on the fire.",
+      "christ": "Second Coming of Christ.",
+      "furniture": "Altar of sacrifice",
+      "date": "Following time of trouble",
+      "date_kind": "Sequence; no calendar date"
+    },
+    {
+      "step": 23,
+      "region": "court",
+      "title": "Burn the fat",
+      "aaron": "Places the fat on the fire.",
+      "christ": "End of sinners.",
+      "furniture": "Altar of sacrifice",
+      "date": "Following Step 22",
+      "date_kind": "Interval not explained in source"
+    },
+    {
+      "step": 24,
+      "region": "court",
+      "title": "Burn bodies outside camp",
+      "aaron": "Disposes of the bull’s and goat’s bodies outside the camp.",
+      "christ": "Second fire; New Earth; all trace of sin gone.",
+      "furniture": "Outside camp · not furniture",
+      "date": "7,000 AM",
+      "date_kind": "Schematic source chronology"
+    }
+  ]
+}

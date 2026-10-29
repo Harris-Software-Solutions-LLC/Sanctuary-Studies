@@ -253,6 +253,15 @@ tbody tr:hover, tbody tr.is-selected { background: #f1f4ee; }
 .timeline-full-reference figure { margin: 0; padding: 8px; border: 1px solid var(--line); background: #fbfaf6; }
 .timeline-full-reference figcaption { margin-bottom: 7px; color: var(--ink); font: 700 13px Georgia, serif; }
 .timeline-full-reference img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #eee9df; }
+.timeline-reference-panel { margin-top: 12px; }
+.timeline-reference-preview { min-height: 180px; max-height: 430px; overflow: hidden; border: 1px solid var(--line); background: #eee9df; }
+.timeline-reference-preview img { display: block; width: 100%; height: 100%; max-height: 430px; object-fit: contain; }
+.timeline-reference-groups { display: grid; gap: 12px; margin-top: 12px; }
+.timeline-reference-strip { display: flex; gap: 8px; overflow-x: auto; padding: 8px 0 3px; }
+.timeline-reference-thumb { flex: 0 0 112px; display: grid; gap: 5px; padding: 5px; border: 1px solid var(--line); color: var(--ink-muted); background: #fbfaf6; text-align: left; cursor: pointer; }
+.timeline-reference-thumb:hover, .timeline-reference-thumb.is-selected { border-color: #b89b50; box-shadow: inset 0 0 0 1px #b89b50; color: var(--ink); }
+.timeline-reference-thumb img { display: block; width: 100%; height: 74px; object-fit: contain; background: #eee9df; }
+.timeline-reference-thumb span { overflow: hidden; font-size: 9px; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
 .timeline-private-notes textarea { display: block; width: 100%; margin: 8px 0; border: 1px solid var(--line); padding: 8px; color: var(--ink); background: #fffdf8; font: inherit; resize: vertical; }
 .timeline-private-notes .button { margin-bottom: 8px; }
 @media (max-width: 900px) { .timeline-visual-grid, .timeline-full-reference { grid-template-columns: 1fr; } .timeline-source-viewport { height: 250px; } }

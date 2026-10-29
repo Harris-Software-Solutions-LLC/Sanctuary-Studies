@@ -3,6 +3,16 @@ const path = require('node:path');
 
 const packagePath = path.join(__dirname, 'timeline-v1.json');
 const dailyAnnotationsPath = path.join(__dirname, 'daily-annotations-v1.json');
+const chartPackRoot = path.join(__dirname, '..', '..', 'assets', 'Sanctuary-Studies-Chart-Pack', 'sanctuary-charts');
+const timelineGalleryRoot = path.join(__dirname, '..', '..', 'assets', 'timeline', '24 StepsOfSanctuary');
+
+function localPngFiles(root, prefix) {
+  if (!fs.existsSync(root)) return [];
+  return fs.readdirSync(root, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith('.png'))
+    .sort((left, right) => left.name.localeCompare(right.name, 'en'))
+    .map((entry) => `${prefix}/${entry.name}`);
+}
 
 function loadTimelinePackage() {
   const packageData = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
@@ -12,6 +22,23 @@ function loadTimelinePackage() {
     return annotation ? { ...step, annotation: { ...annotation, private_notes: step.annotation?.private_notes || [] } } : step;
   });
   packageData.full_timeline = dailyAnnotations.full_timeline;
+  packageData.reference_assets = {
+    chart_pack: {
+      label: 'Sanctuary Studies Chart Pack',
+      readme: 'assets/Sanctuary-Studies-Chart-Pack/sanctuary-charts/README.txt',
+      data: 'assets/Sanctuary-Studies-Chart-Pack/sanctuary-charts/sanctuary-steps.json',
+      charts: ['court', 'holy', 'most', 'daily', 'yearly'].map((name) => ({
+        name,
+        png: `assets/Sanctuary-Studies-Chart-Pack/sanctuary-charts/assets/${name}.png`,
+        svg: `assets/Sanctuary-Studies-Chart-Pack/sanctuary-charts/assets/${name}.svg`
+      }))
+    },
+    timeline_gallery: {
+      label: '24 Steps of the Sanctuary — visual reference gallery',
+      directory: 'assets/timeline/24 StepsOfSanctuary',
+      images: localPngFiles(timelineGalleryRoot, 'assets/timeline/24 StepsOfSanctuary')
+    }
+  };
   return packageData;
 }
 
