@@ -1,0 +1,36 @@
+{
+  "format": "sanctuary-studies-timeline-reference-visuals",
+  "version": 1,
+  "source_directory": "assets/timeline/24 StepsOfSanctuary",
+  "steps": {
+    "0": "assets/timeline/24 StepsOfSanctuary/Aaron and Jesus_ Step 0 version 1.png",
+    "1": "assets/timeline/24 StepsOfSanctuary/Aaron’s Washing and Jesus’ Baptism- Step 1 version 1.png",
+    "2": "assets/timeline/24 StepsOfSanctuary/Courtyard Bull and Calvary Cross - Step 2 version 3.png",
+    "3": "assets/timeline/24 StepsOfSanctuary/Aaron Washes, Jesus Rises - Step 3 version 3.png",
+    "4": "assets/timeline/24 StepsOfSanctuary/Twin holy place scenes_ Aaron and Jesus- Step 4 version 1.png",
+    "5": "assets/timeline/24 StepsOfSanctuary/Golden Ark and cherubim in twin sanctuaries- Step 5 version 1.png",
+    "6": "assets/timeline/24 StepsOfSanctuary/Bronze Altar and Upper Room-Step 6 version 1.png",
+    "7": "assets/timeline/24 StepsOfSanctuary/Aaron’s laver and Jesus’s changing stature- Step 7 version 2.png",
+    "8": "assets/timeline/24 StepsOfSanctuary/Twin High Priests in the Holy Place- Step 8 version 3.png",
+    "9": "assets/timeline/24 StepsOfSanctuary/High Priest, Menorah, and Pentecost- Step 9 version 1.png",
+    "10": "assets/timeline/24 StepsOfSanctuary/Daily sanctuary service, throne, and cross- Step 10 version 2.png",
+    "11": "assets/timeline/24 StepsOfSanctuary/Aaron’s Trumpet and Three Angels- Step 11 version 1.png",
+    "12": "assets/timeline/24 StepsOfSanctuary/Aaron’s Lots, Goats, and Christ’s Cross- Step 12A version 1.png",
+    "13": "assets/timeline/24 StepsOfSanctuary/Aaron and Jesus Enter Sacred Sanctuaries- Step 13A version 3.png",
+    "14": "assets/timeline/24 StepsOfSanctuary/High Priest Before the Ark- Step 14 version 2.png",
+    "15": "assets/timeline/24 StepsOfSanctuary/Aaron and Jesus_ High Priest Triptych-Step 15A and 16A version 3.png",
+    "16": "assets/timeline/24 StepsOfSanctuary/Aaron and Jesus_ High Priest Triptych-Step 15A and 16A version 3.png",
+    "17": "assets/timeline/24 StepsOfSanctuary/Aaron and Jesus at the Incense Altar-Step 17A version 2.png",
+    "18": "assets/timeline/24 StepsOfSanctuary/Aaron and Jesus in the Atonement- Step 18A version 3.png",
+    "19": "assets/timeline/24 StepsOfSanctuary/Aaron and Jesus Depart the Sanctuaries- Step 19 and 20 version 2.png",
+    "20": "assets/timeline/24 StepsOfSanctuary/Aaron and Jesus Depart the Sanctuaries- Step 19 and 20 version 2.png",
+    "21": "assets/timeline/24 StepsOfSanctuary/Aaron’s Washing, Prayer Under Stormy Skies- Step 21A version 2.png",
+    "22": "assets/timeline/24 StepsOfSanctuary/Aaron’s Altar and Rainbow Glory- Step 22A and 23A version 3.png",
+    "23": "assets/timeline/24 StepsOfSanctuary/Aaron’s Altar and Rainbow Glory- Step 22A and 23A version 3.png",
+    "24": "assets/timeline/24 StepsOfSanctuary/Flaming Pyre and Golden New Jerusalem-Step 24 version 3.png"
+  },
+  "full_timeline": {
+    "daily_image": "assets/timeline/24 StepsOfSanctuary/Sanctuary Timeline (Daily).png",
+    "yearly_image": "assets/timeline/24 StepsOfSanctuary/Sanctuary Timeline (Yearly).png"
+  }
+}

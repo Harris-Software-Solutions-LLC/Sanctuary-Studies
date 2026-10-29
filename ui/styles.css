@@ -240,8 +240,7 @@ tbody tr:hover, tbody tr.is-selected { background: #f1f4ee; }
 .timeline-source-viewport { height: 330px; }
 .timeline-visual-viewport:active, .timeline-source-viewport:active { cursor: grabbing; }
 .timeline-visual-viewport img, .timeline-source-viewport img { display: block; max-width: none; transform-origin: center center; user-select: none; pointer-events: none; }
-.timeline-aaron img { width: 200%; height: 100%; object-fit: cover; object-position: left top; }
-.timeline-jesus img { width: 200%; height: 100%; object-fit: cover; object-position: right top; }
+.timeline-aaron img, .timeline-jesus img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .timeline-source-viewport img { width: 100%; height: auto; min-height: 100%; object-fit: contain; object-position: center; }
 .timeline-visual-card p { margin: 8px 2px 0; color: var(--ink-muted); font-size: 10px; line-height: 1.45; }
 .timeline-source-viewer { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
@@ -253,6 +252,9 @@ tbody tr:hover, tbody tr.is-selected { background: #f1f4ee; }
 .timeline-full-reference figure { margin: 0; padding: 8px; border: 1px solid var(--line); background: #fbfaf6; }
 .timeline-full-reference figcaption { margin-bottom: 7px; color: var(--ink); font: 700 13px Georgia, serif; }
 .timeline-full-reference img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #eee9df; }
+.timeline-full-viewport { height: 520px; overflow: hidden; background: #eee9df; cursor: grab; }
+.timeline-full-viewport:active { cursor: grabbing; }
+.timeline-full-viewport img { width: 100%; max-height: none; transform-origin: center center; user-select: none; pointer-events: none; }
 .timeline-reference-panel { margin-top: 12px; }
 .timeline-reference-preview { min-height: 180px; max-height: 430px; overflow: hidden; border: 1px solid var(--line); background: #eee9df; }
 .timeline-reference-preview img { display: block; width: 100%; height: 100%; max-height: 430px; object-fit: contain; }

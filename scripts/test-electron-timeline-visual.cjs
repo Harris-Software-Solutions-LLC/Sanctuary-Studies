@@ -20,6 +20,10 @@ function assertVisualContract(readFile, hasFile) {
   assert.equal(step.annotation.source_image, assetPath, 'Step 1 must reference the packaged local visual asset');
   assert.ok(hasFile(assetPath), 'Step 1 visual asset must be present');
   const daily = JSON.parse(readFile('shared/content/timeline/daily-annotations-v1.json'));
+  const visuals = JSON.parse(readFile('shared/content/timeline/reference-visuals-v1.json'));
+  assert.equal(Object.keys(visuals.steps).length, 25, 'All Steps 0–24 must have a clean visual replacement');
+  assert.ok(hasFile(visuals.steps['1']), 'Clean Step 1 visual must be packaged');
+  assert.ok(hasFile(visuals.steps['24']), 'Clean Step 24 visual must be packaged');
   for (let number = 2; number <= 10; number += 1) {
     const annotation = daily.steps[String(number)];
     assert.ok(annotation, `Daily Step ${number} annotation must exist`);
@@ -35,7 +39,7 @@ function assertVisualContract(readFile, hasFile) {
   assert.ok(hasFile('assets/timeline/24 StepsOfSanctuary/Sanctuary Timeline (Yearly).png'), '24-step gallery Yearly image must be packaged');
   const app = readFile(rendererPath);
   const css = readFile(stylesheetPath);
-  for (const marker of ['timelineVisualMarkup', 'timelineReferenceMarkup', 'data-timeline-track', 'data-timeline-reference-image', 'data-timeline-image-action', 'save-timeline-note', 'timeline-source-viewport', 'timeline-full-view']) assert.ok(app.includes(marker), `renderer missing ${marker}`);
+  for (const marker of ['timelineVisualMarkup', 'timelineReferenceMarkup', 'data-timeline-track', 'data-timeline-reference-image', 'data-timeline-image-action', 'open-chart-pack', 'save-timeline-note', 'timeline-source-viewport', 'timeline-full-view']) assert.ok(app.includes(marker), `renderer missing ${marker}`);
   for (const marker of ['timeline-visual-grid', 'timeline-source-viewport', 'timeline-private-notes', 'timeline-reference-panel', 'timeline-reference-thumb']) assert.ok(css.includes(marker), `stylesheet missing ${marker}`);
 }
 

@@ -5,6 +5,7 @@ contextBridge.exposeInMainWorld('sanctuaryDesktop', Object.freeze({
   isStandalone: true,
   openLegacyWorkspace: () => ipcRenderer.invoke('ui:open-legacy'),
   openLegacyRoute: (route) => ipcRenderer.invoke('ui:open-legacy-route', route),
+  openChartPack: () => ipcRenderer.invoke('ui:open-chart-pack'),
   data: Object.freeze({
     snapshot: () => ipcRenderer.invoke('data:snapshot'),
     listStudies: () => ipcRenderer.invoke('data:list-studies'),

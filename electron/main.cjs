@@ -17,6 +17,7 @@ const { loadLearningGamesPackage, learningGamesPackageToItems, learningGamesPack
 const appRoot = path.resolve(__dirname, '..');
 const entrypoint = path.join(appRoot, 'ui', 'index.html');
 const legacyEntrypoint = path.join(appRoot, 'index.html');
+const chartPackEntrypoint = path.join(appRoot, 'assets', 'Sanctuary-Studies-Chart-Pack', 'sanctuary-charts', 'index.html');
 const appIcon = path.join(appRoot, 'assets', 'icons', 'sanctuary-studies.ico');
 const trayIcon = path.join(appRoot, 'assets', 'icons', 'sanctuary-studies-icon-32.png');
 let store;
@@ -44,7 +45,8 @@ function writePreferredStoragePath(filePath) {
 function isAppFile(url, allowedEntrypoint = entrypoint) {
   if (!url.startsWith('file://')) return false;
   try {
-    return fileURLToPath(new URL(url)) === allowedEntrypoint;
+    const allowed = Array.isArray(allowedEntrypoint) ? allowedEntrypoint : [allowedEntrypoint];
+    return allowed.includes(fileURLToPath(new URL(url)));
   } catch {
     return false;
   }
@@ -114,6 +116,13 @@ function getCachedScripturePackage() {
 function createLegacyRouteWindow(route) {
   if (!LEGACY_ROUTES.has(route)) throw new Error('The requested legacy route is not available offline.');
   return createLegacyWindow(route);
+}
+
+function createChartPackWindow() {
+  const window = new BrowserWindow({ width: 1500, height: 1000, minWidth: 900, minHeight: 640, backgroundColor: '#f5f0e8', title: 'Sanctuary Studies — Chart Pack', icon: appIcon, webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, preload: path.join(__dirname, 'preload.js') } });
+  configureWindow(window, [chartPackEntrypoint]);
+  window.loadFile(chartPackEntrypoint);
+  return window;
 }
 
 function createTray() {
@@ -332,6 +341,7 @@ app.whenReady().then(() => {
     createLegacyRouteWindow(String(route || ''));
     return true;
   });
+  ipcMain.handle('ui:open-chart-pack', () => { createChartPackWindow(); return true; });
 
   session.defaultSession.setPermissionRequestHandler((_webContents, _permission, callback) => callback(false));
   createWindow();
